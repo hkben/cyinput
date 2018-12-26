@@ -37,4 +37,12 @@ cyinput 具有三種輸入模式，分別為
 ## 界面預覽
 <img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/preview.png"></img>
 
+## 功能需求 / BUG 回報
+可以開啟 Issue 來回報自己要的功能，最後會被標上可行或是不可行的標籤，
+
+如果最終不可行的話還敬請見諒，但不要因此而停止提出建議喔 😆。
+
+如在使用時預上 BUG 一樣可以開啟 Issue 然後稍微敘述一下問題，有空就會去檢查。
+
+
 
