@@ -13,7 +13,8 @@ Public Class Form1
     Private hkkp8 As VBHotkeys.GlobalHotkey
     Private hkkp9 As VBHotkeys.GlobalHotkey
     Private hkkpd As VBHotkeys.GlobalHotkey
-
+    Private hkkpp As VBHotkeys.GlobalHotkey
+    Private hkkpm As VBHotkeys.GlobalHotkey
     'Table storage variables
     Dim relatedCharTable As String()
     Dim mappedCharTable As String()
@@ -463,6 +464,10 @@ Public Class Form1
         hkkp8 = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.NumPad8, Me)
         hkkp9 = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.NumPad9, Me)
         hkkpd = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Decimal, Me)
+        'Added in new support for changing page with + and - sign
+        hkkpp = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Add, Me)
+        hkkpm = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Subtract, Me)
+
         hkkp0.Register()
         hkkp1.Register()
         hkkp2.Register()
@@ -474,12 +479,15 @@ Public Class Form1
         hkkp8.Register()
         hkkp9.Register()
         hkkpd.Register()
-
+        'Register the + and - button as well
+        hkkpp.Register()
+        hkkpm.Register()
         'Loading logical program section
         LoadTable()
         Me.TopLevel = True
         Me.TopMost = True
-        ComboBox1.SelectedIndex = 0
+        'Load the previous stored output mode from setting
+        ComboBox1.SelectedIndex = My.Settings.outputMode
 
     End Sub
     Private Function ResolveAssemblies(sender As Object, e As System.ResolveEventArgs) As Reflection.Assembly
@@ -536,8 +544,20 @@ Public Class Form1
             Case 110
                 'Keypad dot
                 dothandler()
+            Case 107
+                '+ pressed
+                If (charset.Length >= 3 Or (punctMode And charset.Length >= 2)) Then
+                    appendToCharSet(0)
+                    handlePage()
+                End If
+            Case 109
+                '- pressed
+                If (charset.Length > 3 Or (punctMode And charset.Length > 2)) Then
+                    charset = charset.Substring(0, charset.Length - 1)
+                    handlePage()
+                End If
         End Select
-        Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode)
+        Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Keycode" & keycode)
 
     End Sub
 
@@ -587,6 +607,12 @@ Public Class Form1
             MessageBox.Show("Hotkey failed to unregister!")
         End If
 
+        If Not hkkpp.Unregister() Then
+            MessageBox.Show("Hotkey failed to unregister!")
+        End If
+        If Not hkkpm.Unregister() Then
+            MessageBox.Show("Hotkey failed to unregister!")
+        End If
     End Sub
 
     Private Sub WriteLine(ByVal message As String)
@@ -639,5 +665,11 @@ Public Class Form1
             SendKeys.Send(" ")
         End If
 
+    End Sub
+
+    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
+        'If the selected index change, save this in settings. Get the value of the last selected output method by default from setting
+        My.Settings.outputMode = ComboBox1.SelectedIndex
+        My.Settings.Save()
     End Sub
 End Class

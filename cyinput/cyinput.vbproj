@@ -8,7 +8,7 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>svchost.My.MyApplication</StartupObject>
     <RootNamespace>svchost</RootNamespace>
-    <AssemblyName>cyinput</AssemblyName>
+    <AssemblyName>cyinputv2</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>WindowsForms</MyType>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
@@ -36,7 +36,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>cyinput.xml</DocumentationFile>
+    <DocumentationFile>cyinputv2.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -46,7 +46,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>cyinput.xml</DocumentationFile>
+    <DocumentationFile>cyinputv2.xml</DocumentationFile>
     <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022</NoWarn>
   </PropertyGroup>
   <PropertyGroup>
