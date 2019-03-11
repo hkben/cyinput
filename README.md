@@ -9,7 +9,7 @@
 而且亦不需要安裝，可直接在 USB 啟動，所謂居家旅行必備程式
 
 ## 下載
-<a href="https://github.com/tobychui/cyinput/raw/master/cyinput/bin/Debug/cyinput.exe">點這裡</a>
+<a href="https://raw.githubusercontent.com/tobychui/cyinput/master/cyinput/bin/Debug/cyinputv2.exe">點這裡</a>
 
 ## 系統要求
 - Windows 7 或以上
@@ -39,6 +39,10 @@ cyinput 具有三種輸入模式，分別為
 
 ## 界面預覽
 <img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/preview.png"></img>
+
+## 關聯字
+<img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/associate.png"></img>
+速型輸入法支援關聯字輸入（但是並不會顯示），如果你需要輸入關聯字請在輸入完第一個字後點選「選字」來查看相關關聯字。
 
 ## 功能需求 / BUG 回報
 可以開啟 Issue 來回報自己要的功能，最後會被標上可行或是不可行的標籤，
