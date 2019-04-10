@@ -22,6 +22,7 @@ Partial Class Form1
     '請勿使用程式碼編輯器進行修改。
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
@@ -43,7 +44,13 @@ Partial Class Form1
         Me.PictureBox7 = New System.Windows.Forms.PictureBox()
         Me.PictureBox8 = New System.Windows.Forms.PictureBox()
         Me.PictureBox9 = New System.Windows.Forms.PictureBox()
-        Me.ComboBox1 = New System.Windows.Forms.ComboBox()
+        Me.TrayIcon = New System.Windows.Forms.NotifyIcon(Me.components)
+        Me.TrayMenu = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.InputModeMenu = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ClipboardModeItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.DirectOutputModeItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.CangjieConversionModeItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitAppItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -53,12 +60,13 @@ Partial Class Form1
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.TrayMenu.SuspendLayout()
         Me.SuspendLayout()
         '
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label1.Location = New System.Drawing.Point(13, 7)
+        Me.Label1.Location = New System.Drawing.Point(0, 0)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(29, 29)
@@ -68,7 +76,7 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label2.Location = New System.Drawing.Point(44, 7)
+        Me.Label2.Location = New System.Drawing.Point(30, 0)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(29, 29)
@@ -78,7 +86,7 @@ Partial Class Form1
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label3.Location = New System.Drawing.Point(75, 6)
+        Me.Label3.Location = New System.Drawing.Point(60, 0)
         Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(29, 29)
@@ -88,7 +96,7 @@ Partial Class Form1
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label4.Location = New System.Drawing.Point(13, 40)
+        Me.Label4.Location = New System.Drawing.Point(0, 30)
         Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(29, 29)
@@ -98,7 +106,7 @@ Partial Class Form1
         'Label5
         '
         Me.Label5.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label5.Location = New System.Drawing.Point(43, 40)
+        Me.Label5.Location = New System.Drawing.Point(30, 30)
         Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(29, 29)
@@ -108,7 +116,7 @@ Partial Class Form1
         'Label6
         '
         Me.Label6.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label6.Location = New System.Drawing.Point(75, 39)
+        Me.Label6.Location = New System.Drawing.Point(60, 30)
         Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(29, 29)
@@ -118,7 +126,7 @@ Partial Class Form1
         'Label7
         '
         Me.Label7.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label7.Location = New System.Drawing.Point(13, 72)
+        Me.Label7.Location = New System.Drawing.Point(0, 60)
         Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(29, 29)
@@ -128,7 +136,7 @@ Partial Class Form1
         'Label8
         '
         Me.Label8.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label8.Location = New System.Drawing.Point(43, 73)
+        Me.Label8.Location = New System.Drawing.Point(30, 60)
         Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(29, 29)
@@ -138,7 +146,7 @@ Partial Class Form1
         'Label9
         '
         Me.Label9.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label9.Location = New System.Drawing.Point(75, 72)
+        Me.Label9.Location = New System.Drawing.Point(60, 60)
         Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(29, 29)
@@ -148,7 +156,7 @@ Partial Class Form1
         'Label10
         '
         Me.Label10.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label10.Location = New System.Drawing.Point(8, 102)
+        Me.Label10.Location = New System.Drawing.Point(0, 93)
         Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(50, 29)
@@ -158,7 +166,7 @@ Partial Class Form1
         'Label11
         '
         Me.Label11.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label11.Location = New System.Drawing.Point(54, 102)
+        Me.Label11.Location = New System.Drawing.Point(40, 93)
         Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(50, 29)
@@ -167,7 +175,7 @@ Partial Class Form1
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(12, 5)
+        Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox1.TabIndex = 12
@@ -176,7 +184,7 @@ Partial Class Form1
         '
         'PictureBox2
         '
-        Me.PictureBox2.Location = New System.Drawing.Point(43, 5)
+        Me.PictureBox2.Location = New System.Drawing.Point(30, 0)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox2.TabIndex = 13
@@ -185,7 +193,7 @@ Partial Class Form1
         '
         'PictureBox3
         '
-        Me.PictureBox3.Location = New System.Drawing.Point(74, 5)
+        Me.PictureBox3.Location = New System.Drawing.Point(60, 0)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox3.TabIndex = 14
@@ -194,7 +202,7 @@ Partial Class Form1
         '
         'PictureBox4
         '
-        Me.PictureBox4.Location = New System.Drawing.Point(12, 37)
+        Me.PictureBox4.Location = New System.Drawing.Point(0, 30)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox4.TabIndex = 15
@@ -203,7 +211,7 @@ Partial Class Form1
         '
         'PictureBox5
         '
-        Me.PictureBox5.Location = New System.Drawing.Point(43, 37)
+        Me.PictureBox5.Location = New System.Drawing.Point(30, 30)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox5.TabIndex = 16
@@ -212,7 +220,7 @@ Partial Class Form1
         '
         'PictureBox6
         '
-        Me.PictureBox6.Location = New System.Drawing.Point(74, 37)
+        Me.PictureBox6.Location = New System.Drawing.Point(60, 30)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox6.TabIndex = 17
@@ -221,7 +229,7 @@ Partial Class Form1
         '
         'PictureBox7
         '
-        Me.PictureBox7.Location = New System.Drawing.Point(12, 69)
+        Me.PictureBox7.Location = New System.Drawing.Point(0, 60)
         Me.PictureBox7.Name = "PictureBox7"
         Me.PictureBox7.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox7.TabIndex = 18
@@ -230,7 +238,7 @@ Partial Class Form1
         '
         'PictureBox8
         '
-        Me.PictureBox8.Location = New System.Drawing.Point(43, 69)
+        Me.PictureBox8.Location = New System.Drawing.Point(30, 60)
         Me.PictureBox8.Name = "PictureBox8"
         Me.PictureBox8.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox8.TabIndex = 19
@@ -239,31 +247,63 @@ Partial Class Form1
         '
         'PictureBox9
         '
-        Me.PictureBox9.Location = New System.Drawing.Point(74, 69)
+        Me.PictureBox9.Location = New System.Drawing.Point(60, 60)
         Me.PictureBox9.Name = "PictureBox9"
         Me.PictureBox9.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox9.TabIndex = 20
         Me.PictureBox9.TabStop = False
         Me.PictureBox9.Visible = False
         '
-        'ComboBox1
+        'TrayIcon
         '
-        Me.ComboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.ComboBox1.FlatStyle = System.Windows.Forms.FlatStyle.System
-        Me.ComboBox1.FormattingEnabled = True
-        Me.ComboBox1.Items.AddRange(New Object() {"經剪貼簿", "直接輸出", "倉頡轉碼"})
-        Me.ComboBox1.Location = New System.Drawing.Point(10, 134)
-        Me.ComboBox1.Name = "ComboBox1"
-        Me.ComboBox1.Size = New System.Drawing.Size(94, 27)
-        Me.ComboBox1.TabIndex = 21
+        Me.TrayIcon.ContextMenuStrip = Me.TrayMenu
+        Me.TrayIcon.Icon = CType(resources.GetObject("TrayIcon.Icon"), System.Drawing.Icon)
+        Me.TrayIcon.Text = "TrayIcon"
+        Me.TrayIcon.Visible = True
+        '
+        'TrayMenu
+        '
+        Me.TrayMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InputModeMenu, Me.ExitAppItem})
+        Me.TrayMenu.Name = "ContextMenuStrip1"
+        Me.TrayMenu.Size = New System.Drawing.Size(140, 48)
+        '
+        'InputModeMenu
+        '
+        Me.InputModeMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClipboardModeItem, Me.DirectOutputModeItem, Me.CangjieConversionModeItem})
+        Me.InputModeMenu.Name = "InputModeMenu"
+        Me.InputModeMenu.Size = New System.Drawing.Size(139, 22)
+        Me.InputModeMenu.Text = "輸入模式"
+        '
+        'ClipboardModeItem
+        '
+        Me.ClipboardModeItem.Name = "ClipboardModeItem"
+        Me.ClipboardModeItem.Size = New System.Drawing.Size(126, 22)
+        Me.ClipboardModeItem.Text = "經剪貼簿"
+        '
+        'DirectOutputModeItem
+        '
+        Me.DirectOutputModeItem.Name = "DirectOutputModeItem"
+        Me.DirectOutputModeItem.Size = New System.Drawing.Size(126, 22)
+        Me.DirectOutputModeItem.Text = "直接輸出"
+        '
+        'CangjieConversionModeItem
+        '
+        Me.CangjieConversionModeItem.Name = "CangjieConversionModeItem"
+        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(126, 22)
+        Me.CangjieConversionModeItem.Text = "倉頡轉碼"
+        '
+        'ExitAppItem
+        '
+        Me.ExitAppItem.Name = "ExitAppItem"
+        Me.ExitAppItem.Size = New System.Drawing.Size(139, 22)
+        Me.ExitAppItem.Text = "關閉輸入法"
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(116, 169)
-        Me.Controls.Add(Me.ComboBox1)
+        Me.ClientSize = New System.Drawing.Size(90, 120)
         Me.Controls.Add(Me.PictureBox9)
         Me.Controls.Add(Me.PictureBox8)
         Me.Controls.Add(Me.PictureBox7)
@@ -284,13 +324,17 @@ Partial Class Form1
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
+        Me.Cursor = System.Windows.Forms.Cursors.SizeAll
         Me.Font = New System.Drawing.Font("微軟正黑體", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(90, 120)
         Me.MinimizeBox = False
+        Me.MinimumSize = New System.Drawing.Size(90, 120)
         Me.Name = "Form1"
+        Me.ShowInTaskbar = False
         Me.Text = "cyinput"
         Me.TopMost = True
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
@@ -302,6 +346,7 @@ Partial Class Form1
         CType(Me.PictureBox7, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox8, System.ComponentModel.ISupportInitialize).EndInit()
         CType(Me.PictureBox9, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.TrayMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
 
     End Sub
@@ -325,5 +370,11 @@ Partial Class Form1
     Friend WithEvents PictureBox7 As PictureBox
     Friend WithEvents PictureBox8 As PictureBox
     Friend WithEvents PictureBox9 As PictureBox
-    Friend WithEvents ComboBox1 As ComboBox
+    Friend WithEvents TrayIcon As NotifyIcon
+    Friend WithEvents TrayMenu As ContextMenuStrip
+    Friend WithEvents InputModeMenu As ToolStripMenuItem
+    Friend WithEvents ClipboardModeItem As ToolStripMenuItem
+    Friend WithEvents DirectOutputModeItem As ToolStripMenuItem
+    Friend WithEvents CangjieConversionModeItem As ToolStripMenuItem
+    Friend WithEvents ExitAppItem As ToolStripMenuItem
 End Class
