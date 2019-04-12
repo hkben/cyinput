@@ -29,6 +29,11 @@ Public Class Form1
     Dim showingTextArrayIndex As Integer = 0
     Dim lastusedword As String = ""
     Dim cj5buffer As String = ""
+
+    Dim drag As Boolean
+    Dim mouseX As Integer
+    Dim mouseY As Integer
+
     Private Function appendToCharSet(number As String)
         charset = charset & number.ToString
         Return charset.ToString
@@ -486,8 +491,6 @@ Public Class Form1
         LoadTable()
         Me.TopLevel = True
         Me.TopMost = True
-        'Load the previous stored output mode from setting
-        ComboBox1.SelectedIndex = My.Settings.outputMode
 
     End Sub
     Private Function ResolveAssemblies(sender As Object, e As System.ResolveEventArgs) As Reflection.Assembly
@@ -644,10 +647,13 @@ Public Class Form1
             'This word do not exists
             Return
         End If
-        If ComboBox1.Text = "經剪貼簿" Then
+
+        Dim mode As Integer = My.Settings.outputMode
+
+        If mode = 0 Then
             Clipboard.SetText(text)
             SendKeys.Send("^v")
-        ElseIf ComboBox1.Text = "直接輸出" Then
+        ElseIf mode = 1 Then
             SendKeys.Send(text)
 
             'ElseIf ComboBox1.Text = "倉頡轉碼" Then
@@ -657,7 +663,7 @@ Public Class Form1
             '    Next
             '    SendKeys.Send(" ")
 
-        ElseIf ComboBox1.Text = "倉頡轉碼" Then
+        ElseIf mode = 2 Then
             cj5buffer = getb5xp(text)
             For Each c As Char In cj5buffer
                 SendKeys.Send(c.ToString)
@@ -667,9 +673,68 @@ Public Class Form1
 
     End Sub
 
-    Private Sub ComboBox1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ComboBox1.SelectedIndexChanged
-        'If the selected index change, save this in settings. Get the value of the last selected output method by default from setting
-        My.Settings.outputMode = ComboBox1.SelectedIndex
+    Private Sub TrayMenu_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles TrayMenu.Opening
+        UpdateMenuCheckState()
+    End Sub
+
+    Private Sub ExitAppItem_Click(sender As Object, e As EventArgs) Handles ExitAppItem.Click
+        Application.Exit()
+    End Sub
+
+    Private Sub ClipboardModeItem_Click(sender As Object, e As EventArgs) Handles ClipboardModeItem.Click
+        SaveOutputModeToSetting(0)
+    End Sub
+
+    Private Sub DirectOutputModeItem_Click(sender As Object, e As EventArgs) Handles DirectOutputModeItem.Click
+        SaveOutputModeToSetting(1)
+    End Sub
+
+    Private Sub CangjieConversionModeItem_Click(sender As Object, e As EventArgs) Handles CangjieConversionModeItem.Click
+        SaveOutputModeToSetting(2)
+    End Sub
+
+    Private Sub SaveOutputModeToSetting(mode As Integer)
+        'Save selected mode to settings
+        My.Settings.outputMode = mode
         My.Settings.Save()
     End Sub
+
+    Private Sub UpdateMenuCheckState()
+
+        'Reset Item CheckState
+        ClipboardModeItem.CheckState = CheckState.Unchecked
+        DirectOutputModeItem.CheckState = CheckState.Unchecked
+        CangjieConversionModeItem.CheckState = CheckState.Unchecked
+
+        'Change Item CheckState based on the mode which user uses
+        Dim mode As Integer = My.Settings.outputMode
+
+        Select Case mode
+            Case 0
+                ClipboardModeItem.CheckState = CheckState.Checked
+            Case 1
+                DirectOutputModeItem.CheckState = CheckState.Checked
+            Case 2
+                CangjieConversionModeItem.CheckState = CheckState.Checked
+        End Select
+
+    End Sub
+
+    Private Sub DragWindow_MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseDown, PictureBox9.MouseDown, PictureBox8.MouseDown, PictureBox7.MouseDown, PictureBox6.MouseDown, PictureBox5.MouseDown, PictureBox4.MouseDown, PictureBox3.MouseDown, PictureBox2.MouseDown, PictureBox1.MouseDown, Label11.MouseDown, Label10.MouseDown
+        drag = True
+        mouseX = Cursor.Position.X - Left
+        mouseY = Cursor.Position.Y - Top
+    End Sub
+
+    Private Sub DragWindow_MouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseMove, PictureBox9.MouseMove, PictureBox8.MouseMove, PictureBox7.MouseMove, PictureBox6.MouseMove, PictureBox5.MouseMove, PictureBox4.MouseMove, PictureBox3.MouseMove, PictureBox2.MouseMove, PictureBox1.MouseMove, Label11.MouseMove, Label10.MouseMove
+        If drag Then
+            Top = Cursor.Position.Y - mouseY
+            Left = Cursor.Position.X - mouseX
+        End If
+    End Sub
+
+    Private Sub DragWindow_MouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseUp, PictureBox9.MouseUp, PictureBox8.MouseUp, PictureBox7.MouseUp, PictureBox6.MouseUp, PictureBox5.MouseUp, PictureBox4.MouseUp, PictureBox3.MouseUp, PictureBox2.MouseUp, PictureBox1.MouseUp, Label11.MouseUp, Label10.MouseUp
+        drag = False
+    End Sub
+
 End Class
