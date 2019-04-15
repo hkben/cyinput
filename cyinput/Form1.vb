@@ -15,6 +15,7 @@ Public Class Form1
     Private hkkpd As VBHotkeys.GlobalHotkey
     Private hkkpp As VBHotkeys.GlobalHotkey
     Private hkkpm As VBHotkeys.GlobalHotkey
+    Private hkkpq As VBHotkeys.GlobalHotkey
     'Table storage variables
     Dim relatedCharTable As String()
     Dim mappedCharTable As String()
@@ -33,6 +34,8 @@ Public Class Form1
     Dim drag As Boolean
     Dim mouseX As Integer
     Dim mouseY As Integer
+
+    Dim cyinputEnable As Boolean
 
     Private Function appendToCharSet(number As String)
         charset = charset & number.ToString
@@ -457,6 +460,7 @@ Public Class Form1
             'MsgBox(IO.Path.GetTempPath.ToString & "cyinput\")
             unzippingToTemp()
         End If
+
         'Start key binding process
         hkkp0 = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.NumPad0, Me)
         hkkp1 = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.NumPad1, Me)
@@ -472,7 +476,16 @@ Public Class Form1
         'Added in new support for changing page with + and - sign
         hkkpp = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Add, Me)
         hkkpm = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Subtract, Me)
+        hkkpq = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Divide, Me)
 
+        'Register keypad /
+        hkkpq.Register()
+
+        OnInputEnable()
+
+    End Sub
+
+    Private Sub OnInputEnable()
         hkkp0.Register()
         hkkp1.Register()
         hkkp2.Register()
@@ -492,7 +505,10 @@ Public Class Form1
         Me.TopLevel = True
         Me.TopMost = True
 
+        cyinputEnable = True
+
     End Sub
+
     Private Function ResolveAssemblies(sender As Object, e As System.ResolveEventArgs) As Reflection.Assembly
         Dim desiredAssembly = New Reflection.AssemblyName(e.Name)
 
@@ -559,6 +575,9 @@ Public Class Form1
                     charset = charset.Substring(0, charset.Length - 1)
                     handlePage()
                 End If
+            Case 111
+                '/ pressed
+                ToggleInputWindow()
         End Select
         Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Keycode" & keycode)
 
@@ -576,6 +595,15 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
+        OnInputDisable()
+
+        If Not hkkpq.Unregister() Then
+            MessageBox.Show("Hotkey failed to unregister!")
+        End If
+
+    End Sub
+
+    Private Sub OnInputDisable()
         If Not hkkp0.Unregister() Then
             MessageBox.Show("Hotkey failed to unregister!")
         End If
@@ -615,6 +643,19 @@ Public Class Form1
         End If
         If Not hkkpm.Unregister() Then
             MessageBox.Show("Hotkey failed to unregister!")
+        End If
+
+        cyinputEnable = False
+
+    End Sub
+
+    Private Sub ToggleInputWindow()
+        If cyinputEnable Then
+            Me.Hide()
+            OnInputDisable()
+        Else
+            Me.Show()
+            OnInputEnable()
         End If
     End Sub
 
