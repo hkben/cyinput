@@ -595,7 +595,9 @@ Public Class Form1
     End Sub
 
     Private Sub Form1_FormClosing(ByVal sender As System.Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles MyBase.FormClosing
-        OnInputDisable()
+        If cyinputEnable Then
+            OnInputDisable()
+        End If
 
         If Not hkkpq.Unregister() Then
             MessageBox.Show("Hotkey failed to unregister!")
