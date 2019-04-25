@@ -1,9 +1,9 @@
-﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()>
 Partial Class Form1
     Inherits System.Windows.Forms.Form
 
     'Form 覆寫 Dispose 以清除元件清單。
-    <System.Diagnostics.DebuggerNonUserCode()> _
+    <System.Diagnostics.DebuggerNonUserCode()>
     Protected Overrides Sub Dispose(ByVal disposing As Boolean)
         Try
             If disposing AndAlso components IsNot Nothing Then
@@ -20,7 +20,7 @@ Partial Class Form1
     '注意: 以下為 Windows Form 設計工具所需的程序
     '可以使用 Windows Form 設計工具進行修改。
     '請勿使用程式碼編輯器進行修改。
-    <System.Diagnostics.DebuggerStepThrough()> _
+    <System.Diagnostics.DebuggerStepThrough()>
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container()
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
@@ -66,7 +66,7 @@ Partial Class Form1
         'Label1
         '
         Me.Label1.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
-        Me.Label1.Location = New System.Drawing.Point(3, 0)
+        Me.Label1.Location = New System.Drawing.Point(3, 2)
         Me.Label1.Margin = New System.Windows.Forms.Padding(0)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(17, 17)
@@ -77,7 +77,7 @@ Partial Class Form1
         'Label2
         '
         Me.Label2.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
-        Me.Label2.Location = New System.Drawing.Point(21, 0)
+        Me.Label2.Location = New System.Drawing.Point(21, 2)
         Me.Label2.Margin = New System.Windows.Forms.Padding(0)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(17, 17)
@@ -88,7 +88,7 @@ Partial Class Form1
         'Label3
         '
         Me.Label3.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
-        Me.Label3.Location = New System.Drawing.Point(39, 0)
+        Me.Label3.Location = New System.Drawing.Point(39, 2)
         Me.Label3.Margin = New System.Windows.Forms.Padding(0)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(17, 17)
@@ -99,7 +99,7 @@ Partial Class Form1
         'Label4
         '
         Me.Label4.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
-        Me.Label4.Location = New System.Drawing.Point(3, 20)
+        Me.Label4.Location = New System.Drawing.Point(3, 22)
         Me.Label4.Margin = New System.Windows.Forms.Padding(0)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(17, 17)
@@ -110,7 +110,7 @@ Partial Class Form1
         'Label5
         '
         Me.Label5.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
-        Me.Label5.Location = New System.Drawing.Point(21, 20)
+        Me.Label5.Location = New System.Drawing.Point(21, 22)
         Me.Label5.Margin = New System.Windows.Forms.Padding(0)
         Me.Label5.Name = "Label5"
         Me.Label5.Size = New System.Drawing.Size(17, 17)
@@ -121,7 +121,7 @@ Partial Class Form1
         'Label6
         '
         Me.Label6.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
-        Me.Label6.Location = New System.Drawing.Point(39, 20)
+        Me.Label6.Location = New System.Drawing.Point(39, 22)
         Me.Label6.Margin = New System.Windows.Forms.Padding(0)
         Me.Label6.Name = "Label6"
         Me.Label6.Size = New System.Drawing.Size(17, 17)
@@ -132,7 +132,7 @@ Partial Class Form1
         'Label7
         '
         Me.Label7.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
-        Me.Label7.Location = New System.Drawing.Point(3, 40)
+        Me.Label7.Location = New System.Drawing.Point(3, 42)
         Me.Label7.Margin = New System.Windows.Forms.Padding(0)
         Me.Label7.Name = "Label7"
         Me.Label7.Size = New System.Drawing.Size(17, 17)
@@ -143,7 +143,7 @@ Partial Class Form1
         'Label8
         '
         Me.Label8.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
-        Me.Label8.Location = New System.Drawing.Point(21, 40)
+        Me.Label8.Location = New System.Drawing.Point(21, 42)
         Me.Label8.Margin = New System.Windows.Forms.Padding(0)
         Me.Label8.Name = "Label8"
         Me.Label8.Size = New System.Drawing.Size(17, 17)
@@ -154,7 +154,7 @@ Partial Class Form1
         'Label9
         '
         Me.Label9.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
-        Me.Label9.Location = New System.Drawing.Point(39, 40)
+        Me.Label9.Location = New System.Drawing.Point(39, 42)
         Me.Label9.Margin = New System.Windows.Forms.Padding(0)
         Me.Label9.Name = "Label9"
         Me.Label9.Size = New System.Drawing.Size(17, 17)
@@ -186,7 +186,7 @@ Partial Class Form1
         'PictureBox1
         '
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox1.Location = New System.Drawing.Point(1, 0)
+        Me.PictureBox1.Location = New System.Drawing.Point(1, 2)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(17, 17)
         Me.PictureBox1.TabIndex = 12
@@ -196,7 +196,7 @@ Partial Class Form1
         'PictureBox2
         '
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox2.Location = New System.Drawing.Point(19, 0)
+        Me.PictureBox2.Location = New System.Drawing.Point(19, 2)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(17, 17)
         Me.PictureBox2.TabIndex = 13
@@ -206,7 +206,7 @@ Partial Class Form1
         'PictureBox3
         '
         Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox3.Location = New System.Drawing.Point(37, 0)
+        Me.PictureBox3.Location = New System.Drawing.Point(37, 2)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(17, 17)
         Me.PictureBox3.TabIndex = 14
@@ -216,7 +216,7 @@ Partial Class Form1
         'PictureBox4
         '
         Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox4.Location = New System.Drawing.Point(1, 20)
+        Me.PictureBox4.Location = New System.Drawing.Point(1, 22)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(17, 17)
         Me.PictureBox4.TabIndex = 15
@@ -226,7 +226,7 @@ Partial Class Form1
         'PictureBox5
         '
         Me.PictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox5.Location = New System.Drawing.Point(19, 20)
+        Me.PictureBox5.Location = New System.Drawing.Point(19, 22)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(17, 17)
         Me.PictureBox5.TabIndex = 16
@@ -236,7 +236,7 @@ Partial Class Form1
         'PictureBox6
         '
         Me.PictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox6.Location = New System.Drawing.Point(37, 20)
+        Me.PictureBox6.Location = New System.Drawing.Point(37, 22)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(17, 17)
         Me.PictureBox6.TabIndex = 17
@@ -246,7 +246,7 @@ Partial Class Form1
         'PictureBox7
         '
         Me.PictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox7.Location = New System.Drawing.Point(1, 40)
+        Me.PictureBox7.Location = New System.Drawing.Point(1, 42)
         Me.PictureBox7.Name = "PictureBox7"
         Me.PictureBox7.Size = New System.Drawing.Size(17, 17)
         Me.PictureBox7.TabIndex = 18
@@ -256,7 +256,7 @@ Partial Class Form1
         'PictureBox8
         '
         Me.PictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox8.Location = New System.Drawing.Point(19, 40)
+        Me.PictureBox8.Location = New System.Drawing.Point(19, 42)
         Me.PictureBox8.Name = "PictureBox8"
         Me.PictureBox8.Size = New System.Drawing.Size(17, 17)
         Me.PictureBox8.TabIndex = 19
@@ -266,7 +266,7 @@ Partial Class Form1
         'PictureBox9
         '
         Me.PictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.PictureBox9.Location = New System.Drawing.Point(37, 40)
+        Me.PictureBox9.Location = New System.Drawing.Point(37, 42)
         Me.PictureBox9.Name = "PictureBox9"
         Me.PictureBox9.Size = New System.Drawing.Size(17, 17)
         Me.PictureBox9.TabIndex = 20
