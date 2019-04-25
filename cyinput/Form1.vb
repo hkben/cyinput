@@ -486,6 +486,9 @@ Public Class Form1
     End Sub
 
     Private Sub OnInputEnable()
+        'Sending "Cancel" for reset (Reset charset that last input left)
+        dothandler()
+
         hkkp0.Register()
         hkkp1.Register()
         hkkp2.Register()
