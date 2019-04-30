@@ -393,8 +393,8 @@ Public Class Form1
         Label11.Text = "取消"
         Console.WriteLine("Punct Mode Enabled")
     End Sub
-    Private Sub dothandler()
-        If charset.Length > 0 Then
+    Private Sub dothandler(Optional reset As Boolean = False)
+        If charset.Length > 0 Or reset Then
             If lastusedword = "" And assoicateMode = False And punctMode = False Then
                 'Reset
                 charset = ""
@@ -487,7 +487,7 @@ Public Class Form1
 
     Private Sub OnInputEnable()
         'Sending "Cancel" for reset (Reset charset that last input left)
-        dothandler()
+        dothandler(True)
 
         hkkp0.Register()
         hkkp1.Register()
