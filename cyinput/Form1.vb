@@ -497,6 +497,12 @@ Public Class Form1
 
         OnInputEnable()
 
+        If Not My.Settings.startPositionTop = 0 And Not My.Settings.startPositionLeft = 0 Then
+            Top = My.Settings.startPositionTop
+            Left = My.Settings.startPositionLeft
+        End If
+
+
     End Sub
 
     Private Sub OnInputEnable()
@@ -795,6 +801,12 @@ Public Class Form1
 
     Private Sub DragWindow_MouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseUp, PictureBox9.MouseUp, PictureBox8.MouseUp, PictureBox7.MouseUp, PictureBox6.MouseUp, PictureBox5.MouseUp, PictureBox4.MouseUp, PictureBox3.MouseUp, PictureBox2.MouseUp, PictureBox1.MouseUp, Label11.MouseUp, Label10.MouseUp
         drag = False
+
+        'Save position to settings
+        My.Settings.startPositionTop = Top
+        My.Settings.startPositionLeft = Left
+        My.Settings.Save()
+
     End Sub
 
     'Handle startup sound effect settings
