@@ -51,6 +51,9 @@ Partial Class Form1
         Me.DirectOutputModeItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CangjieConversionModeItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitAppItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.起動音效ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.啟用ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.停用ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -156,7 +159,7 @@ Partial Class Form1
         'Label10
         '
         Me.Label10.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label10.Location = New System.Drawing.Point(0, 93)
+        Me.Label10.Location = New System.Drawing.Point(0, 94)
         Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label10.Name = "Label10"
         Me.Label10.Size = New System.Drawing.Size(50, 29)
@@ -166,7 +169,7 @@ Partial Class Form1
         'Label11
         '
         Me.Label11.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label11.Location = New System.Drawing.Point(40, 93)
+        Me.Label11.Location = New System.Drawing.Point(44, 94)
         Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label11.Name = "Label11"
         Me.Label11.Size = New System.Drawing.Size(50, 29)
@@ -175,7 +178,7 @@ Partial Class Form1
         '
         'PictureBox1
         '
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 0)
+        Me.PictureBox1.Location = New System.Drawing.Point(0, 1)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox1.TabIndex = 12
@@ -184,7 +187,7 @@ Partial Class Form1
         '
         'PictureBox2
         '
-        Me.PictureBox2.Location = New System.Drawing.Point(30, 0)
+        Me.PictureBox2.Location = New System.Drawing.Point(30, 1)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox2.TabIndex = 13
@@ -193,7 +196,7 @@ Partial Class Form1
         '
         'PictureBox3
         '
-        Me.PictureBox3.Location = New System.Drawing.Point(60, 0)
+        Me.PictureBox3.Location = New System.Drawing.Point(60, 1)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox3.TabIndex = 14
@@ -202,7 +205,7 @@ Partial Class Form1
         '
         'PictureBox4
         '
-        Me.PictureBox4.Location = New System.Drawing.Point(0, 30)
+        Me.PictureBox4.Location = New System.Drawing.Point(0, 31)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox4.TabIndex = 15
@@ -211,7 +214,7 @@ Partial Class Form1
         '
         'PictureBox5
         '
-        Me.PictureBox5.Location = New System.Drawing.Point(30, 30)
+        Me.PictureBox5.Location = New System.Drawing.Point(30, 31)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox5.TabIndex = 16
@@ -220,7 +223,7 @@ Partial Class Form1
         '
         'PictureBox6
         '
-        Me.PictureBox6.Location = New System.Drawing.Point(60, 30)
+        Me.PictureBox6.Location = New System.Drawing.Point(60, 31)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox6.TabIndex = 17
@@ -229,7 +232,7 @@ Partial Class Form1
         '
         'PictureBox7
         '
-        Me.PictureBox7.Location = New System.Drawing.Point(0, 60)
+        Me.PictureBox7.Location = New System.Drawing.Point(0, 61)
         Me.PictureBox7.Name = "PictureBox7"
         Me.PictureBox7.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox7.TabIndex = 18
@@ -238,7 +241,7 @@ Partial Class Form1
         '
         'PictureBox8
         '
-        Me.PictureBox8.Location = New System.Drawing.Point(30, 60)
+        Me.PictureBox8.Location = New System.Drawing.Point(30, 61)
         Me.PictureBox8.Name = "PictureBox8"
         Me.PictureBox8.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox8.TabIndex = 19
@@ -247,7 +250,7 @@ Partial Class Form1
         '
         'PictureBox9
         '
-        Me.PictureBox9.Location = New System.Drawing.Point(60, 60)
+        Me.PictureBox9.Location = New System.Drawing.Point(60, 61)
         Me.PictureBox9.Name = "PictureBox9"
         Me.PictureBox9.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox9.TabIndex = 20
@@ -258,52 +261,73 @@ Partial Class Form1
         '
         Me.TrayIcon.ContextMenuStrip = Me.TrayMenu
         Me.TrayIcon.Icon = CType(resources.GetObject("TrayIcon.Icon"), System.Drawing.Icon)
-        Me.TrayIcon.Text = "TrayIcon"
+        Me.TrayIcon.Text = "速型輸入法"
         Me.TrayIcon.Visible = True
         '
         'TrayMenu
         '
-        Me.TrayMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InputModeMenu, Me.ExitAppItem})
+        Me.TrayMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InputModeMenu, Me.起動音效ToolStripMenuItem, Me.ExitAppItem})
         Me.TrayMenu.Name = "ContextMenuStrip1"
-        Me.TrayMenu.Size = New System.Drawing.Size(140, 48)
+        Me.TrayMenu.Size = New System.Drawing.Size(137, 70)
         '
         'InputModeMenu
         '
         Me.InputModeMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClipboardModeItem, Me.DirectOutputModeItem, Me.CangjieConversionModeItem})
         Me.InputModeMenu.Name = "InputModeMenu"
-        Me.InputModeMenu.Size = New System.Drawing.Size(139, 22)
+        Me.InputModeMenu.Size = New System.Drawing.Size(136, 22)
         Me.InputModeMenu.Text = "輸入模式"
         '
         'ClipboardModeItem
         '
         Me.ClipboardModeItem.Name = "ClipboardModeItem"
-        Me.ClipboardModeItem.Size = New System.Drawing.Size(126, 22)
+        Me.ClipboardModeItem.Size = New System.Drawing.Size(152, 22)
         Me.ClipboardModeItem.Text = "經剪貼簿"
         '
         'DirectOutputModeItem
         '
         Me.DirectOutputModeItem.Name = "DirectOutputModeItem"
-        Me.DirectOutputModeItem.Size = New System.Drawing.Size(126, 22)
+        Me.DirectOutputModeItem.Size = New System.Drawing.Size(152, 22)
         Me.DirectOutputModeItem.Text = "直接輸出"
         '
         'CangjieConversionModeItem
         '
         Me.CangjieConversionModeItem.Name = "CangjieConversionModeItem"
-        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(126, 22)
+        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(152, 22)
         Me.CangjieConversionModeItem.Text = "倉頡轉碼"
         '
         'ExitAppItem
         '
         Me.ExitAppItem.Name = "ExitAppItem"
-        Me.ExitAppItem.Size = New System.Drawing.Size(139, 22)
+        Me.ExitAppItem.Size = New System.Drawing.Size(136, 22)
         Me.ExitAppItem.Text = "關閉輸入法"
+        '
+        '起動音效ToolStripMenuItem
+        '
+        Me.起動音效ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.啟用ToolStripMenuItem, Me.停用ToolStripMenuItem})
+        Me.起動音效ToolStripMenuItem.Name = "起動音效ToolStripMenuItem"
+        Me.起動音效ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
+        Me.起動音效ToolStripMenuItem.Text = "起動音效"
+        '
+        '啟用ToolStripMenuItem
+        '
+        Me.啟用ToolStripMenuItem.Checked = True
+        Me.啟用ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.啟用ToolStripMenuItem.Name = "啟用ToolStripMenuItem"
+        Me.啟用ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.啟用ToolStripMenuItem.Text = "啟用"
+        '
+        '停用ToolStripMenuItem
+        '
+        Me.停用ToolStripMenuItem.Name = "停用ToolStripMenuItem"
+        Me.停用ToolStripMenuItem.Size = New System.Drawing.Size(152, 22)
+        Me.停用ToolStripMenuItem.Text = "停用"
         '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 19.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(90, 120)
+        Me.ClientSize = New System.Drawing.Size(92, 120)
         Me.Controls.Add(Me.PictureBox9)
         Me.Controls.Add(Me.PictureBox8)
         Me.Controls.Add(Me.PictureBox7)
@@ -330,9 +354,9 @@ Partial Class Form1
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.MaximizeBox = False
-        Me.MaximumSize = New System.Drawing.Size(90, 120)
+        Me.MaximumSize = New System.Drawing.Size(92, 120)
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(90, 120)
+        Me.MinimumSize = New System.Drawing.Size(92, 120)
         Me.Name = "Form1"
         Me.ShowInTaskbar = False
         Me.Text = "cyinput"
@@ -377,4 +401,7 @@ Partial Class Form1
     Friend WithEvents DirectOutputModeItem As ToolStripMenuItem
     Friend WithEvents CangjieConversionModeItem As ToolStripMenuItem
     Friend WithEvents ExitAppItem As ToolStripMenuItem
+    Friend WithEvents 起動音效ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents 啟用ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents 停用ToolStripMenuItem As ToolStripMenuItem
 End Class
