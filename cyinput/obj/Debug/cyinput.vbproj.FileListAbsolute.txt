@@ -34,3 +34,15 @@ C:\Users\Toby\Desktop\Project\速形輸入法\cyinputv2\cyinput\obj\Debug\cyinpu
 C:\Users\Toby\Desktop\Project\速形輸入法\cyinputv2\cyinput\obj\Debug\svchost.Form1.resources
 C:\Users\Toby\Desktop\Project\速形輸入法\cyinputv2\cyinput\obj\Debug\svchost.Resources.resources
 C:\Users\Toby\Desktop\Project\速形輸入法\cyinputv2\cyinput\obj\Debug\cyinput.vbproj.GenerateResource.Cache
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\bin\Debug\cyinputv2.exe.config
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinputv2.exe
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinputv2.xml
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinputv2.pdb
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\bin\Debug\cyinputv2.exe
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\bin\Debug\cyinputv2.pdb
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\bin\Debug\cyinputv2.xml
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\bin\Debug\VBHotkeyLib.dll
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.vbprojResolveAssemblyReference.cache
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.Form1.resources
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.Resources.resources
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.vbproj.GenerateResource.Cache

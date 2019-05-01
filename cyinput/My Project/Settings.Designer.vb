@@ -65,6 +65,18 @@ Namespace My
                 Me("outputMode") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property initSound() As Boolean
+            Get
+                Return CType(Me("initSound"),Boolean)
+            End Get
+            Set
+                Me("initSound") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

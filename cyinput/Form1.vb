@@ -461,6 +461,20 @@ Public Class Form1
             unzippingToTemp()
         End If
 
+        'Creating a system border to make it easier to be found when it is used on top of Window's file explorer
+        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Text = ""
+        Me.ControlBox = False
+
+        'Create a ding sound to show the process is started.
+        If (My.Settings.initSound = True) Then
+            My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Beep)
+        Else
+            停用ToolStripMenuItem.Checked = True
+            啟用ToolStripMenuItem.Checked = False
+        End If
+
+
         'Start key binding process
         hkkp0 = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.NumPad0, Me)
         hkkp1 = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.NumPad1, Me)
@@ -579,7 +593,7 @@ Public Class Form1
                     handlePage()
                 End If
             Case 111
-                '/ pressed
+                '/ pressed (Keypad)
                 ToggleInputWindow()
         End Select
         Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Keycode" & keycode)
@@ -783,4 +797,18 @@ Public Class Form1
         drag = False
     End Sub
 
+    'Handle startup sound effect settings
+    Private Sub 停用ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 停用ToolStripMenuItem.Click
+        My.Settings.initSound = False
+        啟用ToolStripMenuItem.Checked = False
+        停用ToolStripMenuItem.Checked = True
+        My.Settings.Save()
+    End Sub
+
+    Private Sub 啟用ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 啟用ToolStripMenuItem.Click
+        My.Settings.initSound = True
+        啟用ToolStripMenuItem.Checked = True
+        停用ToolStripMenuItem.Checked = False
+        My.Settings.Save()
+    End Sub
 End Class
