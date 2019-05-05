@@ -101,6 +101,18 @@ Namespace My
                 Me("startPositionLeft") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property numberOfMonitors() As Integer
+            Get
+                Return CType(Me("numberOfMonitors"),Integer)
+            End Get
+            Set
+                Me("numberOfMonitors") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

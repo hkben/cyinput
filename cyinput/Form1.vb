@@ -497,9 +497,12 @@ Public Class Form1
 
         OnInputEnable()
 
-        If Not My.Settings.startPositionTop = 0 And Not My.Settings.startPositionLeft = 0 Then
-            Top = My.Settings.startPositionTop
-            Left = My.Settings.startPositionLeft
+        'if starting position is set and numberOfMonitors not changed , use position in setting
+        If My.Settings.numberOfMonitors = Screen.AllScreens.Length Then
+            If Not My.Settings.startPositionTop = 0 And Not My.Settings.startPositionLeft = 0 Then
+                Top = My.Settings.startPositionTop
+                Left = My.Settings.startPositionLeft
+            End If
         End If
 
 
@@ -805,6 +808,7 @@ Public Class Form1
         'Save position to settings
         My.Settings.startPositionTop = Top
         My.Settings.startPositionLeft = Left
+        My.Settings.numberOfMonitors = Screen.AllScreens.Length
         My.Settings.Save()
 
     End Sub
