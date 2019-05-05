@@ -827,4 +827,9 @@ Public Class Form1
         停用ToolStripMenuItem.Checked = False
         My.Settings.Save()
     End Sub
+
+    Private Sub ResetWindowPositionItem_Click(sender As Object, e As EventArgs) Handles ResetWindowPositionItem.Click
+        Top = 0
+        Left = 0
+    End Sub
 End Class
