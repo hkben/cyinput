@@ -53,8 +53,13 @@ Partial Class Form1
         Me.起動音效ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.啟用ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.停用ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.ExitAppItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.視窗設定ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.縮放ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MsizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NsizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToggleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ResetWindowPositionItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ExitAppItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -159,6 +164,10 @@ Partial Class Form1
         '
         'Label10
         '
+        Me.Label10.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label10.BackColor = System.Drawing.Color.White
         Me.Label10.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label10.Location = New System.Drawing.Point(0, 94)
         Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
@@ -169,6 +178,10 @@ Partial Class Form1
         '
         'Label11
         '
+        Me.Label11.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label11.BackColor = System.Drawing.Color.White
         Me.Label11.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label11.Location = New System.Drawing.Point(44, 94)
         Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
@@ -179,6 +192,10 @@ Partial Class Form1
         '
         'PictureBox1
         '
+        Me.PictureBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox1.Location = New System.Drawing.Point(0, 1)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(30, 30)
@@ -188,6 +205,10 @@ Partial Class Form1
         '
         'PictureBox2
         '
+        Me.PictureBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox2.Location = New System.Drawing.Point(30, 1)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(30, 30)
@@ -197,6 +218,10 @@ Partial Class Form1
         '
         'PictureBox3
         '
+        Me.PictureBox3.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox3.Location = New System.Drawing.Point(60, 1)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(30, 30)
@@ -206,6 +231,10 @@ Partial Class Form1
         '
         'PictureBox4
         '
+        Me.PictureBox4.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox4.Location = New System.Drawing.Point(0, 31)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(30, 30)
@@ -215,6 +244,10 @@ Partial Class Form1
         '
         'PictureBox5
         '
+        Me.PictureBox5.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox5.Location = New System.Drawing.Point(30, 31)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(30, 30)
@@ -224,6 +257,10 @@ Partial Class Form1
         '
         'PictureBox6
         '
+        Me.PictureBox6.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox6.Location = New System.Drawing.Point(60, 31)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(30, 30)
@@ -233,6 +270,10 @@ Partial Class Form1
         '
         'PictureBox7
         '
+        Me.PictureBox7.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox7.Location = New System.Drawing.Point(0, 61)
         Me.PictureBox7.Name = "PictureBox7"
         Me.PictureBox7.Size = New System.Drawing.Size(30, 30)
@@ -242,6 +283,10 @@ Partial Class Form1
         '
         'PictureBox8
         '
+        Me.PictureBox8.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox8.Location = New System.Drawing.Point(30, 61)
         Me.PictureBox8.Name = "PictureBox8"
         Me.PictureBox8.Size = New System.Drawing.Size(30, 30)
@@ -251,6 +296,10 @@ Partial Class Form1
         '
         'PictureBox9
         '
+        Me.PictureBox9.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+            Or System.Windows.Forms.AnchorStyles.Left) _
+            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.PictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
         Me.PictureBox9.Location = New System.Drawing.Point(60, 61)
         Me.PictureBox9.Name = "PictureBox9"
         Me.PictureBox9.Size = New System.Drawing.Size(30, 30)
@@ -267,40 +316,40 @@ Partial Class Form1
         '
         'TrayMenu
         '
-        Me.TrayMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InputModeMenu, Me.起動音效ToolStripMenuItem, Me.ResetWindowPositionItem, Me.ExitAppItem})
+        Me.TrayMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InputModeMenu, Me.起動音效ToolStripMenuItem, Me.視窗設定ToolStripMenuItem, Me.ExitAppItem})
         Me.TrayMenu.Name = "ContextMenuStrip1"
-        Me.TrayMenu.Size = New System.Drawing.Size(181, 114)
+        Me.TrayMenu.Size = New System.Drawing.Size(137, 92)
         '
         'InputModeMenu
         '
         Me.InputModeMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClipboardModeItem, Me.DirectOutputModeItem, Me.CangjieConversionModeItem})
         Me.InputModeMenu.Name = "InputModeMenu"
-        Me.InputModeMenu.Size = New System.Drawing.Size(180, 22)
+        Me.InputModeMenu.Size = New System.Drawing.Size(136, 22)
         Me.InputModeMenu.Text = "輸入模式"
         '
         'ClipboardModeItem
         '
         Me.ClipboardModeItem.Name = "ClipboardModeItem"
-        Me.ClipboardModeItem.Size = New System.Drawing.Size(180, 22)
+        Me.ClipboardModeItem.Size = New System.Drawing.Size(124, 22)
         Me.ClipboardModeItem.Text = "經剪貼簿"
         '
         'DirectOutputModeItem
         '
         Me.DirectOutputModeItem.Name = "DirectOutputModeItem"
-        Me.DirectOutputModeItem.Size = New System.Drawing.Size(180, 22)
+        Me.DirectOutputModeItem.Size = New System.Drawing.Size(124, 22)
         Me.DirectOutputModeItem.Text = "直接輸出"
         '
         'CangjieConversionModeItem
         '
         Me.CangjieConversionModeItem.Name = "CangjieConversionModeItem"
-        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(180, 22)
+        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(124, 22)
         Me.CangjieConversionModeItem.Text = "倉頡轉碼"
         '
         '起動音效ToolStripMenuItem
         '
         Me.起動音效ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.啟用ToolStripMenuItem, Me.停用ToolStripMenuItem})
         Me.起動音效ToolStripMenuItem.Name = "起動音效ToolStripMenuItem"
-        Me.起動音效ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.起動音效ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
         Me.起動音效ToolStripMenuItem.Text = "起動音效"
         '
         '啟用ToolStripMenuItem
@@ -308,26 +357,60 @@ Partial Class Form1
         Me.啟用ToolStripMenuItem.Checked = True
         Me.啟用ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.啟用ToolStripMenuItem.Name = "啟用ToolStripMenuItem"
-        Me.啟用ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.啟用ToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
         Me.啟用ToolStripMenuItem.Text = "啟用"
         '
         '停用ToolStripMenuItem
         '
         Me.停用ToolStripMenuItem.Name = "停用ToolStripMenuItem"
-        Me.停用ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.停用ToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
         Me.停用ToolStripMenuItem.Text = "停用"
         '
-        'ExitAppItem
+        '視窗設定ToolStripMenuItem
         '
-        Me.ExitAppItem.Name = "ExitAppItem"
-        Me.ExitAppItem.Size = New System.Drawing.Size(180, 22)
-        Me.ExitAppItem.Text = "關閉輸入法"
+        Me.視窗設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.縮放ToolStripMenuItem, Me.ToggleToolStripMenuItem, Me.ResetWindowPositionItem})
+        Me.視窗設定ToolStripMenuItem.Name = "視窗設定ToolStripMenuItem"
+        Me.視窗設定ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
+        Me.視窗設定ToolStripMenuItem.Text = "視窗設定"
+        '
+        '縮放ToolStripMenuItem
+        '
+        Me.縮放ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MsizeToolStripMenuItem, Me.NsizeToolStripMenuItem})
+        Me.縮放ToolStripMenuItem.Name = "縮放ToolStripMenuItem"
+        Me.縮放ToolStripMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.縮放ToolStripMenuItem.Text = "縮放"
+        '
+        'MsizeToolStripMenuItem
+        '
+        Me.MsizeToolStripMenuItem.Checked = True
+        Me.MsizeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MsizeToolStripMenuItem.Name = "MsizeToolStripMenuItem"
+        Me.MsizeToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.MsizeToolStripMenuItem.Text = "迷你"
+        '
+        'NsizeToolStripMenuItem
+        '
+        Me.NsizeToolStripMenuItem.Name = "NsizeToolStripMenuItem"
+        Me.NsizeToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.NsizeToolStripMenuItem.Text = "一般"
+        '
+        'ToggleToolStripMenuItem
+        '
+        Me.ToggleToolStripMenuItem.Name = "ToggleToolStripMenuItem"
+        Me.ToggleToolStripMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.ToggleToolStripMenuItem.Text = "顯示 / 隱藏"
         '
         'ResetWindowPositionItem
         '
         Me.ResetWindowPositionItem.Name = "ResetWindowPositionItem"
-        Me.ResetWindowPositionItem.Size = New System.Drawing.Size(180, 22)
+        Me.ResetWindowPositionItem.Size = New System.Drawing.Size(148, 22)
         Me.ResetWindowPositionItem.Text = "重置視窗位置"
+        '
+        'ExitAppItem
+        '
+        Me.ExitAppItem.Name = "ExitAppItem"
+        Me.ExitAppItem.Size = New System.Drawing.Size(136, 22)
+        Me.ExitAppItem.Text = "關閉輸入法"
         '
         'Form1
         '
@@ -411,5 +494,10 @@ Partial Class Form1
     Friend WithEvents 起動音效ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 啟用ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 停用ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents 視窗設定ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ResetWindowPositionItem As ToolStripMenuItem
+    Friend WithEvents 縮放ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents NsizeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MsizeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToggleToolStripMenuItem As ToolStripMenuItem
 End Class
