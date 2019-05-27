@@ -65,6 +65,66 @@ Namespace My
                 Me("outputMode") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property initSound() As Boolean
+            Get
+                Return CType(Me("initSound"),Boolean)
+            End Get
+            Set
+                Me("initSound") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property startPositionTop() As Integer
+            Get
+                Return CType(Me("startPositionTop"),Integer)
+            End Get
+            Set
+                Me("startPositionTop") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property startPositionLeft() As Integer
+            Get
+                Return CType(Me("startPositionLeft"),Integer)
+            End Get
+            Set
+                Me("startPositionLeft") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("1")>  _
+        Public Property numberOfMonitors() As Integer
+            Get
+                Return CType(Me("numberOfMonitors"),Integer)
+            End Get
+            Set
+                Me("numberOfMonitors") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0")>  _
+        Public Property startSize() As Double
+            Get
+                Return CType(Me("startSize"),Double)
+            End Get
+            Set
+                Me("startSize") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

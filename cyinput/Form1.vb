@@ -37,16 +37,24 @@ Public Class Form1
 
     Dim cyinputEnable As Boolean
 
+    'Scaling factor controls
+    Dim defaultPictureboxSize As Integer = 30
+    Dim currentSize = 0
+    'currentSize = 0 means it is in mini state
+    'currentSize = 1 means it is in normal state (larger than default)
+
     Private Function appendToCharSet(number As String)
         charset = charset & number.ToString
         Return charset.ToString
     End Function
 
     Private Sub LoadTable()
-        relatedCharTable = My.Resources.related_char.ToString.Split(vbNewLine)
-        mappedCharTable = My.Resources.mapped_char.Split(vbNewLine)
-        cj5_mapping = My.Resources.cj5_map.Split(vbNewLine)
-        b5xp_mapping = My.Resources.b5xp_map.Split(vbNewLine)
+        'Solve CRLF/LF Problem 
+        Dim arg() As String = {vbCrLf, vbLf}
+        relatedCharTable = My.Resources.related_char.ToString.Split(arg, StringSplitOptions.None)
+        mappedCharTable = My.Resources.mapped_char.Split(arg, StringSplitOptions.None)
+        cj5_mapping = My.Resources.cj5_map.Split(arg, StringSplitOptions.None)
+        b5xp_mapping = My.Resources.b5xp_map.Split(arg, StringSplitOptions.None)
         textArray.Clear()
         textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
         drawText()
@@ -288,22 +296,8 @@ Public Class Form1
         showPicturebox()
         textArray.Clear()
         Dim returnassiate = loadAssoicatedWords()
-        Dim tmparray(10) As String
-        Dim counter As Integer = 1
-        For Each c As Char In returnassiate
-            tmparray(counter) = c.ToString
-            counter += 1
-        Next
-        'Return array reordering
-        textArray.Add(tmparray(7))
-        textArray.Add(tmparray(8))
-        textArray.Add(tmparray(9))
-        textArray.Add(tmparray(4))
-        textArray.Add(tmparray(5))
-        textArray.Add(tmparray(6))
-        textArray.Add(tmparray(1))
-        textArray.Add(tmparray(2))
-        textArray.Add(tmparray(3))
+        Dim tmparray() As Char = returnassiate.ToCharArray
+        textArray.AddRange(tmparray)
         showingTextArrayIndex = 0
         drawText()
         Label10.Text = "選字"
@@ -332,13 +326,19 @@ Public Class Form1
     Private Function getWordList()
         For Each i As String In mappedCharTable
             If i.Contains(charset.ToString) Then
-                Dim returnmsg As String
-                If charset = "0" Then
-                    returnmsg = i.Replace(i.Substring(0, 1), "")
-                Else
-                    returnmsg = i.Replace(i.Substring(0, charset.Length + 1), "")
+                Dim returnmsg = i.Split(",")
+
+                If returnmsg(1).Length = 0 Then
+                    Return "*********"
                 End If
-                Return returnmsg
+
+                'Fill Empty Spot with *
+                Dim emptySpot = returnmsg(1).Length Mod 9
+                For index As Integer = 1 To emptySpot
+                    returnmsg(1) += "*"
+                Next
+
+                Return returnmsg(1)
             End If
         Next
         Return "*********"
@@ -367,15 +367,16 @@ Public Class Form1
             sp = 0
             showingTextArrayIndex = 0
         End If
-        Label1.Text = textArray(sp)
-        Label2.Text = textArray(sp + 1)
-        Label3.Text = textArray(sp + 2)
+
+        Label7.Text = textArray(sp)
+        Label8.Text = textArray(sp + 1)
+        Label9.Text = textArray(sp + 2)
         Label4.Text = textArray(sp + 3)
         Label5.Text = textArray(sp + 4)
         Label6.Text = textArray(sp + 5)
-        Label7.Text = textArray(sp + 6)
-        Label8.Text = textArray(sp + 7)
-        Label9.Text = textArray(sp + 8)
+        Label1.Text = textArray(sp + 6)
+        Label2.Text = textArray(sp + 7)
+        Label3.Text = textArray(sp + 8)
     End Sub
 
     Private Sub enterPunctMode()
@@ -393,8 +394,8 @@ Public Class Form1
         Label11.Text = "取消"
         Console.WriteLine("Punct Mode Enabled")
     End Sub
-    Private Sub dothandler()
-        If charset.Length > 0 Then
+    Private Sub dothandler(Optional reset As Boolean = False)
+        If charset.Length > 0 Or reset Then
             If lastusedword = "" And assoicateMode = False And punctMode = False Then
                 'Reset
                 charset = ""
@@ -461,6 +462,20 @@ Public Class Form1
             unzippingToTemp()
         End If
 
+        'Creating a system border to make it easier to be found when it is used on top of Window's file explorer
+        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Text = ""
+        Me.ControlBox = False
+
+        'Create a ding sound to show the process is started.
+        If (My.Settings.initSound = True) Then
+            My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Beep)
+        Else
+            停用ToolStripMenuItem.Checked = True
+            啟用ToolStripMenuItem.Checked = False
+        End If
+
+
         'Start key binding process
         hkkp0 = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.NumPad0, Me)
         hkkp1 = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.NumPad1, Me)
@@ -483,9 +498,28 @@ Public Class Form1
 
         OnInputEnable()
 
+        'if starting position is set and numberOfMonitors not changed , use position in setting
+        If My.Settings.numberOfMonitors = Screen.AllScreens.Length Then
+            If Not My.Settings.startPositionTop = 0 And Not My.Settings.startPositionLeft = 0 Then
+                Top = My.Settings.startPositionTop
+                Left = My.Settings.startPositionLeft
+            End If
+        End If
+
+        'Check if the size is set to Normal Mode or Default (mini) mode
+        If My.Settings.startSize = 1 Then
+            resizeAllElements(1.7, 1, New Size(160, 204), 18, 21)
+            currentSize = 1
+            MsizeToolStripMenuItem.Checked = False
+            NsizeToolStripMenuItem.Checked = True
+        End If
+
     End Sub
 
     Private Sub OnInputEnable()
+        'Sending "Cancel" for reset (Reset charset that last input left)
+        dothandler(True)
+
         hkkp0.Register()
         hkkp1.Register()
         hkkp2.Register()
@@ -576,7 +610,7 @@ Public Class Form1
                     handlePage()
                 End If
             Case 111
-                '/ pressed
+                '/ pressed (Keypad)
                 ToggleInputWindow()
         End Select
         Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Keycode" & keycode)
@@ -778,6 +812,127 @@ Public Class Form1
 
     Private Sub DragWindow_MouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseUp, PictureBox9.MouseUp, PictureBox8.MouseUp, PictureBox7.MouseUp, PictureBox6.MouseUp, PictureBox5.MouseUp, PictureBox4.MouseUp, PictureBox3.MouseUp, PictureBox2.MouseUp, PictureBox1.MouseUp, Label11.MouseUp, Label10.MouseUp
         drag = False
+
+        'Save position to settings
+        My.Settings.startPositionTop = Top
+        My.Settings.startPositionLeft = Left
+        My.Settings.numberOfMonitors = Screen.AllScreens.Length
+        My.Settings.Save()
+
     End Sub
 
+    'Handle startup sound effect settings
+    Private Sub 停用ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 停用ToolStripMenuItem.Click
+        My.Settings.initSound = False
+        啟用ToolStripMenuItem.Checked = False
+        停用ToolStripMenuItem.Checked = True
+        My.Settings.Save()
+    End Sub
+
+    Private Sub 啟用ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 啟用ToolStripMenuItem.Click
+        My.Settings.initSound = True
+        啟用ToolStripMenuItem.Checked = True
+        停用ToolStripMenuItem.Checked = False
+        My.Settings.Save()
+    End Sub
+
+    Private Sub ResetWindowPositionItem_Click(sender As Object, e As EventArgs) Handles ResetWindowPositionItem.Click
+        Top = 0
+        Left = 0
+    End Sub
+
+    Private Sub ToggleToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ToggleToolStripMenuItem.Click
+        'Handle window toggle from tool strip menu 
+        ToggleInputWindow()
+    End Sub
+
+    Private Sub NormalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NsizeToolStripMenuItem.Click
+        NsizeToolStripMenuItem.Checked = True
+        MsizeToolStripMenuItem.Checked = False
+
+        If (currentSize <> 1) Then
+            'Scale this up to the size where a normal input method should be
+            ' Original size x 1.7 times
+            resizeAllElements(1.7, 1, New Size(160, 204), 18, 21)
+            currentSize = 1
+            My.Settings.startSize = 1
+            My.Settings.Save()
+        End If
+
+    End Sub
+
+    Private Sub resizeAllElements(scaleFactor As Double, yOffset As Integer, WindowSize As Size, fontSize As Integer, labelSize As Integer)
+
+        Dim pictureboxSize = defaultPictureboxSize * scaleFactor
+        Me.Size = WindowSize
+        Me.MaximumSize = WindowSize
+        Me.MinimumSize = WindowSize
+        UpdateControlSizes(PictureBox1, 0 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox2, 30 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox3, 60 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox4, 0 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox5, 30 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox6, 60 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox7, 0 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox8, 30 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox9, 60 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+
+        UpdateControlSizes(Label1, 0 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label2, 30 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label3, 60 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label4, 0 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label5, 30 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label6, 60 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label7, 0 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label8, 30 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label9, 60 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+
+        Label1.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
+        Label2.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
+        Label3.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
+        Label4.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
+        Label5.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
+        Label6.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
+        Label7.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
+        Label8.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
+        Label9.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
+
+        Label1.TextAlign = ContentAlignment.MiddleCenter
+        Label2.TextAlign = ContentAlignment.MiddleCenter
+        Label3.TextAlign = ContentAlignment.MiddleCenter
+        Label4.TextAlign = ContentAlignment.MiddleCenter
+        Label5.TextAlign = ContentAlignment.MiddleCenter
+        Label6.TextAlign = ContentAlignment.MiddleCenter
+        Label7.TextAlign = ContentAlignment.MiddleCenter
+        Label8.TextAlign = ContentAlignment.MiddleCenter
+        Label9.TextAlign = ContentAlignment.MiddleCenter
+
+        UpdateControlSizes(Label10, 0, 94 * scaleFactor, 50 * scaleFactor, 29 * scaleFactor)
+        UpdateControlSizes(Label11, 44 * scaleFactor, 94 * scaleFactor, 50 * scaleFactor, 29 * scaleFactor)
+        Label10.Font = New Font("微軟正黑體", labelSize)
+        Label11.Font = New Font("微軟正黑體", labelSize)
+    End Sub
+
+    Private Sub UpdateControlSizes(element As Control, posx As Integer, posy As Integer, width As Integer, Optional height As Integer = -1)
+        If (height = -1) Then
+            height = width 'This is a square
+        End If
+        element.Width = width
+        element.Height = width
+        element.Left = posx
+        element.Top = posy
+    End Sub
+
+    Private Sub MiniToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MsizeToolStripMenuItem.Click
+        NsizeToolStripMenuItem.Checked = False
+        MsizeToolStripMenuItem.Checked = True
+
+        If (currentSize <> 0) Then
+            resizeAllElements(1, 1, New Size(92, 120), 14.25, 14.25)
+            currentSize = 0
+            My.Settings.startSize = 0
+            My.Settings.Save()
+        End If
+
+    End Sub
 End Class

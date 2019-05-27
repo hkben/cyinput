@@ -50,6 +50,15 @@ Partial Class Form1
         Me.ClipboardModeItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.DirectOutputModeItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.CangjieConversionModeItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.起動音效ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.啟用ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.停用ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.視窗設定ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.縮放ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MsizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NsizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ToggleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.ResetWindowPositionItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitAppItem = New System.Windows.Forms.ToolStripMenuItem()
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -277,44 +286,105 @@ Partial Class Form1
         '
         Me.TrayIcon.ContextMenuStrip = Me.TrayMenu
         Me.TrayIcon.Icon = CType(resources.GetObject("TrayIcon.Icon"), System.Drawing.Icon)
-        Me.TrayIcon.Text = "TrayIcon"
+        Me.TrayIcon.Text = "速型輸入法"
         Me.TrayIcon.Visible = True
         '
         'TrayMenu
         '
-        Me.TrayMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InputModeMenu, Me.ExitAppItem})
+        Me.TrayMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InputModeMenu, Me.起動音效ToolStripMenuItem, Me.視窗設定ToolStripMenuItem, Me.ExitAppItem})
         Me.TrayMenu.Name = "ContextMenuStrip1"
-        Me.TrayMenu.Size = New System.Drawing.Size(140, 48)
+        Me.TrayMenu.Size = New System.Drawing.Size(137, 92)
         '
         'InputModeMenu
         '
         Me.InputModeMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClipboardModeItem, Me.DirectOutputModeItem, Me.CangjieConversionModeItem})
         Me.InputModeMenu.Name = "InputModeMenu"
-        Me.InputModeMenu.Size = New System.Drawing.Size(139, 22)
+        Me.InputModeMenu.Size = New System.Drawing.Size(136, 22)
         Me.InputModeMenu.Text = "輸入模式"
         '
         'ClipboardModeItem
         '
         Me.ClipboardModeItem.Name = "ClipboardModeItem"
-        Me.ClipboardModeItem.Size = New System.Drawing.Size(126, 22)
+        Me.ClipboardModeItem.Size = New System.Drawing.Size(124, 22)
         Me.ClipboardModeItem.Text = "經剪貼簿"
         '
         'DirectOutputModeItem
         '
         Me.DirectOutputModeItem.Name = "DirectOutputModeItem"
-        Me.DirectOutputModeItem.Size = New System.Drawing.Size(126, 22)
+        Me.DirectOutputModeItem.Size = New System.Drawing.Size(124, 22)
         Me.DirectOutputModeItem.Text = "直接輸出"
         '
         'CangjieConversionModeItem
         '
         Me.CangjieConversionModeItem.Name = "CangjieConversionModeItem"
-        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(126, 22)
+        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(124, 22)
         Me.CangjieConversionModeItem.Text = "倉頡轉碼"
+        '
+        '起動音效ToolStripMenuItem
+        '
+        Me.起動音效ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.啟用ToolStripMenuItem, Me.停用ToolStripMenuItem})
+        Me.起動音效ToolStripMenuItem.Name = "起動音效ToolStripMenuItem"
+        Me.起動音效ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
+        Me.起動音效ToolStripMenuItem.Text = "起動音效"
+        '
+        '啟用ToolStripMenuItem
+        '
+        Me.啟用ToolStripMenuItem.Checked = True
+        Me.啟用ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.啟用ToolStripMenuItem.Name = "啟用ToolStripMenuItem"
+        Me.啟用ToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.啟用ToolStripMenuItem.Text = "啟用"
+        '
+        '停用ToolStripMenuItem
+        '
+        Me.停用ToolStripMenuItem.Name = "停用ToolStripMenuItem"
+        Me.停用ToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.停用ToolStripMenuItem.Text = "停用"
+        '
+        '視窗設定ToolStripMenuItem
+        '
+        Me.視窗設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.縮放ToolStripMenuItem, Me.ToggleToolStripMenuItem, Me.ResetWindowPositionItem})
+        Me.視窗設定ToolStripMenuItem.Name = "視窗設定ToolStripMenuItem"
+        Me.視窗設定ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
+        Me.視窗設定ToolStripMenuItem.Text = "視窗設定"
+        '
+        '縮放ToolStripMenuItem
+        '
+        Me.縮放ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MsizeToolStripMenuItem, Me.NsizeToolStripMenuItem})
+        Me.縮放ToolStripMenuItem.Name = "縮放ToolStripMenuItem"
+        Me.縮放ToolStripMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.縮放ToolStripMenuItem.Text = "縮放"
+        '
+        'MsizeToolStripMenuItem
+        '
+        Me.MsizeToolStripMenuItem.Checked = True
+        Me.MsizeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MsizeToolStripMenuItem.Name = "MsizeToolStripMenuItem"
+        Me.MsizeToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.MsizeToolStripMenuItem.Text = "迷你"
+        '
+        'NsizeToolStripMenuItem
+        '
+        Me.NsizeToolStripMenuItem.Name = "NsizeToolStripMenuItem"
+        Me.NsizeToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.NsizeToolStripMenuItem.Text = "一般"
+        '
+        'ToggleToolStripMenuItem
+        '
+        Me.ToggleToolStripMenuItem.Name = "ToggleToolStripMenuItem"
+        Me.ToggleToolStripMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.ToggleToolStripMenuItem.Text = "顯示 / 隱藏"
+        '
+        'ResetWindowPositionItem
+        '
+        Me.ResetWindowPositionItem.Name = "ResetWindowPositionItem"
+        Me.ResetWindowPositionItem.Size = New System.Drawing.Size(148, 22)
+        Me.ResetWindowPositionItem.Text = "重置視窗位置"
         '
         'ExitAppItem
         '
         Me.ExitAppItem.Name = "ExitAppItem"
-        Me.ExitAppItem.Size = New System.Drawing.Size(139, 22)
+        Me.ExitAppItem.Size = New System.Drawing.Size(136, 22)
         Me.ExitAppItem.Text = "關閉輸入法"
         '
         'Form1
@@ -397,4 +467,13 @@ Partial Class Form1
     Friend WithEvents DirectOutputModeItem As ToolStripMenuItem
     Friend WithEvents CangjieConversionModeItem As ToolStripMenuItem
     Friend WithEvents ExitAppItem As ToolStripMenuItem
+    Friend WithEvents 起動音效ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents 啟用ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents 停用ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents 視窗設定ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ResetWindowPositionItem As ToolStripMenuItem
+    Friend WithEvents 縮放ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents NsizeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MsizeToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents ToggleToolStripMenuItem As ToolStripMenuItem
 End Class
