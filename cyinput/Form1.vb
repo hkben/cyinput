@@ -462,11 +462,6 @@ Public Class Form1
             unzippingToTemp()
         End If
 
-        'Creating a system border to make it easier to be found when it is used on top of Window's file explorer
-        Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
-        Me.Text = ""
-        Me.ControlBox = False
-
         'Create a ding sound to show the process is started.
         If (My.Settings.initSound = True) Then
             My.Computer.Audio.PlaySystemSound(Media.SystemSounds.Beep)
@@ -504,14 +499,6 @@ Public Class Form1
                 Top = My.Settings.startPositionTop
                 Left = My.Settings.startPositionLeft
             End If
-        End If
-
-        'Check if the size is set to Normal Mode or Default (mini) mode
-        If My.Settings.startSize = 1 Then
-            resizeAllElements(1.7, 1, New Size(160, 204), 18, 21)
-            currentSize = 1
-            MsizeToolStripMenuItem.Checked = False
-            NsizeToolStripMenuItem.Checked = True
         End If
 
     End Sub
@@ -846,93 +833,4 @@ Public Class Form1
         ToggleInputWindow()
     End Sub
 
-    Private Sub NormalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NsizeToolStripMenuItem.Click
-        NsizeToolStripMenuItem.Checked = True
-        MsizeToolStripMenuItem.Checked = False
-
-        If (currentSize <> 1) Then
-            'Scale this up to the size where a normal input method should be
-            ' Original size x 1.7 times
-            resizeAllElements(1.7, 1, New Size(160, 204), 18, 21)
-            currentSize = 1
-            My.Settings.startSize = 1
-            My.Settings.Save()
-        End If
-
-    End Sub
-
-    Private Sub resizeAllElements(scaleFactor As Double, yOffset As Integer, WindowSize As Size, fontSize As Integer, labelSize As Integer)
-
-        Dim pictureboxSize = defaultPictureboxSize * scaleFactor
-        Me.Size = WindowSize
-        Me.MaximumSize = WindowSize
-        Me.MinimumSize = WindowSize
-        UpdateControlSizes(PictureBox1, 0 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(PictureBox2, 30 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(PictureBox3, 60 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(PictureBox4, 0 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(PictureBox5, 30 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(PictureBox6, 60 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(PictureBox7, 0 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(PictureBox8, 30 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(PictureBox9, 60 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
-
-        UpdateControlSizes(Label1, 0 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(Label2, 30 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(Label3, 60 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(Label4, 0 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(Label5, 30 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(Label6, 60 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(Label7, 0 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(Label8, 30 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
-        UpdateControlSizes(Label9, 60 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
-
-        Label1.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label2.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label3.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label4.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label5.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label6.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label7.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label8.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label9.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-
-        Label1.TextAlign = ContentAlignment.MiddleCenter
-        Label2.TextAlign = ContentAlignment.MiddleCenter
-        Label3.TextAlign = ContentAlignment.MiddleCenter
-        Label4.TextAlign = ContentAlignment.MiddleCenter
-        Label5.TextAlign = ContentAlignment.MiddleCenter
-        Label6.TextAlign = ContentAlignment.MiddleCenter
-        Label7.TextAlign = ContentAlignment.MiddleCenter
-        Label8.TextAlign = ContentAlignment.MiddleCenter
-        Label9.TextAlign = ContentAlignment.MiddleCenter
-
-        UpdateControlSizes(Label10, 0, 94 * scaleFactor, 50 * scaleFactor, 29 * scaleFactor)
-        UpdateControlSizes(Label11, 44 * scaleFactor, 94 * scaleFactor, 50 * scaleFactor, 29 * scaleFactor)
-        Label10.Font = New Font("微軟正黑體", labelSize)
-        Label11.Font = New Font("微軟正黑體", labelSize)
-    End Sub
-
-    Private Sub UpdateControlSizes(element As Control, posx As Integer, posy As Integer, width As Integer, Optional height As Integer = -1)
-        If (height = -1) Then
-            height = width 'This is a square
-        End If
-        element.Width = width
-        element.Height = width
-        element.Left = posx
-        element.Top = posy
-    End Sub
-
-    Private Sub MiniToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MsizeToolStripMenuItem.Click
-        NsizeToolStripMenuItem.Checked = False
-        MsizeToolStripMenuItem.Checked = True
-
-        If (currentSize <> 0) Then
-            resizeAllElements(1, 1, New Size(92, 120), 14.25, 14.25)
-            currentSize = 0
-            My.Settings.startSize = 0
-            My.Settings.Save()
-        End If
-
-    End Sub
 End Class
