@@ -333,13 +333,15 @@ Public Class Form1
                 End If
 
                 'Fill Empty Spot with *
-                Dim emptySpot = returnmsg(1).Length Mod 9
-                For index As Integer = 1 To emptySpot
-                    returnmsg(1) += "*"
-                Next
+                Dim emptySpot = 9 - (returnmsg(1).Length Mod 9)
+                If emptySpot <> 9 Then
+                    For index As Integer = 1 To emptySpot
+                        returnmsg(1) += "*"
+                    Next
+                End If
 
                 Return returnmsg(1)
-            End If
+                End If
         Next
         Return "*********"
     End Function
