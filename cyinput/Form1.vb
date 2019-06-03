@@ -49,10 +49,12 @@ Public Class Form1
     End Function
 
     Private Sub LoadTable()
-        relatedCharTable = My.Resources.related_char.ToString.Split(vbNewLine)
-        mappedCharTable = My.Resources.mapped_char.Split(vbNewLine)
-        cj5_mapping = My.Resources.cj5_map.Split(vbNewLine)
-        b5xp_mapping = My.Resources.b5xp_map.Split(vbNewLine)
+        'Solve CRLF/LF Problem 
+        Dim arg() As String = {vbCrLf, vbLf}
+        relatedCharTable = My.Resources.related_char.ToString.Split(arg, StringSplitOptions.None)
+        mappedCharTable = My.Resources.mapped_char.Split(arg, StringSplitOptions.None)
+        cj5_mapping = My.Resources.cj5_map.Split(arg, StringSplitOptions.None)
+        b5xp_mapping = My.Resources.b5xp_map.Split(arg, StringSplitOptions.None)
         textArray.Clear()
         textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
         drawText()
@@ -294,22 +296,8 @@ Public Class Form1
         showPicturebox()
         textArray.Clear()
         Dim returnassiate = loadAssoicatedWords()
-        Dim tmparray(10) As String
-        Dim counter As Integer = 1
-        For Each c As Char In returnassiate
-            tmparray(counter) = c.ToString
-            counter += 1
-        Next
-        'Return array reordering
-        textArray.Add(tmparray(7))
-        textArray.Add(tmparray(8))
-        textArray.Add(tmparray(9))
-        textArray.Add(tmparray(4))
-        textArray.Add(tmparray(5))
-        textArray.Add(tmparray(6))
-        textArray.Add(tmparray(1))
-        textArray.Add(tmparray(2))
-        textArray.Add(tmparray(3))
+        Dim tmparray() As Char = returnassiate.ToCharArray
+        textArray.AddRange(tmparray)
         showingTextArrayIndex = 0
         drawText()
         Label10.Text = "選字"
@@ -338,14 +326,22 @@ Public Class Form1
     Private Function getWordList()
         For Each i As String In mappedCharTable
             If i.Contains(charset.ToString) Then
-                Dim returnmsg As String
-                If charset = "0" Then
-                    returnmsg = i.Replace(i.Substring(0, 1), "")
-                Else
-                    returnmsg = i.Replace(i.Substring(0, charset.Length + 1), "")
+                Dim returnmsg = i.Split(",")
+
+                If returnmsg(1).Length = 0 Then
+                    Return "*********"
                 End If
-                Return returnmsg
-            End If
+
+                'Fill Empty Spot with *
+                Dim emptySpot = 9 - (returnmsg(1).Length Mod 9)
+                If emptySpot <> 9 Then
+                    For index As Integer = 1 To emptySpot
+                        returnmsg(1) += "*"
+                    Next
+                End If
+
+                Return returnmsg(1)
+                End If
         Next
         Return "*********"
     End Function
@@ -373,15 +369,16 @@ Public Class Form1
             sp = 0
             showingTextArrayIndex = 0
         End If
-        Label1.Text = textArray(sp)
-        Label2.Text = textArray(sp + 1)
-        Label3.Text = textArray(sp + 2)
+
+        Label7.Text = textArray(sp)
+        Label8.Text = textArray(sp + 1)
+        Label9.Text = textArray(sp + 2)
         Label4.Text = textArray(sp + 3)
         Label5.Text = textArray(sp + 4)
         Label6.Text = textArray(sp + 5)
-        Label7.Text = textArray(sp + 6)
-        Label8.Text = textArray(sp + 7)
-        Label9.Text = textArray(sp + 8)
+        Label1.Text = textArray(sp + 6)
+        Label2.Text = textArray(sp + 7)
+        Label3.Text = textArray(sp + 8)
     End Sub
 
     Private Sub enterPunctMode()
