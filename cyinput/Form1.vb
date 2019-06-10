@@ -937,4 +937,9 @@ Public Class Form1
         End If
 
     End Sub
+
+    Private Sub TrayIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
+        'Toggle Input by DoubleClick TrayIcon
+        ToggleInputWindow()
+    End Sub
 End Class
