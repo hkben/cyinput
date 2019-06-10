@@ -308,7 +308,7 @@ Public Class Form1
         Dim target As String = lastusedword
         Dim returnvalue As String = "個能的到資就你這好"
         For Each i As String In relatedCharTable
-            If i.Length > 2 Then
+            If i.Length > 1 Then
                 If i.Substring(0, 1).Contains(target) Then
                     i = i.Substring(1, i.Length - 1)
                     If i.Length < returnvalue.Length Then
@@ -755,6 +755,7 @@ Public Class Form1
 
 
     Private Sub SendOut(text As String)
+        On Error Resume Next
         If text = "*" Then
             'This word do not exists
             Return
