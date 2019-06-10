@@ -461,23 +461,29 @@ Public Class Form1
 
     Private Sub unzippingToTemp()
         Dim temppath As String = IO.Path.GetTempPath.ToString & "cyinput\"
-        My.Computer.FileSystem.CreateDirectory(temppath)
+        If My.Computer.FileSystem.DirectoryExists(IO.Path.GetTempPath.ToString & "cyinput\") = False Then
+            My.Computer.FileSystem.CreateDirectory(temppath)
+        End If
+
         'Unzip small UI symbols
-        Dim b As Byte() = My.Resources.img
-        My.Computer.FileSystem.WriteAllBytes(temppath & "tmp.zip", b, False)
-        ZipFile.ExtractToDirectory(temppath & "tmp.zip", temppath)
+        If My.Computer.FileSystem.DirectoryExists(temppath & "img\") = False Then
+            Dim b As Byte() = My.Resources.img
+            My.Computer.FileSystem.WriteAllBytes(temppath & "tmp.zip", b, False)
+            ZipFile.ExtractToDirectory(temppath & "tmp.zip", temppath)
+        End If
+
         'Unzip large UI interfaces
         Dim l As Byte() = My.Resources.lui
-        My.Computer.FileSystem.WriteAllBytes(temppath & "lui.zip", l, False)
-        ZipFile.ExtractToDirectory(temppath & "lui.zip", temppath)
+        If My.Computer.FileSystem.DirectoryExists(temppath & "lui\") = False Then
+            My.Computer.FileSystem.WriteAllBytes(temppath & "lui.zip", l, False)
+            ZipFile.ExtractToDirectory(temppath & "lui.zip", temppath)
+        End If
+
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         On Error Resume Next
-        If My.Computer.FileSystem.DirectoryExists(IO.Path.GetTempPath.ToString & "cyinput\") = False Then
-            'MsgBox(IO.Path.GetTempPath.ToString & "cyinput\")
-            unzippingToTemp()
-        End If
+        unzippingToTemp()
 
         'Creating a system border to make it easier to be found when it is used on top of Window's file explorer
         Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle

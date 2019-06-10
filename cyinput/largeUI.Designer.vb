@@ -78,18 +78,18 @@ Partial Class largeUI
         '
         Me.Label1.AutoSize = True
         Me.Label1.Cursor = System.Windows.Forms.Cursors.SizeAll
-        Me.Label1.Font = New System.Drawing.Font("Microsoft YaHei UI", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.Label1.ForeColor = System.Drawing.SystemColors.ButtonHighlight
         Me.Label1.Location = New System.Drawing.Point(4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(55, 19)
+        Me.Label1.Size = New System.Drawing.Size(50, 16)
         Me.Label1.TabIndex = 0
         Me.Label1.Text = "cyinput"
         '
         'l1
         '
         Me.l1.BackColor = System.Drawing.Color.White
-        Me.l1.Font = New System.Drawing.Font("MingLiU_HKSCS", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l1.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l1.Location = New System.Drawing.Point(7, 132)
         Me.l1.Name = "l1"
         Me.l1.Size = New System.Drawing.Size(43, 43)
@@ -100,7 +100,7 @@ Partial Class largeUI
         'l2
         '
         Me.l2.BackColor = System.Drawing.Color.White
-        Me.l2.Font = New System.Drawing.Font("MingLiU_HKSCS", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l2.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l2.Location = New System.Drawing.Point(58, 132)
         Me.l2.Name = "l2"
         Me.l2.Size = New System.Drawing.Size(43, 43)
@@ -111,7 +111,7 @@ Partial Class largeUI
         'l3
         '
         Me.l3.BackColor = System.Drawing.Color.White
-        Me.l3.Font = New System.Drawing.Font("MingLiU_HKSCS", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l3.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l3.Location = New System.Drawing.Point(109, 132)
         Me.l3.Name = "l3"
         Me.l3.Size = New System.Drawing.Size(43, 43)
@@ -122,7 +122,7 @@ Partial Class largeUI
         'l6
         '
         Me.l6.BackColor = System.Drawing.Color.White
-        Me.l6.Font = New System.Drawing.Font("MingLiU_HKSCS", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l6.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l6.Location = New System.Drawing.Point(109, 81)
         Me.l6.Name = "l6"
         Me.l6.Size = New System.Drawing.Size(43, 43)
@@ -133,7 +133,7 @@ Partial Class largeUI
         'l5
         '
         Me.l5.BackColor = System.Drawing.Color.White
-        Me.l5.Font = New System.Drawing.Font("MingLiU_HKSCS", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l5.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l5.Location = New System.Drawing.Point(58, 81)
         Me.l5.Name = "l5"
         Me.l5.Size = New System.Drawing.Size(43, 43)
@@ -144,7 +144,7 @@ Partial Class largeUI
         'l4
         '
         Me.l4.BackColor = System.Drawing.Color.White
-        Me.l4.Font = New System.Drawing.Font("MingLiU_HKSCS", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l4.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l4.Location = New System.Drawing.Point(7, 81)
         Me.l4.Name = "l4"
         Me.l4.Size = New System.Drawing.Size(43, 43)
@@ -155,7 +155,7 @@ Partial Class largeUI
         'l9
         '
         Me.l9.BackColor = System.Drawing.Color.White
-        Me.l9.Font = New System.Drawing.Font("MingLiU_HKSCS", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l9.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l9.Location = New System.Drawing.Point(109, 30)
         Me.l9.Name = "l9"
         Me.l9.Size = New System.Drawing.Size(43, 43)
@@ -166,7 +166,7 @@ Partial Class largeUI
         'l8
         '
         Me.l8.BackColor = System.Drawing.Color.White
-        Me.l8.Font = New System.Drawing.Font("MingLiU_HKSCS", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l8.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l8.Location = New System.Drawing.Point(58, 30)
         Me.l8.Name = "l8"
         Me.l8.Size = New System.Drawing.Size(43, 43)
@@ -177,7 +177,7 @@ Partial Class largeUI
         'l7
         '
         Me.l7.BackColor = System.Drawing.Color.White
-        Me.l7.Font = New System.Drawing.Font("MingLiU_HKSCS", 21.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.l7.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l7.Location = New System.Drawing.Point(7, 30)
         Me.l7.Name = "l7"
         Me.l7.Size = New System.Drawing.Size(43, 43)
@@ -203,7 +203,7 @@ Partial Class largeUI
         Me.Controls.Add(Me.Panel1)
         Me.Controls.Add(Me.PictureBox2)
         Me.Controls.Add(Me.PictureBox1)
-        Me.Font = New System.Drawing.Font("MingLiU_HKSCS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Font = New System.Drawing.Font("細明體_HKSCS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.MaximizeBox = False
         Me.MinimizeBox = False
