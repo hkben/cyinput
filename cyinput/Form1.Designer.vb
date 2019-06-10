@@ -56,10 +56,11 @@ Partial Class Form1
         Me.視窗設定ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.縮放ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.MsizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
-        Me.NsizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NormalSizedToggle = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToggleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ResetWindowPositionItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitAppItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.onLoadHide = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -74,129 +75,132 @@ Partial Class Form1
         '
         'Label1
         '
-        Me.Label1.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label1.Location = New System.Drawing.Point(0, 0)
+        Me.Label1.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label1.Location = New System.Drawing.Point(3, 1)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
-        Me.Label1.Size = New System.Drawing.Size(29, 29)
+        Me.Label1.Size = New System.Drawing.Size(30, 30)
         Me.Label1.TabIndex = 1
         Me.Label1.Text = "個"
+        Me.Label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label2
         '
-        Me.Label2.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label2.Location = New System.Drawing.Point(30, 0)
+        Me.Label2.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label2.Location = New System.Drawing.Point(36, 1)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
-        Me.Label2.Size = New System.Drawing.Size(29, 29)
+        Me.Label2.Size = New System.Drawing.Size(30, 30)
         Me.Label2.TabIndex = 2
         Me.Label2.Text = "能"
+        Me.Label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label3
         '
-        Me.Label3.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label3.Location = New System.Drawing.Point(60, 0)
+        Me.Label3.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label3.Location = New System.Drawing.Point(69, 1)
         Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
-        Me.Label3.Size = New System.Drawing.Size(29, 29)
+        Me.Label3.Size = New System.Drawing.Size(30, 30)
         Me.Label3.TabIndex = 3
         Me.Label3.Text = "的"
+        Me.Label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label4
         '
-        Me.Label4.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label4.Location = New System.Drawing.Point(0, 30)
+        Me.Label4.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label4.Location = New System.Drawing.Point(3, 34)
         Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
-        Me.Label4.Size = New System.Drawing.Size(29, 29)
+        Me.Label4.Size = New System.Drawing.Size(30, 30)
         Me.Label4.TabIndex = 4
         Me.Label4.Text = "到"
+        Me.Label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label5
         '
-        Me.Label5.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label5.Location = New System.Drawing.Point(30, 30)
+        Me.Label5.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label5.Location = New System.Drawing.Point(36, 34)
         Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label5.Name = "Label5"
-        Me.Label5.Size = New System.Drawing.Size(29, 29)
+        Me.Label5.Size = New System.Drawing.Size(30, 30)
         Me.Label5.TabIndex = 5
         Me.Label5.Text = "資"
+        Me.Label5.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label6
         '
-        Me.Label6.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label6.Location = New System.Drawing.Point(60, 30)
+        Me.Label6.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label6.Location = New System.Drawing.Point(69, 34)
         Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
-        Me.Label6.Size = New System.Drawing.Size(29, 29)
+        Me.Label6.Size = New System.Drawing.Size(30, 30)
         Me.Label6.TabIndex = 6
         Me.Label6.Text = "就"
+        Me.Label6.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label7
         '
-        Me.Label7.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label7.Location = New System.Drawing.Point(0, 60)
+        Me.Label7.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label7.Location = New System.Drawing.Point(3, 67)
         Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
-        Me.Label7.Size = New System.Drawing.Size(29, 29)
+        Me.Label7.Size = New System.Drawing.Size(30, 30)
         Me.Label7.TabIndex = 7
         Me.Label7.Text = "你"
+        Me.Label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label8
         '
-        Me.Label8.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label8.Location = New System.Drawing.Point(30, 60)
+        Me.Label8.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label8.Location = New System.Drawing.Point(36, 67)
         Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label8.Name = "Label8"
-        Me.Label8.Size = New System.Drawing.Size(29, 29)
+        Me.Label8.Size = New System.Drawing.Size(30, 30)
         Me.Label8.TabIndex = 8
         Me.Label8.Text = "這"
+        Me.Label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label9
         '
-        Me.Label9.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label9.Location = New System.Drawing.Point(60, 60)
+        Me.Label9.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label9.Location = New System.Drawing.Point(69, 67)
         Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label9.Name = "Label9"
-        Me.Label9.Size = New System.Drawing.Size(29, 29)
+        Me.Label9.Size = New System.Drawing.Size(30, 30)
         Me.Label9.TabIndex = 9
         Me.Label9.Text = "好"
+        Me.Label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label10
         '
-        Me.Label10.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label10.BackColor = System.Drawing.Color.White
-        Me.Label10.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label10.Location = New System.Drawing.Point(0, 94)
+        Me.Label10.Font = New System.Drawing.Font("MingLiU_HKSCS", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label10.Location = New System.Drawing.Point(-1, 101)
         Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label10.Name = "Label10"
-        Me.Label10.Size = New System.Drawing.Size(50, 29)
+        Me.Label10.Size = New System.Drawing.Size(50, 28)
         Me.Label10.TabIndex = 10
         Me.Label10.Text = "標點"
+        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label11
         '
-        Me.Label11.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label11.BackColor = System.Drawing.Color.White
-        Me.Label11.Font = New System.Drawing.Font("微軟正黑體", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
-        Me.Label11.Location = New System.Drawing.Point(44, 94)
+        Me.Label11.Font = New System.Drawing.Font("MingLiU_HKSCS", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label11.Location = New System.Drawing.Point(49, 101)
         Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label11.Name = "Label11"
-        Me.Label11.Size = New System.Drawing.Size(50, 29)
+        Me.Label11.Size = New System.Drawing.Size(54, 28)
         Me.Label11.TabIndex = 11
         Me.Label11.Text = "選字"
+        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'PictureBox1
         '
-        Me.PictureBox1.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox1.Location = New System.Drawing.Point(0, 1)
+        Me.PictureBox1.Location = New System.Drawing.Point(3, 2)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.PictureBox1.Name = "PictureBox1"
         Me.PictureBox1.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox1.TabIndex = 12
@@ -205,11 +209,9 @@ Partial Class Form1
         '
         'PictureBox2
         '
-        Me.PictureBox2.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox2.Location = New System.Drawing.Point(30, 1)
+        Me.PictureBox2.Location = New System.Drawing.Point(36, 2)
+        Me.PictureBox2.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.PictureBox2.Name = "PictureBox2"
         Me.PictureBox2.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox2.TabIndex = 13
@@ -218,11 +220,9 @@ Partial Class Form1
         '
         'PictureBox3
         '
-        Me.PictureBox3.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox3.Location = New System.Drawing.Point(60, 1)
+        Me.PictureBox3.Location = New System.Drawing.Point(69, 2)
+        Me.PictureBox3.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.PictureBox3.Name = "PictureBox3"
         Me.PictureBox3.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox3.TabIndex = 14
@@ -231,11 +231,9 @@ Partial Class Form1
         '
         'PictureBox4
         '
-        Me.PictureBox4.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox4.Location = New System.Drawing.Point(0, 31)
+        Me.PictureBox4.Location = New System.Drawing.Point(3, 36)
+        Me.PictureBox4.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.PictureBox4.Name = "PictureBox4"
         Me.PictureBox4.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox4.TabIndex = 15
@@ -244,11 +242,9 @@ Partial Class Form1
         '
         'PictureBox5
         '
-        Me.PictureBox5.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox5.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox5.Location = New System.Drawing.Point(30, 31)
+        Me.PictureBox5.Location = New System.Drawing.Point(36, 36)
+        Me.PictureBox5.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.PictureBox5.Name = "PictureBox5"
         Me.PictureBox5.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox5.TabIndex = 16
@@ -257,11 +253,9 @@ Partial Class Form1
         '
         'PictureBox6
         '
-        Me.PictureBox6.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox6.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox6.Location = New System.Drawing.Point(60, 31)
+        Me.PictureBox6.Location = New System.Drawing.Point(69, 36)
+        Me.PictureBox6.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.PictureBox6.Name = "PictureBox6"
         Me.PictureBox6.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox6.TabIndex = 17
@@ -270,11 +264,9 @@ Partial Class Form1
         '
         'PictureBox7
         '
-        Me.PictureBox7.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox7.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox7.Location = New System.Drawing.Point(0, 61)
+        Me.PictureBox7.Location = New System.Drawing.Point(3, 69)
+        Me.PictureBox7.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.PictureBox7.Name = "PictureBox7"
         Me.PictureBox7.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox7.TabIndex = 18
@@ -283,11 +275,9 @@ Partial Class Form1
         '
         'PictureBox8
         '
-        Me.PictureBox8.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox8.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox8.Location = New System.Drawing.Point(30, 61)
+        Me.PictureBox8.Location = New System.Drawing.Point(36, 69)
+        Me.PictureBox8.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.PictureBox8.Name = "PictureBox8"
         Me.PictureBox8.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox8.TabIndex = 19
@@ -296,11 +286,9 @@ Partial Class Form1
         '
         'PictureBox9
         '
-        Me.PictureBox9.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-            Or System.Windows.Forms.AnchorStyles.Left) _
-            Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.PictureBox9.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.PictureBox9.Location = New System.Drawing.Point(60, 61)
+        Me.PictureBox9.Location = New System.Drawing.Point(69, 69)
+        Me.PictureBox9.Margin = New System.Windows.Forms.Padding(3, 2, 3, 2)
         Me.PictureBox9.Name = "PictureBox9"
         Me.PictureBox9.Size = New System.Drawing.Size(30, 30)
         Me.PictureBox9.TabIndex = 20
@@ -318,38 +306,38 @@ Partial Class Form1
         '
         Me.TrayMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InputModeMenu, Me.起動音效ToolStripMenuItem, Me.視窗設定ToolStripMenuItem, Me.ExitAppItem})
         Me.TrayMenu.Name = "ContextMenuStrip1"
-        Me.TrayMenu.Size = New System.Drawing.Size(137, 92)
+        Me.TrayMenu.Size = New System.Drawing.Size(135, 92)
         '
         'InputModeMenu
         '
         Me.InputModeMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClipboardModeItem, Me.DirectOutputModeItem, Me.CangjieConversionModeItem})
         Me.InputModeMenu.Name = "InputModeMenu"
-        Me.InputModeMenu.Size = New System.Drawing.Size(136, 22)
+        Me.InputModeMenu.Size = New System.Drawing.Size(134, 22)
         Me.InputModeMenu.Text = "輸入模式"
         '
         'ClipboardModeItem
         '
         Me.ClipboardModeItem.Name = "ClipboardModeItem"
-        Me.ClipboardModeItem.Size = New System.Drawing.Size(124, 22)
+        Me.ClipboardModeItem.Size = New System.Drawing.Size(122, 22)
         Me.ClipboardModeItem.Text = "經剪貼簿"
         '
         'DirectOutputModeItem
         '
         Me.DirectOutputModeItem.Name = "DirectOutputModeItem"
-        Me.DirectOutputModeItem.Size = New System.Drawing.Size(124, 22)
+        Me.DirectOutputModeItem.Size = New System.Drawing.Size(122, 22)
         Me.DirectOutputModeItem.Text = "直接輸出"
         '
         'CangjieConversionModeItem
         '
         Me.CangjieConversionModeItem.Name = "CangjieConversionModeItem"
-        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(124, 22)
+        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(122, 22)
         Me.CangjieConversionModeItem.Text = "倉頡轉碼"
         '
         '起動音效ToolStripMenuItem
         '
         Me.起動音效ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.啟用ToolStripMenuItem, Me.停用ToolStripMenuItem})
         Me.起動音效ToolStripMenuItem.Name = "起動音效ToolStripMenuItem"
-        Me.起動音效ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
+        Me.起動音效ToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
         Me.起動音效ToolStripMenuItem.Text = "起動音效"
         '
         '啟用ToolStripMenuItem
@@ -357,27 +345,27 @@ Partial Class Form1
         Me.啟用ToolStripMenuItem.Checked = True
         Me.啟用ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.啟用ToolStripMenuItem.Name = "啟用ToolStripMenuItem"
-        Me.啟用ToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.啟用ToolStripMenuItem.Size = New System.Drawing.Size(99, 22)
         Me.啟用ToolStripMenuItem.Text = "啟用"
         '
         '停用ToolStripMenuItem
         '
         Me.停用ToolStripMenuItem.Name = "停用ToolStripMenuItem"
-        Me.停用ToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.停用ToolStripMenuItem.Size = New System.Drawing.Size(99, 22)
         Me.停用ToolStripMenuItem.Text = "停用"
         '
         '視窗設定ToolStripMenuItem
         '
         Me.視窗設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.縮放ToolStripMenuItem, Me.ToggleToolStripMenuItem, Me.ResetWindowPositionItem})
         Me.視窗設定ToolStripMenuItem.Name = "視窗設定ToolStripMenuItem"
-        Me.視窗設定ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
+        Me.視窗設定ToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
         Me.視窗設定ToolStripMenuItem.Text = "視窗設定"
         '
         '縮放ToolStripMenuItem
         '
-        Me.縮放ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MsizeToolStripMenuItem, Me.NsizeToolStripMenuItem})
+        Me.縮放ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MsizeToolStripMenuItem, Me.NormalSizedToggle})
         Me.縮放ToolStripMenuItem.Name = "縮放ToolStripMenuItem"
-        Me.縮放ToolStripMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.縮放ToolStripMenuItem.Size = New System.Drawing.Size(146, 22)
         Me.縮放ToolStripMenuItem.Text = "縮放"
         '
         'MsizeToolStripMenuItem
@@ -385,39 +373,42 @@ Partial Class Form1
         Me.MsizeToolStripMenuItem.Checked = True
         Me.MsizeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MsizeToolStripMenuItem.Name = "MsizeToolStripMenuItem"
-        Me.MsizeToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.MsizeToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
         Me.MsizeToolStripMenuItem.Text = "迷你"
         '
-        'NsizeToolStripMenuItem
+        'NormalSizedToggle
         '
-        Me.NsizeToolStripMenuItem.Name = "NsizeToolStripMenuItem"
-        Me.NsizeToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
-        Me.NsizeToolStripMenuItem.Text = "一般"
+        Me.NormalSizedToggle.Name = "NormalSizedToggle"
+        Me.NormalSizedToggle.Size = New System.Drawing.Size(98, 22)
+        Me.NormalSizedToggle.Text = "正常"
         '
         'ToggleToolStripMenuItem
         '
         Me.ToggleToolStripMenuItem.Name = "ToggleToolStripMenuItem"
-        Me.ToggleToolStripMenuItem.Size = New System.Drawing.Size(148, 22)
+        Me.ToggleToolStripMenuItem.Size = New System.Drawing.Size(146, 22)
         Me.ToggleToolStripMenuItem.Text = "顯示 / 隱藏"
         '
         'ResetWindowPositionItem
         '
         Me.ResetWindowPositionItem.Name = "ResetWindowPositionItem"
-        Me.ResetWindowPositionItem.Size = New System.Drawing.Size(148, 22)
+        Me.ResetWindowPositionItem.Size = New System.Drawing.Size(146, 22)
         Me.ResetWindowPositionItem.Text = "重置視窗位置"
         '
         'ExitAppItem
         '
         Me.ExitAppItem.Name = "ExitAppItem"
-        Me.ExitAppItem.Size = New System.Drawing.Size(136, 22)
+        Me.ExitAppItem.Size = New System.Drawing.Size(134, 22)
         Me.ExitAppItem.Text = "關閉輸入法"
+        '
+        'onLoadHide
+        '
         '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 19.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
-        Me.ClientSize = New System.Drawing.Size(92, 120)
+        Me.ClientSize = New System.Drawing.Size(102, 130)
         Me.Controls.Add(Me.PictureBox9)
         Me.Controls.Add(Me.PictureBox8)
         Me.Controls.Add(Me.PictureBox7)
@@ -439,14 +430,14 @@ Partial Class Form1
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Cursor = System.Windows.Forms.Cursors.SizeAll
-        Me.Font = New System.Drawing.Font("微軟正黑體", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Font = New System.Drawing.Font("MingLiU_HKSCS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
-        Me.MaximumSize = New System.Drawing.Size(92, 120)
+        Me.MaximumSize = New System.Drawing.Size(102, 130)
         Me.MinimizeBox = False
-        Me.MinimumSize = New System.Drawing.Size(92, 120)
+        Me.MinimumSize = New System.Drawing.Size(102, 130)
         Me.Name = "Form1"
         Me.ShowInTaskbar = False
         Me.Text = "cyinput"
@@ -497,7 +488,8 @@ Partial Class Form1
     Friend WithEvents 視窗設定ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ResetWindowPositionItem As ToolStripMenuItem
     Friend WithEvents 縮放ToolStripMenuItem As ToolStripMenuItem
-    Friend WithEvents NsizeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents MsizeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToggleToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents NormalSizedToggle As ToolStripMenuItem
+    Friend WithEvents onLoadHide As Timer
 End Class

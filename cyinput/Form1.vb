@@ -24,11 +24,11 @@ Public Class Form1
     'Logical Processing Variables
     Dim charset As String = ""
     Dim table As String()
-    Dim assoicateMode As Boolean = False
-    Dim punctMode As Boolean = False
+    Public assoicateMode As Boolean = False
+    Public punctMode As Boolean = False
     Dim textArray As New ArrayList
     Dim showingTextArrayIndex As Integer = 0
-    Dim lastusedword As String = ""
+    Public lastusedword As String = ""
     Dim cj5buffer As String = ""
 
     Dim drag As Boolean
@@ -309,8 +309,8 @@ Public Class Form1
         Dim returnvalue As String = "個能的到資就你這好"
         For Each i As String In relatedCharTable
             If i.Length > 2 Then
-                If i.Substring(1, 1).Contains(target) Then
-                    i = i.Substring(2, i.Length - 2)
+                If i.Substring(0, 1).Contains(target) Then
+                    i = i.Substring(1, i.Length - 1)
                     If i.Length < returnvalue.Length Then
                         returnvalue = i & returnvalue.Substring(i.Length, returnvalue.Length - i.Length)
                         Return returnvalue
@@ -369,7 +369,6 @@ Public Class Form1
             sp = 0
             showingTextArrayIndex = 0
         End If
-
         Label7.Text = textArray(sp)
         Label8.Text = textArray(sp + 1)
         Label9.Text = textArray(sp + 2)
@@ -379,6 +378,17 @@ Public Class Form1
         Label1.Text = textArray(sp + 6)
         Label2.Text = textArray(sp + 7)
         Label3.Text = textArray(sp + 8)
+
+        'Update text on largeUI as well
+        largeUI.l1.Text = textArray(sp)
+        largeUI.l2.Text = textArray(sp + 1)
+        largeUI.l3.Text = textArray(sp + 2)
+        largeUI.l4.Text = textArray(sp + 3)
+        largeUI.l5.Text = textArray(sp + 4)
+        largeUI.l6.Text = textArray(sp + 5)
+        largeUI.l7.Text = textArray(sp + 6)
+        largeUI.l8.Text = textArray(sp + 7)
+        largeUI.l9.Text = textArray(sp + 8)
     End Sub
 
     Private Sub enterPunctMode()
@@ -452,9 +462,14 @@ Public Class Form1
     Private Sub unzippingToTemp()
         Dim temppath As String = IO.Path.GetTempPath.ToString & "cyinput\"
         My.Computer.FileSystem.CreateDirectory(temppath)
+        'Unzip small UI symbols
         Dim b As Byte() = My.Resources.img
         My.Computer.FileSystem.WriteAllBytes(temppath & "tmp.zip", b, False)
         ZipFile.ExtractToDirectory(temppath & "tmp.zip", temppath)
+        'Unzip large UI interfaces
+        Dim l As Byte() = My.Resources.lui
+        My.Computer.FileSystem.WriteAllBytes(temppath & "lui.zip", l, False)
+        ZipFile.ExtractToDirectory(temppath & "lui.zip", temppath)
     End Sub
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -510,10 +525,15 @@ Public Class Form1
 
         'Check if the size is set to Normal Mode or Default (mini) mode
         If My.Settings.startSize = 1 Then
-            resizeAllElements(1.7, 1, New Size(160, 204), 18, 21)
+            'resizeAllElements(1.7, 1, New Size(160, 204), 18, 21)
             currentSize = 1
             MsizeToolStripMenuItem.Checked = False
-            NsizeToolStripMenuItem.Checked = True
+            NormalSizedToggle.Checked = True
+            showLargeUI()
+            onLoadHide.Enabled = True
+        Else
+            MsizeToolStripMenuItem.Checked = True
+            NormalSizedToggle.Checked = False
         End If
 
     End Sub
@@ -615,6 +635,7 @@ Public Class Form1
                 '/ pressed (Keypad)
                 ToggleInputWindow()
         End Select
+        largeUI.updateUIbyCharCode(charset)
         Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Keycode" & keycode)
 
     End Sub
@@ -636,7 +657,8 @@ Public Class Form1
         End If
 
         If Not hkkpq.Unregister() Then
-            MessageBox.Show("Hotkey failed to unregister!")
+            '//Ignore the message and continues.
+            'MessageBox.Show("Hide hotkey failed to unregister.")
         End If
 
     End Sub
@@ -848,8 +870,10 @@ Public Class Form1
         ToggleInputWindow()
     End Sub
 
-    Private Sub NormalToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles NsizeToolStripMenuItem.Click
-        NsizeToolStripMenuItem.Checked = True
+
+    Private Sub NormalToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        'Deprecated function for direct zooming
+        NormalSizedToggle.Checked = True
         MsizeToolStripMenuItem.Checked = False
 
         If (currentSize <> 1) Then
@@ -889,15 +913,15 @@ Public Class Form1
         UpdateControlSizes(Label8, 30 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
         UpdateControlSizes(Label9, 60 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
 
-        Label1.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label2.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label3.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label4.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label5.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label6.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label7.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label8.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
-        Label9.Font = New Font("微軟正黑體", fontSize, FontStyle.Bold)
+        Label1.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label2.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label3.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label4.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label5.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label6.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label7.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label8.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label9.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
 
         Label1.TextAlign = ContentAlignment.MiddleCenter
         Label2.TextAlign = ContentAlignment.MiddleCenter
@@ -911,8 +935,8 @@ Public Class Form1
 
         UpdateControlSizes(Label10, 0, 94 * scaleFactor, 50 * scaleFactor, 29 * scaleFactor)
         UpdateControlSizes(Label11, 44 * scaleFactor, 94 * scaleFactor, 50 * scaleFactor, 29 * scaleFactor)
-        Label10.Font = New Font("微軟正黑體", labelSize)
-        Label11.Font = New Font("微軟正黑體", labelSize)
+        Label10.Font = New Font("MingLiU_HKSCS", labelSize)
+        Label11.Font = New Font("MingLiU_HKSCS", labelSize)
     End Sub
 
     Private Sub UpdateControlSizes(element As Control, posx As Integer, posy As Integer, width As Integer, Optional height As Integer = -1)
@@ -926,11 +950,16 @@ Public Class Form1
     End Sub
 
     Private Sub MiniToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MsizeToolStripMenuItem.Click
-        NsizeToolStripMenuItem.Checked = False
+        NormalSizedToggle.Checked = False
         MsizeToolStripMenuItem.Checked = True
-
+        Me.Show()
+        'Update this form location to match the larger UI
+        Me.Left = largeUI.Left
+        Me.Top = largeUI.Top
+        largeUI.Hide()
         If (currentSize <> 0) Then
-            resizeAllElements(1, 1, New Size(92, 120), 14.25, 14.25)
+            'Deprecated method for direct zooming
+            'resizeAllElements(1, 1, New Size(92, 120), 14.25, 14.25)
             currentSize = 0
             My.Settings.startSize = 0
             My.Settings.Save()
@@ -941,5 +970,26 @@ Public Class Form1
     Private Sub TrayIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
         'Toggle Input by DoubleClick TrayIcon
         ToggleInputWindow()
+    End Sub
+
+    Private Sub NormalSizedToggleClick(sender As Object, e As EventArgs) Handles NormalSizedToggle.Click
+        'New method for zooming into the input method
+        showLargeUI()
+        currentSize = 1
+        My.Settings.startSize = 1
+        My.Settings.Save()
+    End Sub
+
+    Private Sub showLargeUI()
+        Me.Hide()
+        largeUI.Show()
+        largeUI.Left = Me.Left
+        largeUI.Top = Me.Top
+    End Sub
+
+    Private Sub onLoadHide_Tick(sender As Object, e As EventArgs) Handles onLoadHide.Tick
+        onLoadHide.Enabled = False
+        Me.Hide()
+
     End Sub
 End Class

@@ -46,3 +46,15 @@ C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.vbprojResolveAs
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.Form1.resources
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.Resources.resources
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.vbproj.GenerateResource.Cache
+D:\cyinput-master\cyinput\bin\Debug\VBHotkeyLib.dll
+D:\cyinput-master\cyinput\obj\Debug\svchost.Form1.resources
+D:\cyinput-master\cyinput\obj\Debug\svchost.Resources.resources
+D:\cyinput-master\cyinput\obj\Debug\cyinput.vbproj.GenerateResource.Cache
+D:\cyinput-master\cyinput\bin\Debug\cyinput.exe.config
+D:\cyinput-master\cyinput\obj\Debug\cyinput.xml
+D:\cyinput-master\cyinput\obj\Debug\cyinput.pdb
+D:\cyinput-master\cyinput\bin\Debug\cyinput.exe
+D:\cyinput-master\cyinput\bin\Debug\cyinput.pdb
+D:\cyinput-master\cyinput\bin\Debug\cyinput.xml
+D:\cyinput-master\cyinput\obj\Debug\cyinput.exe
+D:\cyinput-master\cyinput\obj\Debug\svchost.largeUI.resources
