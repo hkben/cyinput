@@ -38,12 +38,31 @@ cyinput 具有三種輸入模式，分別為
 - 倉頡轉碼 ➜ 文字輸出為倉頡碼，再經倉頡輸入法輸入到軟件，非中文 Windows 系統可先安裝倉頡再使用此功能以避免亂碼問題
 
 ## 界面預覽
+### 新版
+迷你界面
+
+<img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/mini.png"></img>
+
+標準界面
+
+<img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/large.png"></img>
+
+### Legacy 版本
 <img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/preview.png"></img>
 
 ## 關聯字
-<img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/associate.png"></img>
+<img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/asso_new.png"></img>
 
 速型輸入法支援關聯字輸入（但是並不會顯示），如果你需要輸入關聯字請在輸入完第一個字後點選「選字」來查看相關關聯字。
+
+## 香港增補字符集
+在 6-20-2019 之後的版本已經新增香港增補字符集支援，如果無法顯示請檢查系統是否已安裝 "MingLiU_HKSCS" 字體
+<img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/HKSCS.PNG"></img>
+
+## To-do List 
+如果你想要的要求已經在 To-Do List 裡面請不要再開新 Issue，謝謝！
+- 加入姓氏功能
+- 加入同音 / 近音字
 
 ## 功能需求 / BUG 回報
 可以開啟 Issue 來回報自己要的功能，最後會被標上可行或是不可行的標籤，
