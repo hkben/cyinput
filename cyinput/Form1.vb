@@ -17,7 +17,7 @@ Public Class Form1
     Private hkkpm As VBHotkeys.GlobalHotkey
     Private hkkpq As VBHotkeys.GlobalHotkey
     'Table storage variables
-    Dim relatedCharTable As String()
+    Public relatedCharTable As String()
     Dim mappedCharTable As String()
     Dim cj5_mapping As String()
     Dim b5xp_mapping As String()
@@ -304,7 +304,7 @@ Public Class Form1
         Label11.Text = "標點"
     End Sub
 
-    Private Function loadAssoicatedWords()
+    Public Function loadAssoicatedWords()
         Dim target As String = lastusedword
         Dim returnvalue As String = "個能的到資就你這好"
         For Each i As String In relatedCharTable

@@ -88,7 +88,7 @@ Partial Class largeUI
         '
         'l1
         '
-        Me.l1.BackColor = System.Drawing.Color.White
+        Me.l1.BackColor = System.Drawing.Color.Transparent
         Me.l1.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l1.Location = New System.Drawing.Point(7, 132)
         Me.l1.Name = "l1"
@@ -99,7 +99,7 @@ Partial Class largeUI
         '
         'l2
         '
-        Me.l2.BackColor = System.Drawing.Color.White
+        Me.l2.BackColor = System.Drawing.Color.Transparent
         Me.l2.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l2.Location = New System.Drawing.Point(58, 132)
         Me.l2.Name = "l2"
@@ -110,7 +110,7 @@ Partial Class largeUI
         '
         'l3
         '
-        Me.l3.BackColor = System.Drawing.Color.White
+        Me.l3.BackColor = System.Drawing.Color.Transparent
         Me.l3.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l3.Location = New System.Drawing.Point(109, 132)
         Me.l3.Name = "l3"
@@ -121,7 +121,7 @@ Partial Class largeUI
         '
         'l6
         '
-        Me.l6.BackColor = System.Drawing.Color.White
+        Me.l6.BackColor = System.Drawing.Color.Transparent
         Me.l6.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l6.Location = New System.Drawing.Point(109, 81)
         Me.l6.Name = "l6"
@@ -132,7 +132,7 @@ Partial Class largeUI
         '
         'l5
         '
-        Me.l5.BackColor = System.Drawing.Color.White
+        Me.l5.BackColor = System.Drawing.Color.Transparent
         Me.l5.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l5.Location = New System.Drawing.Point(58, 81)
         Me.l5.Name = "l5"
@@ -143,7 +143,7 @@ Partial Class largeUI
         '
         'l4
         '
-        Me.l4.BackColor = System.Drawing.Color.White
+        Me.l4.BackColor = System.Drawing.Color.Transparent
         Me.l4.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l4.Location = New System.Drawing.Point(7, 81)
         Me.l4.Name = "l4"
@@ -154,7 +154,7 @@ Partial Class largeUI
         '
         'l9
         '
-        Me.l9.BackColor = System.Drawing.Color.White
+        Me.l9.BackColor = System.Drawing.Color.Transparent
         Me.l9.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l9.Location = New System.Drawing.Point(109, 30)
         Me.l9.Name = "l9"
@@ -165,7 +165,7 @@ Partial Class largeUI
         '
         'l8
         '
-        Me.l8.BackColor = System.Drawing.Color.White
+        Me.l8.BackColor = System.Drawing.Color.Transparent
         Me.l8.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l8.Location = New System.Drawing.Point(58, 30)
         Me.l8.Name = "l8"
@@ -176,7 +176,7 @@ Partial Class largeUI
         '
         'l7
         '
-        Me.l7.BackColor = System.Drawing.Color.White
+        Me.l7.BackColor = System.Drawing.Color.Transparent
         Me.l7.Font = New System.Drawing.Font("細明體_HKSCS", 21.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.l7.Location = New System.Drawing.Point(7, 30)
         Me.l7.Name = "l7"

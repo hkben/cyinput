@@ -31,6 +31,7 @@
             If (charcode.Substring(0, 1) = "0") Then
                 loadInterface("e")
                 ShowAllLabels()
+                setAssoCharMode(False)
             Else
                 loadInterface(charcode)
                 HideAllLabels()
@@ -39,11 +40,15 @@
             'Punct selectio mode and scroll down
             loadInterface("e")
             ShowAllLabels()
+            setAssoCharMode(False)
         ElseIf (charcode.Length = 0 And Form1.lastusedword <> "") Then
             'Show word select interface instead of index
             loadInterface("c")
-            HideAllLabels()
+            setAssoCharMode(True)
+            ShowAllLabels()
+            ' HideAllLabels()
         ElseIf (charcode.Length = 2) Then
+            setAssoCharMode(False)
             If (charcode.Substring(1, 1) = "0") Then
                 'First name, not implemented yet
                 loadInterface("e")
@@ -110,9 +115,107 @@
 
     Private Sub largeUI_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         HideAllLabels()
+        l1.Location = PictureBox2.PointToClient(Me.PointToScreen(l1.Location))
+        l1.Parent = PictureBox2
+        l2.Location = PictureBox2.PointToClient(Me.PointToScreen(l2.Location))
+        l2.Parent = PictureBox2
+        l3.Location = PictureBox2.PointToClient(Me.PointToScreen(l3.Location))
+        l3.Parent = PictureBox2
+        l4.Location = PictureBox2.PointToClient(Me.PointToScreen(l4.Location))
+        l4.Parent = PictureBox2
+        l5.Location = PictureBox2.PointToClient(Me.PointToScreen(l5.Location))
+        l5.Parent = PictureBox2
+        l6.Location = PictureBox2.PointToClient(Me.PointToScreen(l6.Location))
+        l6.Parent = PictureBox2
+        l7.Location = PictureBox2.PointToClient(Me.PointToScreen(l7.Location))
+        l7.Parent = PictureBox2
+        l8.Location = PictureBox2.PointToClient(Me.PointToScreen(l8.Location))
+        l8.Parent = PictureBox2
+        l9.Location = PictureBox2.PointToClient(Me.PointToScreen(l9.Location))
+        l9.Parent = PictureBox2
+    End Sub
+    Dim assoCharSize = False
+    Private Sub setAssoCharMode(mode As Boolean)
+        If (mode = assoCharSize) Then
+            'Already in this mode. Need not to set again.
+            Return
+        End If
+        If (mode = False) Then
+            Dim labelsize As Single = 21.75
+            l1.Size = New Size(43, 43)
+            l1.Font = New Font("MingLiU_HKSCS", labelsize, FontStyle.Bold)
+            shiftDownCorner(l1)
+            l2.Size = New Size(43, 43)
+            l2.Font = New Font("MingLiU_HKSCS", labelsize, FontStyle.Bold)
+            shiftDownCorner(l2)
+            l3.Size = New Size(43, 43)
+            l3.Font = New Font("MingLiU_HKSCS", labelsize, FontStyle.Bold)
+            shiftDownCorner(l3)
+            l4.Size = New Size(43, 43)
+            l4.Font = New Font("MingLiU_HKSCS", labelsize, FontStyle.Bold)
+            shiftDownCorner(l4)
+            l5.Size = New Size(43, 43)
+            l5.Font = New Font("MingLiU_HKSCS", labelsize, FontStyle.Bold)
+            shiftDownCorner(l5)
+            l6.Size = New Size(43, 43)
+            l6.Font = New Font("MingLiU_HKSCS", labelsize, FontStyle.Bold)
+            shiftDownCorner(l6)
+            l7.Size = New Size(43, 43)
+            l7.Font = New Font("MingLiU_HKSCS", labelsize, FontStyle.Bold)
+            shiftDownCorner(l7)
+            l8.Size = New Size(43, 43)
+            l8.Font = New Font("MingLiU_HKSCS", labelsize, FontStyle.Bold)
+            shiftDownCorner(l8)
+            l9.Size = New Size(43, 43)
+            l9.Font = New Font("MingLiU_HKSCS", labelsize, FontStyle.Bold)
+            shiftDownCorner(l9)
+            assoCharSize = False
+        Else
+            Dim labelsize As Integer = 18
+            Dim labelWidth As Integer = 28
+            l1.Size = New Size(labelWidth, labelWidth)
+            l1.Font = New Font("MingLiU_HKSCS", labelsize)
+            shiftUpCorner(l1)
+            l2.Size = New Size(labelWidth, labelWidth)
+            l2.Font = New Font("MingLiU_HKSCS", labelsize)
+            shiftUpCorner(l2)
+            l3.Size = New Size(labelWidth, labelWidth)
+            l3.Font = New Font("MingLiU_HKSCS", labelsize)
+            shiftUpCorner(l3)
+            l4.Size = New Size(labelWidth, labelWidth)
+            l4.Font = New Font("MingLiU_HKSCS", labelsize)
+            shiftUpCorner(l4)
+            l5.Size = New Size(labelWidth, labelWidth)
+            l5.Font = New Font("MingLiU_HKSCS", labelsize)
+            shiftUpCorner(l5)
+            l6.Size = New Size(labelWidth, labelWidth)
+            l6.Font = New Font("MingLiU_HKSCS", labelsize)
+            shiftUpCorner(l6)
+            l7.Size = New Size(labelWidth, labelWidth)
+            l7.Font = New Font("MingLiU_HKSCS", labelsize)
+            shiftUpCorner(l7)
+            l8.Size = New Size(labelWidth, labelWidth)
+            l8.Font = New Font("MingLiU_HKSCS", labelsize)
+            shiftUpCorner(l8)
+            l9.Size = New Size(labelWidth, labelWidth)
+            l9.Font = New Font("MingLiU_HKSCS", labelsize)
+            shiftUpCorner(l9)
+            assoCharSize = True
+        End If
+    End Sub
+
+    Private Sub shiftUpCorner(label As Object)
+        label.top -= 3
+        label.left -= 3
+    End Sub
+
+    Private Sub shiftDownCorner(label As Object)
+        label.top += 3
+        label.left += 3
     End Sub
 
     Private Sub Panel1_MouseClick(sender As Object, e As MouseEventArgs) Handles Panel1.MouseClick
+
     End Sub
 
     Private Sub Panel1_Paint(sender As Object, e As PaintEventArgs) Handles Panel1.Paint
