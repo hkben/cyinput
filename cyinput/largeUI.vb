@@ -18,6 +18,10 @@
             newpoint.X -= (xpos1)
             newpoint.Y -= (ypos1)
             Me.Location = newpoint
+            My.Settings.startPositionTop = Top
+            My.Settings.startPositionLeft = Left
+            My.Settings.numberOfMonitors = Screen.AllScreens.Length
+            My.Settings.Save()
         End If
     End Sub
 
@@ -60,7 +64,6 @@
             HideAllLabels()
             loadInterface("s")
         End If
-        Console.WriteLine(charcode.Length)
 
     End Sub
     Private Sub loadTextFromMiniUI()

@@ -718,9 +718,14 @@ Public Class Form1
     Private Sub ToggleInputWindow()
         If cyinputEnable Then
             Me.Hide()
+            largeUI.Hide()
             OnInputDisable()
         Else
-            Me.Show()
+            If (currentSize = 0) Then
+                Me.Show()
+            Else
+                largeUI.Show()
+            End If
             OnInputEnable()
         End If
     End Sub
@@ -991,6 +996,8 @@ Public Class Form1
         largeUI.Show()
         largeUI.Left = Me.Left
         largeUI.Top = Me.Top
+        MsizeToolStripMenuItem.Checked = False
+        NormalSizedToggle.Checked = True
     End Sub
 
     Private Sub onLoadHide_Tick(sender As Object, e As EventArgs) Handles onLoadHide.Tick
