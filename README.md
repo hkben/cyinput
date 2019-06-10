@@ -9,7 +9,7 @@
 而且亦不需要安裝，可直接在 USB 啟動，所謂居家旅行必備程式
 
 ## 下載
-<a href="https://raw.githubusercontent.com/tobychui/cyinput/master/cyinput/bin/Debug/cyinputv2.exe">點這裡</a>
+<a href="https://raw.githubusercontent.com/tobychui/cyinput/master/cyinput/bin/Debug/cyinput.exe">點這裡</a>
 
 ## 系統要求
 - Windows 7 或以上
