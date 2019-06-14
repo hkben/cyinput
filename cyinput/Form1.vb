@@ -21,6 +21,7 @@ Public Class Form1
     Dim mappedCharTable As String()
     Dim cj5_mapping As String()
     Dim b5xp_mapping As String()
+    Public homograph_mapping As String()
     'Logical Processing Variables
     Dim charset As String = ""
     Dim table As String()
@@ -55,6 +56,7 @@ Public Class Form1
         mappedCharTable = My.Resources.mapped_char.Split(arg, StringSplitOptions.None)
         cj5_mapping = My.Resources.cj5_map.Split(arg, StringSplitOptions.None)
         b5xp_mapping = My.Resources.b5xp_map.Split(arg, StringSplitOptions.None)
+        homograph_mapping = My.Resources.mapped_homograph.Split(arg, StringSplitOptions.None)
         textArray.Clear()
         textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
         drawText()
@@ -379,17 +381,25 @@ Public Class Form1
         Label2.Text = textArray(sp + 7)
         Label3.Text = textArray(sp + 8)
 
-        'Update text on largeUI as well
-        largeUI.l1.Text = textArray(sp)
-        largeUI.l2.Text = textArray(sp + 1)
-        largeUI.l3.Text = textArray(sp + 2)
-        largeUI.l4.Text = textArray(sp + 3)
-        largeUI.l5.Text = textArray(sp + 4)
-        largeUI.l6.Text = textArray(sp + 5)
-        largeUI.l7.Text = textArray(sp + 6)
-        largeUI.l8.Text = textArray(sp + 7)
-        largeUI.l9.Text = textArray(sp + 8)
+        'Update text on largeUI as well, filter the stars icon to nothing (Empty string). Only do filtering on large UI
+        largeUI.l1.Text = filterStarToEmptyString(textArray(sp))
+        largeUI.l2.Text = filterStarToEmptyString(textArray(sp + 1))
+        largeUI.l3.Text = filterStarToEmptyString(textArray(sp + 2))
+        largeUI.l4.Text = filterStarToEmptyString(textArray(sp + 3))
+        largeUI.l5.Text = filterStarToEmptyString(textArray(sp + 4))
+        largeUI.l6.Text = filterStarToEmptyString(textArray(sp + 5))
+        largeUI.l7.Text = filterStarToEmptyString(textArray(sp + 6))
+        largeUI.l8.Text = filterStarToEmptyString(textArray(sp + 7))
+        largeUI.l9.Text = filterStarToEmptyString(textArray(sp + 8))
     End Sub
+
+    Private Function filterStarToEmptyString(inString As String)
+        If (inString = "*") Then
+            Return ""
+        Else
+            Return inString
+        End If
+    End Function
 
     Private Sub enterPunctMode()
         punctMode = True
@@ -900,7 +910,7 @@ Public Class Form1
     End Sub
 
     Private Sub resizeAllElements(scaleFactor As Double, yOffset As Integer, WindowSize As Size, fontSize As Integer, labelSize As Integer)
-
+        'Deprecated Method for making large UI. Keep here for reference only.
         Dim pictureboxSize = defaultPictureboxSize * scaleFactor
         Me.Size = WindowSize
         Me.MaximumSize = WindowSize
