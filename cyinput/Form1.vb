@@ -27,6 +27,7 @@ Public Class Form1
     Dim table As String()
     Public assoicateMode As Boolean = False
     Public punctMode As Boolean = False
+    Public homoMode As Boolean = False
     Dim textArray As New ArrayList
     Dim showingTextArrayIndex As Integer = 0
     Public lastusedword As String = ""
@@ -120,7 +121,7 @@ Public Class Form1
                 Label10.Text = "  "
                 Label11.Text = "取消"
             End If
-        ElseIf charset.Length = 2 And punctMode = False And assoicateMode = False Then
+        ElseIf charset.Length = 2 And punctMode = False And assoicateMode = False And homoMode = False Then
             If charset.Substring(charset.Length - 1, 1) = "0" Then
                 'First name system is not enabled on this version of cyinput
                 charset = charset.Substring(0, 1)
@@ -134,7 +135,7 @@ Public Class Form1
                 Label11.Text = "取消"
             End If
 
-        ElseIf charset.Length = 2 And punctMode = False And assoicateMode = True Then
+        ElseIf charset.Length = 2 And punctMode = False And assoicateMode = True And homoMode = False Then
             'Selecting Assoicated Word
             Dim selectedPos = charset.Substring(charset.Length - 1, 1)
             Dim wordtosend As String = ""
@@ -164,7 +165,7 @@ Public Class Form1
             assoicateMode = False
 
 
-        ElseIf charset.Length = 2 And punctMode = True Then
+        ElseIf charset.Length = 2 And punctMode = True And homoMode = False Then
             'Choosing punctuation from the list
             If charset.Substring(charset.Length - 1, 1) = "9" Then
                 'Choosing advance punct mode (09)
@@ -205,8 +206,11 @@ Public Class Form1
                 dothandler()
                 punctMode = False
             End If
-
-        ElseIf charset.Length = 3 And punctMode = False Then
+        ElseIf charset.Length = 2 And homoMode = True And charset.Substring(1, 1) = "0" Then
+            'Inside homophonic Mode. Show homophonic keys instead.
+            showingTextArrayIndex += 9
+            drawText()
+        ElseIf charset.Length = 3 And punctMode = False And homoMode = False Then
             'Typing normal text in 3rd stage
             Dim wordlist As String = getWordList()
             textArray.Clear()
@@ -219,7 +223,7 @@ Public Class Form1
             Label10.Text = "下頁"
             Label11.Text = "取消"
 
-        ElseIf charset.Length = 3 And punctMode = True Then
+        ElseIf charset.Length = 3 And punctMode = True And homoMode = False Then
             'Selecting punct in 09 mode
             If charset.Substring(charset.Length - 1, 1) = "0" Then
                 showingTextArrayIndex += 9
@@ -251,6 +255,7 @@ Public Class Form1
                 lastusedword = ""
                 dothandler()
                 punctMode = False
+                homoMode = False
             End If
         Else
             If charset.Substring(charset.Length - 1, 1) = "0" Then
@@ -286,6 +291,9 @@ Public Class Form1
                 handleNextWord()
                 If punctMode = True Then
                     punctMode = False
+                End If
+                If homoMode = True Then
+                    homoMode = False
                 End If
             End If
         End If
@@ -416,12 +424,55 @@ Public Class Form1
         Label11.Text = "取消"
         Console.WriteLine("Punct Mode Enabled")
     End Sub
+
+    Public Sub enterHomophonicMode(keyword As String)
+        homoMode = True
+        assoicateMode = False
+        charset = "h"
+        Dim wordlist As String = searchHomophonicWords(keyword)
+        textArray.Clear()
+        For Each c As Char In wordlist
+            textArray.Add(c.ToString)
+        Next
+        While textArray.Count < 9
+            textArray.Add("*")
+        End While
+        showingTextArrayIndex = 0
+        drawText()
+        hidePicturebox()
+        Label10.Text = "下頁"
+        Label11.Text = "取消"
+        Console.WriteLine("Homophonic Mode Enabled")
+    End Sub
+
+    Public Function searchHomophonicWords(keyword As String)
+        For Each searchIndex As String In homograph_mapping
+            Dim tmp = searchIndex.Split(" ")
+            Dim thisKey = tmp(0)
+            If (thisKey = keyword) Then
+                Return tmp(1)
+            End If
+        Next
+        Return ""
+    End Function
+
     Private Sub dothandler(Optional reset As Boolean = False)
         If charset.Length > 0 Or reset Then
-            If lastusedword = "" And assoicateMode = False And punctMode = False Then
+            If lastusedword = "" And assoicateMode = False And punctMode = False And homoMode = False Then
                 'Reset
                 charset = ""
                 lastusedword = ""
+                paintPictureBoxes(0)
+                showPicturebox()
+                textArray.Clear()
+                textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
+                showingTextArrayIndex = 0
+                drawText()
+                Label10.Text = "標點"
+                Label11.Text = "取消"
+            ElseIf assoicateMode = False And punctMode = False And homoMode = True Then
+                homoMode = False
+                charset = ""
                 paintPictureBoxes(0)
                 showPicturebox()
                 textArray.Clear()
@@ -652,7 +703,7 @@ Public Class Form1
                 ToggleInputWindow()
         End Select
         largeUI.updateUIbyCharCode(charset)
-        Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Keycode" & keycode)
+        Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Homophonic: " & homoMode & ",Keycode" & keycode)
 
     End Sub
 
