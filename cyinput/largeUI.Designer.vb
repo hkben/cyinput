@@ -48,7 +48,7 @@ Partial Class largeUI
         Me.PictureBox1.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.PictureBox1.Location = New System.Drawing.Point(0, 31)
         Me.PictureBox1.Name = "PictureBox1"
-        Me.PictureBox1.Size = New System.Drawing.Size(163, 228)
+        Me.PictureBox1.Size = New System.Drawing.Size(170, 228)
         Me.PictureBox1.TabIndex = 0
         Me.PictureBox1.TabStop = False
         '
@@ -71,7 +71,7 @@ Partial Class largeUI
         Me.Panel1.Dock = System.Windows.Forms.DockStyle.Top
         Me.Panel1.Location = New System.Drawing.Point(0, 0)
         Me.Panel1.Name = "Panel1"
-        Me.Panel1.Size = New System.Drawing.Size(163, 21)
+        Me.Panel1.Size = New System.Drawing.Size(170, 21)
         Me.Panel1.TabIndex = 2
         '
         'Label1
@@ -190,7 +190,7 @@ Partial Class largeUI
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 11.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch
-        Me.ClientSize = New System.Drawing.Size(163, 259)
+        Me.ClientSize = New System.Drawing.Size(170, 259)
         Me.Controls.Add(Me.l9)
         Me.Controls.Add(Me.l8)
         Me.Controls.Add(Me.l7)
@@ -206,6 +206,7 @@ Partial Class largeUI
         Me.Font = New System.Drawing.Font("細明體_HKSCS", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.MaximizeBox = False
+        Me.MaximumSize = New System.Drawing.Size(170, 259)
         Me.MinimizeBox = False
         Me.Name = "largeUI"
         Me.ShowIcon = False
