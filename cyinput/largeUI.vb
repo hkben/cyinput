@@ -228,7 +228,7 @@
     End Sub
 
     Private Sub l1_MouseDown(sender As Object, e As MouseEventArgs) Handles l1.MouseDown, l2.MouseDown, l3.MouseDown, l4.MouseDown, l5.MouseDown, l6.MouseDown, l7.MouseDown, l8.MouseDown, l9.MouseDown
-        If e.Button = MouseButtons.Right And Form1.punctMode = False Then
+        If e.Button = MouseButtons.Right And Form1.isSelecting = True Then
             Dim labelString As String = sender.Text.ToString.Trim
             Form1.enterHomophonicMode(labelString)
         End If
