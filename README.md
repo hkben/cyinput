@@ -63,7 +63,7 @@ cyinput 具有三種輸入模式，分別為
 在 15-6-2019 版本之後已經新增同音字檢索，由於字庫暫未整理，所以常用字未必會放在第一頁。
 <img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/homophonic.png"></img>
 
-注：此同音字檢索是基於無音調廣東話同音字資料庫，與其他字型輸入法有少許不同，使用時敬請注意。
+注：此同音字檢索是基於無音調粵語同音字<a href="https://words.hk/">資料庫</a>，與其他字型輸入法有少許不同，使用時敬請注意。
 
 ## To-do List 
 如果你想要的要求已經在 To-Do List 裡面請不要再開新 Issue，謝謝！
