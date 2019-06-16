@@ -26,55 +26,45 @@
     End Sub
 
     Public Sub updateUIbyCharCode(charcode As String)
-        If (charcode.Length = 1) Then
-            'Selected first key shape
-            If (charcode.Substring(0, 1) = "0") Then
-                loadInterface("e")
-                ShowAllLabels()
-                setAssoCharMode(False)
-            ElseIf (charcode.Substring(0, 1) = "h") Then
-                'Homophonic Mode
-                loadInterface("e")
-                ShowAllLabels()
-                setAssoCharMode(False)
-            Else
-                loadInterface(charcode)
-                HideAllLabels()
-            End If
-        ElseIf (charcode.Length >= 2 AndAlso charcode.Substring(0, 2) = "09") Then
-            'Punct selectio mode and scroll down
+
+        If Form1.isSelecting Then
+            'for selecting Mode only
             loadInterface("e")
-            ShowAllLabels()
             setAssoCharMode(False)
-        ElseIf (charcode.Length = 0 And Form1.lastusedword <> "") Then
-            'Show word select interface instead of index
+            ShowAllLabels()
+            Return
+        End If
+
+        If (charcode.Length = 0 And Form1.lastusedword = "") Then
+            'Home page with lastusedword - display associate  char
+            loadInterface("s")
+            setAssoCharMode(False)
+            HideAllLabels()
+            Return
+        End If
+
+        If (charcode.Length = 0 And Form1.lastusedword <> "") Then
+            'Home page with no lastusedword
             loadInterface("c")
             setAssoCharMode(True)
             ShowAllLabels()
-            ' HideAllLabels()
-        ElseIf (charcode.Length = 2) Then
-            setAssoCharMode(False)
-            If (charcode.Substring(1, 1) = "0") Then
-                'First name, not implemented yet
-                loadInterface("e")
-                ShowAllLabels()
-            Else
-                'Char with two parts
-                loadInterface("n")
-                HideAllLabels()
-            End If
-
-        ElseIf (charcode.Length >= 3) Then
-            loadInterface("e")
-            ShowAllLabels()
-            'Move the words from Form1 to this form
-
-        Else
-            'No char inside charcode
-            HideAllLabels()
-            loadInterface("s")
+            Return
         End If
 
+        If (charcode.Length = 1) Then
+            loadInterface(charcode)
+            HideAllLabels()
+            Return
+        End If
+
+        If (charcode.Length = 2) Then
+            setAssoCharMode(False)
+            'Char with two parts
+            loadInterface("n")
+            HideAllLabels()
+        End If
+
+        'no need for charcode.Length = 3 because if charcode.Length = 3 , it will in selecting mode
     End Sub
     Private Sub loadTextFromMiniUI()
         l1.Text = Form1.Label7.Text
