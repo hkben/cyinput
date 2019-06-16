@@ -29,6 +29,8 @@
 3. 選擇及點取你想輸入的中文字
 4. 重複第 2 步及第 3步直至你已完成輸入所有你需要輸入的文字
 
+<img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/preveiwType.gif"/>
+
 <sub> *數字鍵即為鍵盤最右面的九個數字按鍵。部分筆記本電腦上或會缺少這些按鈕，在此況下你需要一個外置的數字鍵盤。 </sub>
 
 ## 輸入模式
