@@ -59,16 +59,19 @@ cyinput 具有三種輸入模式，分別為
 
 ## 香港增補字符集
 在 10-6-2019 之後的版本已經新增香港增補字符集支援，如果無法顯示請檢查系統是否已安裝 "MingLiU_HKSCS" 字體
+
 <img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/HKSCS.PNG"></img>
 
 ## 同音字檢索
 在 15-6-2019 版本之後已經新增同音字檢索，由於字庫暫未整理，所以常用字未必會放在第一頁。
+
 <img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/homophonic.png"></img>
 
 注：此同音字檢索是基於無音調粵語同音字<a href="https://words.hk/">資料庫</a>，與其他字型輸入法有少許不同，使用時敬請注意。
 
 ## 姓氏檢索
 在 17-6-2019 版本之後已經新增姓氏快速檢索功能。
+
 <img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/lastname.png"/>
 
 ## 其他功能
