@@ -71,3 +71,4 @@ C:\Users\Toby\Documents\GitHub\cyinput\cyinput\bin\Debug\cyinput.xml
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\bin\Debug\VBHotkeyLib.dll
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.exe
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.pdb
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.vbprojResolveAssemblyReference.cache

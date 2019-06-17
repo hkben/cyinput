@@ -27,6 +27,7 @@ Public Class Form1
     Dim table As String()
     Dim textArray As New ArrayList
     Dim showingTextArrayIndex As Integer = 0
+    Dim useScrollLockKey As Boolean = My.Settings.useScrollLockInstead
     Public lastusedword As String = ""
     Dim cj5buffer As String = ""
     Public isSelecting As Boolean = False
@@ -437,10 +438,19 @@ Public Class Form1
         'Added in new support for changing page with + and - sign
         hkkpp = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Add, Me)
         hkkpm = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Subtract, Me)
-        hkkpq = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Divide, Me)
 
-        'Register keypad /
-        hkkpq.Register()
+        'Add support for toggling to use scoll lock or keypad divide 
+        If (useScrollLockKey) Then
+            'Use scrollLock for toggling
+            scrollLockListener.Enabled = True
+            useScrollLockInstead.Checked = True
+        Else
+            'Use Keypad / as toggling. Register keypad /
+            hkkpq = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Divide, Me)
+            hkkpq.Register()
+        End If
+
+
 
         OnInputEnable()
 
@@ -572,10 +582,13 @@ Public Class Form1
             OnInputDisable()
         End If
 
-        If Not hkkpq.Unregister() Then
-            '//Ignore the message and continues.
-            'MessageBox.Show("Hide hotkey failed to unregister.")
+        If Not useScrollLockKey Then
+            If Not hkkpq.Unregister() Then
+                '//Ignore the message and continues.
+                'MessageBox.Show("Hide hotkey failed to unregister.")
+            End If
         End If
+
 
     End Sub
 
@@ -915,5 +928,24 @@ Public Class Form1
         onLoadHide.Enabled = False
         Me.Hide()
 
+    End Sub
+
+    Private Sub useScrollLockIsnteadClick(sender As Object, e As EventArgs) Handles useScrollLockInstead.Click
+        If My.Settings.useScrollLockInstead = True Then
+            My.Settings.useScrollLockInstead = False
+        Else
+            My.Settings.useScrollLockInstead = True
+        End If
+        My.Settings.Save()
+        System.Windows.Forms.Application.Restart()
+    End Sub
+
+    Dim scrollLockState As Boolean = My.Computer.Keyboard.ScrollLock
+    Private Sub scrollLockListener_Tick(sender As Object, e As EventArgs) Handles scrollLockListener.Tick
+        'Check if scroll lock state change. If yes, toggle hide / show state
+        If My.Computer.Keyboard.ScrollLock <> scrollLockState Then
+            scrollLockState = My.Computer.Keyboard.ScrollLock
+            ToggleInputWindow()
+        End If
     End Sub
 End Class

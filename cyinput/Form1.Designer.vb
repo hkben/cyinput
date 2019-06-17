@@ -59,8 +59,10 @@ Partial Class Form1
         Me.NormalSizedToggle = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToggleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ResetWindowPositionItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.useScrollLockInstead = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitAppItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.onLoadHide = New System.Windows.Forms.Timer(Me.components)
+        Me.scrollLockListener = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,7 +77,7 @@ Partial Class Form1
         '
         'Label1
         '
-        Me.Label1.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label1.Font = New System.Drawing.Font("細明體_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label1.Location = New System.Drawing.Point(3, 1)
         Me.Label1.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label1.Name = "Label1"
@@ -86,7 +88,7 @@ Partial Class Form1
         '
         'Label2
         '
-        Me.Label2.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label2.Font = New System.Drawing.Font("細明體_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label2.Location = New System.Drawing.Point(36, 1)
         Me.Label2.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label2.Name = "Label2"
@@ -97,7 +99,7 @@ Partial Class Form1
         '
         'Label3
         '
-        Me.Label3.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label3.Font = New System.Drawing.Font("細明體_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label3.Location = New System.Drawing.Point(69, 1)
         Me.Label3.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label3.Name = "Label3"
@@ -108,7 +110,7 @@ Partial Class Form1
         '
         'Label4
         '
-        Me.Label4.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label4.Font = New System.Drawing.Font("細明體_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label4.Location = New System.Drawing.Point(3, 34)
         Me.Label4.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label4.Name = "Label4"
@@ -119,7 +121,7 @@ Partial Class Form1
         '
         'Label5
         '
-        Me.Label5.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label5.Font = New System.Drawing.Font("細明體_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label5.Location = New System.Drawing.Point(36, 34)
         Me.Label5.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label5.Name = "Label5"
@@ -130,7 +132,7 @@ Partial Class Form1
         '
         'Label6
         '
-        Me.Label6.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label6.Font = New System.Drawing.Font("細明體_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label6.Location = New System.Drawing.Point(69, 34)
         Me.Label6.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label6.Name = "Label6"
@@ -141,7 +143,7 @@ Partial Class Form1
         '
         'Label7
         '
-        Me.Label7.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label7.Font = New System.Drawing.Font("細明體_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label7.Location = New System.Drawing.Point(3, 67)
         Me.Label7.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label7.Name = "Label7"
@@ -152,7 +154,7 @@ Partial Class Form1
         '
         'Label8
         '
-        Me.Label8.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label8.Font = New System.Drawing.Font("細明體_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label8.Location = New System.Drawing.Point(36, 67)
         Me.Label8.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label8.Name = "Label8"
@@ -163,7 +165,7 @@ Partial Class Form1
         '
         'Label9
         '
-        Me.Label9.Font = New System.Drawing.Font("MingLiU_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label9.Font = New System.Drawing.Font("細明體_HKSCS", 15.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label9.Location = New System.Drawing.Point(69, 67)
         Me.Label9.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label9.Name = "Label9"
@@ -175,7 +177,7 @@ Partial Class Form1
         'Label10
         '
         Me.Label10.BackColor = System.Drawing.Color.White
-        Me.Label10.Font = New System.Drawing.Font("MingLiU_HKSCS", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label10.Font = New System.Drawing.Font("細明體_HKSCS", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label10.Location = New System.Drawing.Point(-1, 101)
         Me.Label10.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label10.Name = "Label10"
@@ -187,7 +189,7 @@ Partial Class Form1
         'Label11
         '
         Me.Label11.BackColor = System.Drawing.Color.White
-        Me.Label11.Font = New System.Drawing.Font("MingLiU_HKSCS", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Label11.Font = New System.Drawing.Font("細明體_HKSCS", 14.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.Label11.Location = New System.Drawing.Point(49, 101)
         Me.Label11.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.Label11.Name = "Label11"
@@ -306,38 +308,38 @@ Partial Class Form1
         '
         Me.TrayMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.InputModeMenu, Me.起動音效ToolStripMenuItem, Me.視窗設定ToolStripMenuItem, Me.ExitAppItem})
         Me.TrayMenu.Name = "ContextMenuStrip1"
-        Me.TrayMenu.Size = New System.Drawing.Size(135, 92)
+        Me.TrayMenu.Size = New System.Drawing.Size(137, 92)
         '
         'InputModeMenu
         '
         Me.InputModeMenu.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ClipboardModeItem, Me.DirectOutputModeItem, Me.CangjieConversionModeItem})
         Me.InputModeMenu.Name = "InputModeMenu"
-        Me.InputModeMenu.Size = New System.Drawing.Size(134, 22)
+        Me.InputModeMenu.Size = New System.Drawing.Size(136, 22)
         Me.InputModeMenu.Text = "輸入模式"
         '
         'ClipboardModeItem
         '
         Me.ClipboardModeItem.Name = "ClipboardModeItem"
-        Me.ClipboardModeItem.Size = New System.Drawing.Size(122, 22)
+        Me.ClipboardModeItem.Size = New System.Drawing.Size(124, 22)
         Me.ClipboardModeItem.Text = "經剪貼簿"
         '
         'DirectOutputModeItem
         '
         Me.DirectOutputModeItem.Name = "DirectOutputModeItem"
-        Me.DirectOutputModeItem.Size = New System.Drawing.Size(122, 22)
+        Me.DirectOutputModeItem.Size = New System.Drawing.Size(124, 22)
         Me.DirectOutputModeItem.Text = "直接輸出"
         '
         'CangjieConversionModeItem
         '
         Me.CangjieConversionModeItem.Name = "CangjieConversionModeItem"
-        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(122, 22)
+        Me.CangjieConversionModeItem.Size = New System.Drawing.Size(124, 22)
         Me.CangjieConversionModeItem.Text = "倉頡轉碼"
         '
         '起動音效ToolStripMenuItem
         '
         Me.起動音效ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.啟用ToolStripMenuItem, Me.停用ToolStripMenuItem})
         Me.起動音效ToolStripMenuItem.Name = "起動音效ToolStripMenuItem"
-        Me.起動音效ToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
+        Me.起動音效ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
         Me.起動音效ToolStripMenuItem.Text = "起動音效"
         '
         '啟用ToolStripMenuItem
@@ -345,27 +347,27 @@ Partial Class Form1
         Me.啟用ToolStripMenuItem.Checked = True
         Me.啟用ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.啟用ToolStripMenuItem.Name = "啟用ToolStripMenuItem"
-        Me.啟用ToolStripMenuItem.Size = New System.Drawing.Size(99, 22)
+        Me.啟用ToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
         Me.啟用ToolStripMenuItem.Text = "啟用"
         '
         '停用ToolStripMenuItem
         '
         Me.停用ToolStripMenuItem.Name = "停用ToolStripMenuItem"
-        Me.停用ToolStripMenuItem.Size = New System.Drawing.Size(99, 22)
+        Me.停用ToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
         Me.停用ToolStripMenuItem.Text = "停用"
         '
         '視窗設定ToolStripMenuItem
         '
-        Me.視窗設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.縮放ToolStripMenuItem, Me.ToggleToolStripMenuItem, Me.ResetWindowPositionItem})
+        Me.視窗設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.縮放ToolStripMenuItem, Me.ToggleToolStripMenuItem, Me.ResetWindowPositionItem, Me.useScrollLockInstead})
         Me.視窗設定ToolStripMenuItem.Name = "視窗設定ToolStripMenuItem"
-        Me.視窗設定ToolStripMenuItem.Size = New System.Drawing.Size(134, 22)
+        Me.視窗設定ToolStripMenuItem.Size = New System.Drawing.Size(136, 22)
         Me.視窗設定ToolStripMenuItem.Text = "視窗設定"
         '
         '縮放ToolStripMenuItem
         '
         Me.縮放ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MsizeToolStripMenuItem, Me.NormalSizedToggle})
         Me.縮放ToolStripMenuItem.Name = "縮放ToolStripMenuItem"
-        Me.縮放ToolStripMenuItem.Size = New System.Drawing.Size(146, 22)
+        Me.縮放ToolStripMenuItem.Size = New System.Drawing.Size(211, 22)
         Me.縮放ToolStripMenuItem.Text = "縮放"
         '
         'MsizeToolStripMenuItem
@@ -373,34 +375,43 @@ Partial Class Form1
         Me.MsizeToolStripMenuItem.Checked = True
         Me.MsizeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
         Me.MsizeToolStripMenuItem.Name = "MsizeToolStripMenuItem"
-        Me.MsizeToolStripMenuItem.Size = New System.Drawing.Size(98, 22)
+        Me.MsizeToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
         Me.MsizeToolStripMenuItem.Text = "迷你"
         '
         'NormalSizedToggle
         '
         Me.NormalSizedToggle.Name = "NormalSizedToggle"
-        Me.NormalSizedToggle.Size = New System.Drawing.Size(98, 22)
+        Me.NormalSizedToggle.Size = New System.Drawing.Size(100, 22)
         Me.NormalSizedToggle.Text = "正常"
         '
         'ToggleToolStripMenuItem
         '
         Me.ToggleToolStripMenuItem.Name = "ToggleToolStripMenuItem"
-        Me.ToggleToolStripMenuItem.Size = New System.Drawing.Size(146, 22)
+        Me.ToggleToolStripMenuItem.Size = New System.Drawing.Size(211, 22)
         Me.ToggleToolStripMenuItem.Text = "顯示 / 隱藏"
         '
         'ResetWindowPositionItem
         '
         Me.ResetWindowPositionItem.Name = "ResetWindowPositionItem"
-        Me.ResetWindowPositionItem.Size = New System.Drawing.Size(146, 22)
+        Me.ResetWindowPositionItem.Size = New System.Drawing.Size(211, 22)
         Me.ResetWindowPositionItem.Text = "重置視窗位置"
+        '
+        'useScrollLockInstead
+        '
+        Me.useScrollLockInstead.Name = "useScrollLockInstead"
+        Me.useScrollLockInstead.Size = New System.Drawing.Size(211, 22)
+        Me.useScrollLockInstead.Text = "使用 ScrollLock 作隱藏鍵"
         '
         'ExitAppItem
         '
         Me.ExitAppItem.Name = "ExitAppItem"
-        Me.ExitAppItem.Size = New System.Drawing.Size(134, 22)
+        Me.ExitAppItem.Size = New System.Drawing.Size(136, 22)
         Me.ExitAppItem.Text = "關閉輸入法"
         '
         'onLoadHide
+        '
+        '
+        'scrollLockListener
         '
         '
         'Form1
@@ -430,7 +441,7 @@ Partial Class Form1
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Cursor = System.Windows.Forms.Cursors.SizeAll
-        Me.Font = New System.Drawing.Font("MingLiU_HKSCS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Font = New System.Drawing.Font("細明體_HKSCS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
         Me.Margin = New System.Windows.Forms.Padding(4)
@@ -492,4 +503,6 @@ Partial Class Form1
     Friend WithEvents ToggleToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents NormalSizedToggle As ToolStripMenuItem
     Friend WithEvents onLoadHide As Timer
+    Friend WithEvents useScrollLockInstead As ToolStripMenuItem
+    Friend WithEvents scrollLockListener As Timer
 End Class
