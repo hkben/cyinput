@@ -364,7 +364,7 @@ Public Class Form1
 
     Private Sub dothandler(Optional reset As Boolean = False)
 
-        If charset.Length = 0 And lastusedword <> "" And isSelecting = False Then
+        If charset.Length = 0 And lastusedword <> "" And isSelecting = False And reset = False Then
             'Punct mode
             enterPunctMode()
             Return
