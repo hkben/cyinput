@@ -130,9 +130,6 @@
   <data name="related_char" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\bin\Debug\related_char.dll;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
-  <data name="VBHotkeyLib" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\bin\Debug\VBHotkeyLib.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="b5xp_map" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\b5xp_map.dll;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;big5</value>
   </data>
@@ -141,5 +138,8 @@
   </data>
   <data name="mapped_homograph" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\mapped_homograph.dll;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
+  </data>
+  <data name="VBHotkeyLib" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\VBHotkeyLib.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
 </root>
