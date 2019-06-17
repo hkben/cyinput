@@ -25,13 +25,11 @@ Public Class Form1
     'Logical Processing Variables
     Dim charset As String = ""
     Dim table As String()
-    Public assoicateMode As Boolean = False
-    Public punctMode As Boolean = False
-    Public homoMode As Boolean = False
     Dim textArray As New ArrayList
     Dim showingTextArrayIndex As Integer = 0
     Public lastusedword As String = ""
     Dim cj5buffer As String = ""
+    Public isSelecting As Boolean = False
 
     Dim drag As Boolean
     Dim mouseX As Integer
@@ -46,8 +44,38 @@ Public Class Form1
     'currentSize = 1 means it is in normal state (larger than default)
 
     Private Function appendToCharSet(number As String)
+
+        If isSelecting = True Then
+            'Special Case "09" 
+            If charset = "0" And number = "9" Then
+                charset = "09"
+                handlePage()
+                Return False
+            End If
+
+            '-1 = Last Page , 0 = Next Page , 1-9 = SelectedWord
+            If number <= 0 Then
+
+                If number = 0 Then
+                    showingTextArrayIndex += 9
+                ElseIf number = -1 Then
+                    showingTextArrayIndex -= 9
+                End If
+
+                'Go to Update Text Directly
+                drawText()
+            ElseIf number <> 0 Or number <> -1 Then
+                'If not last or next page , then its selecting word
+                SendWord(number)
+            End If
+
+            Return False
+        End If
+
+        'Default 
         charset = charset & number.ToString
-        Return charset.ToString
+        handlePage()
+        Return False
     End Function
 
     Private Sub LoadTable()
@@ -88,214 +116,102 @@ Public Class Form1
         PictureBox8.Visible = False
         PictureBox9.Visible = False
     End Sub
-    Private Sub handlePage()
-        If charset.Length = 1 Then
-            If charset = "0" Then
-                If lastusedword = "" Then
-                    'Not typing any thing yet
-                    punctMode = True
-                    Dim wordlist As String = getWordList()
-                    textArray.Clear()
-                    For Each c As Char In wordlist
-                        textArray.Add(c.ToString)
-                    Next
-                    showingTextArrayIndex = 0
-                    drawText()
-                    hidePicturebox()
-                    Label10.Text = "下頁"
-                    Label11.Text = "取消"
-                    Console.WriteLine("Punct Mode Enabled")
-                Else
-                    'Select related char
-                    hidePicturebox()
-                    assoicateMode = True
-                    lastusedword = ""
-                    Label10.Text = "下頁"
-                    Label11.Text = "取消"
-                    Console.WriteLine("Selecting Assoicated Word")
-                End If
 
+    Private Sub SendWord(selectedPos As Byte)
+        Dim wordtosend As String = ""
+        Select Case selectedPos
+            Case 1
+                wordtosend = (Label7.Text)
+            Case 2
+                wordtosend = (Label8.Text)
+            Case 3
+                wordtosend = (Label9.Text)
+            Case 4
+                wordtosend = (Label4.Text)
+            Case 5
+                wordtosend = (Label5.Text)
+            Case 6
+                wordtosend = (Label6.Text)
+            Case 7
+                wordtosend = (Label1.Text)
+            Case 8
+                wordtosend = (Label2.Text)
+            Case 9
+                wordtosend = (Label3.Text)
+        End Select
+        SendOut(wordtosend)
+        lastusedword = wordtosend
+        handleNextWord()
+
+        isSelecting = False
+    End Sub
+
+    Private Sub loadWords(Optional mode As Short = 0)
+        isSelecting = True
+
+        Dim wordlist As String = ""
+
+        If mode = 0 Then
+            'load from mappedChar
+            wordlist = getWordList()
+        ElseIf mode = 1 Then
+            'load from AssoicatedWords
+            wordlist = loadAssoicatedWords()
+        End If
+
+        textArray.Clear()
+        For Each c As Char In wordlist
+            textArray.Add(c.ToString)
+        Next
+        drawText()
+        hidePicturebox()
+        Label10.Text = "下頁"
+        Label11.Text = "取消"
+    End Sub
+
+    Private Sub handlePage()
+
+        If charset = "0" Then
+            If lastusedword = "" Then
+                'Not typing any thing yet
+                loadWords()
+                Console.WriteLine("Punct Mode Enabled")
             Else
-                paintPictureBoxes(charset)
-                showPicturebox()
-                Label10.Text = "  "
-                Label11.Text = "取消"
+                'Select related char
+                loadWords(1)
+                charset = ""
+                Console.WriteLine("Selecting Assoicated Word")
             End If
-        ElseIf charset.Length = 2 And punctMode = False And assoicateMode = False And homoMode = False Then
+            Return
+        End If
+
+        If charset.Length = 1 Then
+            paintPictureBoxes(charset)
+            showPicturebox()
+            Label10.Text = "姓氏"
+            Label11.Text = "取消"
+            Return
+        End If
+
+        If charset.Length = 2 Then
+            'All Last Name Mode Ends with 0  , 09 is special case
             If charset.Substring(charset.Length - 1, 1) = "0" Then
-                'First name system is not enabled on this version of cyinput
-                charset = charset.Substring(0, 1)
+                loadWords()
+            ElseIf charset = "09" Then
+                loadWords()
             Else
                 'Typing normally
                 paintPictureBoxes(0)
                 showPicturebox()
-                textArray.Clear()
-                drawText()
                 Label10.Text = "確定"
                 Label11.Text = "取消"
             End If
+            Return
+        End If
 
-        ElseIf charset.Length = 2 And punctMode = False And assoicateMode = True And homoMode = False Then
-            'Selecting Assoicated Word
-            Dim selectedPos = charset.Substring(charset.Length - 1, 1)
-            Dim wordtosend As String = ""
-            Select Case selectedPos
-                Case 1
-                    wordtosend = (Label7.Text)
-                Case 2
-                    wordtosend = (Label8.Text)
-                Case 3
-                    wordtosend = (Label9.Text)
-                Case 4
-                    wordtosend = (Label4.Text)
-                Case 5
-                    wordtosend = (Label5.Text)
-                Case 6
-                    wordtosend = (Label6.Text)
-                Case 7
-                    wordtosend = (Label1.Text)
-                Case 8
-                    wordtosend = (Label2.Text)
-                Case 9
-                    wordtosend = (Label3.Text)
-            End Select
-            SendOut(wordtosend)
-            lastusedword = wordtosend
-            handleNextWord()
-            assoicateMode = False
-
-
-        ElseIf charset.Length = 2 And punctMode = True And homoMode = False Then
-            'Choosing punctuation from the list
-            If charset.Substring(charset.Length - 1, 1) = "9" Then
-                'Choosing advance punct mode (09)
-                Dim wordlist As String = getWordList()
-                textArray.Clear()
-                For Each c As Char In wordlist
-                    textArray.Add(c.ToString)
-                Next
-                showingTextArrayIndex = 0
-                drawText()
-                hidePicturebox()
-                Label10.Text = "下頁"
-                Label11.Text = "取消"
-            Else
-                'Select and send the selected punct
-                Dim selectedPos As Integer = charset.Substring(charset.Length - 1, 1)
-                Dim wordtosend As String = "*"
-                Select Case selectedPos
-                    Case 1
-                        wordtosend = (Label7.Text)
-                    Case 2
-                        wordtosend = (Label8.Text)
-                    Case 3
-                        wordtosend = (Label9.Text)
-                    Case 4
-                        wordtosend = (Label4.Text)
-                    Case 5
-                        wordtosend = (Label5.Text)
-                    Case 6
-                        wordtosend = (Label6.Text)
-                    Case 7
-                        wordtosend = (Label1.Text)
-                    Case 8
-                        wordtosend = (Label2.Text)
-                End Select
-                SendOut(wordtosend)
-                lastusedword = ""
-                dothandler()
-                punctMode = False
-            End If
-        ElseIf charset.Length = 2 And homoMode = True And charset.Substring(1, 1) = "0" Then
-            'Inside homophonic Mode. Show homophonic keys instead.
-            showingTextArrayIndex += 9
-            drawText()
-        ElseIf charset.Length = 3 And punctMode = False And homoMode = False Then
-            'Typing normal text in 3rd stage
-            Dim wordlist As String = getWordList()
-            textArray.Clear()
-            For Each c As Char In wordlist
-                textArray.Add(c.ToString)
-            Next
-            showingTextArrayIndex = 0
-            drawText()
-            hidePicturebox()
-            Label10.Text = "下頁"
-            Label11.Text = "取消"
-
-        ElseIf charset.Length = 3 And punctMode = True And homoMode = False Then
-            'Selecting punct in 09 mode
-            If charset.Substring(charset.Length - 1, 1) = "0" Then
-                showingTextArrayIndex += 9
-                drawText()
-            Else
-                Dim selectedPos As Integer = charset.Substring(charset.Length - 1, 1)
-                Dim wordtosend As String = ""
-                Select Case selectedPos
-                    Case 1
-                        wordtosend = (Label7.Text)
-                    Case 2
-                        wordtosend = (Label8.Text)
-                    Case 3
-                        wordtosend = (Label9.Text)
-                    Case 4
-                        wordtosend = (Label4.Text)
-                    Case 5
-                        wordtosend = (Label5.Text)
-                    Case 6
-                        wordtosend = (Label6.Text)
-                    Case 7
-                        wordtosend = (Label1.Text)
-                    Case 8
-                        wordtosend = (Label2.Text)
-                    Case 9
-                        wordtosend = (Label3.Text)
-                End Select
-                SendOut(wordtosend)
-                lastusedword = ""
-                dothandler()
-                punctMode = False
-                homoMode = False
-            End If
-        Else
-            If charset.Substring(charset.Length - 1, 1) = "0" Then
-                'Next page in word selection
-                showingTextArrayIndex += 9
-                drawText()
-            Else
-                'Send the selected word
-                Dim selectedPos As Integer = charset.Substring(charset.Length - 1, 1)
-                Dim wordtosend As String = ""
-                Select Case selectedPos
-                    Case 1
-                        wordtosend = (Label7.Text)
-                    Case 2
-                        wordtosend = (Label8.Text)
-                    Case 3
-                        wordtosend = (Label9.Text)
-                    Case 4
-                        wordtosend = (Label4.Text)
-                    Case 5
-                        wordtosend = (Label5.Text)
-                    Case 6
-                        wordtosend = (Label6.Text)
-                    Case 7
-                        wordtosend = (Label1.Text)
-                    Case 8
-                        wordtosend = (Label2.Text)
-                    Case 9
-                        wordtosend = (Label3.Text)
-                End Select
-                SendOut(wordtosend)
-                lastusedword = wordtosend
-                handleNextWord()
-                If punctMode = True Then
-                    punctMode = False
-                End If
-                If homoMode = True Then
-                    homoMode = False
-                End If
-            End If
+        If charset.Length = 3 Then
+            loadWords()
+            Return
         End If
 
     End Sub
@@ -410,24 +326,13 @@ Public Class Form1
     End Function
 
     Private Sub enterPunctMode()
-        punctMode = True
+        lastusedword = ""
         charset = "0"
-        Dim wordlist As String = getWordList()
-        textArray.Clear()
-        For Each c As Char In wordlist
-            textArray.Add(c.ToString)
-        Next
-        showingTextArrayIndex = 0
-        drawText()
-        hidePicturebox()
-        Label10.Text = "下頁"
-        Label11.Text = "取消"
-        Console.WriteLine("Punct Mode Enabled")
+        handlePage()
     End Sub
 
     Public Sub enterHomophonicMode(keyword As String)
-        homoMode = True
-        assoicateMode = False
+        isSelecting = True
         charset = "h"
         Dim wordlist As String = searchHomophonicWords(keyword)
         textArray.Clear()
@@ -457,67 +362,24 @@ Public Class Form1
     End Function
 
     Private Sub dothandler(Optional reset As Boolean = False)
-        If charset.Length > 0 Or reset Then
-            If lastusedword = "" And assoicateMode = False And punctMode = False And homoMode = False Then
-                'Reset
-                charset = ""
-                lastusedword = ""
-                paintPictureBoxes(0)
-                showPicturebox()
-                textArray.Clear()
-                textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
-                showingTextArrayIndex = 0
-                drawText()
-                Label10.Text = "標點"
-                Label11.Text = "取消"
-            ElseIf assoicateMode = False And punctMode = False And homoMode = True Then
-                homoMode = False
-                charset = ""
-                paintPictureBoxes(0)
-                showPicturebox()
-                textArray.Clear()
-                textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
-                showingTextArrayIndex = 0
-                drawText()
-                Label10.Text = "標點"
-                Label11.Text = "取消"
-            ElseIf assoicateMode = True Then
-                'Cancel associate mode and return to default
-                assoicateMode = False
-                charset = ""
-                paintPictureBoxes(0)
-                showPicturebox()
-                textArray.Clear()
-                textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
-                showingTextArrayIndex = 0
-                drawText()
-                Label10.Text = "標點"
-                Label11.Text = "取消"
-            Else
-                'Cancel punct mode
-                charset = ""
-                paintPictureBoxes(0)
-                showPicturebox()
-                textArray.Clear()
-                textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
-                showingTextArrayIndex = 0
-                drawText()
-                lastusedword = ""
-                punctMode = False
-                Label10.Text = "標點"
-                Label11.Text = "取消"
 
-
-            End If
-        ElseIf charset.Length = 0 And lastusedword <> "" Then
+        If charset.Length = 0 And lastusedword <> "" And isSelecting = False Then
             'Punct mode
             enterPunctMode()
-        ElseIf charset.Length = 0 And lastusedword = "" Then
-            'Cancel button, do nothing
-            If punctMode = True Then
-                punctMode = False
-            End If
+            Return
         End If
+
+        'Reset
+        isSelecting = False
+        charset = ""
+        paintPictureBoxes(0)
+        showPicturebox()
+        textArray.Clear()
+        textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
+        showingTextArrayIndex = 0
+        drawText()
+        Label10.Text = "標點"
+        Label11.Text = "取消"
     End Sub
 
     Private Sub unzippingToTemp()
@@ -644,66 +506,53 @@ Public Class Form1
     Private Sub HandleHotkey(keycode As Integer)
         Select Case (keycode)
             Case 96
-                'Keypad 0
                 appendToCharSet(0)
-                handlePage()
             Case 97
                 'Keypad 1
                 appendToCharSet(1)
-                handlePage()
             Case 98
                 'Keypad 2
                 appendToCharSet(2)
-                handlePage()
             Case 99
                 'Keypad 3
                 appendToCharSet(3)
-                handlePage()
             Case 100
                 'Keypad 4
                 appendToCharSet(4)
-                handlePage()
             Case 101
                 'Keypad 5
                 appendToCharSet(5)
-                handlePage()
             Case 102
                 'Keypad 6
                 appendToCharSet(6)
-                handlePage()
             Case 103
                 'Keypad 7
                 appendToCharSet(7)
-                handlePage()
             Case 104
                 'Keypad 8
                 appendToCharSet(8)
-                handlePage()
             Case 105
                 'Keypad 9
                 appendToCharSet(9)
-                handlePage()
             Case 110
                 'Keypad dot
                 dothandler()
             Case 107
                 '+ pressed
-                If (charset.Length >= 3 Or (punctMode And charset.Length >= 2)) Then
+                If isSelecting Then
                     appendToCharSet(0)
-                    handlePage()
                 End If
             Case 109
                 '- pressed
-                If (charset.Length > 3 Or (punctMode And charset.Length > 2)) Then
-                    charset = charset.Substring(0, charset.Length - 1)
-                    handlePage()
+                If isSelecting Then
+                    appendToCharSet(-1)
                 End If
             Case 111
                 '/ pressed (Keypad)
                 ToggleInputWindow()
         End Select
         largeUI.updateUIbyCharCode(charset)
-        Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Homophonic: " & homoMode & ",Keycode" & keycode)
+        'Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Homophonic: " & homoMode & ",Keycode" & keycode)
 
     End Sub
 
