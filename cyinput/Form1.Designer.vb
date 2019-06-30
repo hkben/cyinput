@@ -63,6 +63,7 @@ Partial Class Form1
         Me.ExitAppItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.onLoadHide = New System.Windows.Forms.Timer(Me.components)
         Me.scrollLockListener = New System.Windows.Forms.Timer(Me.components)
+        Me.TempFolderChecker = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -414,6 +415,10 @@ Partial Class Form1
         'scrollLockListener
         '
         '
+        'TempFolderChecker
+        '
+        Me.TempFolderChecker.Interval = 1000
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
@@ -505,4 +510,5 @@ Partial Class Form1
     Friend WithEvents onLoadHide As Timer
     Friend WithEvents useScrollLockInstead As ToolStripMenuItem
     Friend WithEvents scrollLockListener As Timer
+    Friend WithEvents TempFolderChecker As Timer
 End Class

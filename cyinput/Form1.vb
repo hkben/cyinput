@@ -41,8 +41,13 @@ Public Class Form1
     'Scaling factor controls
     Dim defaultPictureboxSize As Integer = 30
     Dim currentSize = 0
+
     'currentSize = 0 means it is in mini state
     'currentSize = 1 means it is in normal state (larger than default)
+
+    'Temp files checking variables
+    Dim tempFilelistOriginal As String()
+    Dim temppath As String = IO.Path.GetTempPath.ToString & "cyinput\"
 
     Private Function appendToCharSet(number As String)
 
@@ -384,8 +389,13 @@ Public Class Form1
     End Sub
 
     Private Sub unzippingToTemp()
-        Dim temppath As String = IO.Path.GetTempPath.ToString & "cyinput\"
         If My.Computer.FileSystem.DirectoryExists(IO.Path.GetTempPath.ToString & "cyinput\") = False Then
+            'If cyinput directory do not exists, create one.
+            My.Computer.FileSystem.CreateDirectory(temppath)
+        Else
+            'If the directory already exists, remove it and create a new one. This can prevent any problem left due to Windows 10 Hibernation Mode
+            'Yes, Windows are problematic.
+            My.Computer.FileSystem.DeleteDirectory(temppath, FileIO.DeleteDirectoryOption.DeleteAllContents)
             My.Computer.FileSystem.CreateDirectory(temppath)
         End If
 
@@ -403,7 +413,17 @@ Public Class Form1
             ZipFile.ExtractToDirectory(temppath & "lui.zip", temppath)
         End If
 
+        'Build the filelist for compare
+        tempFilelistOriginal = recursiveListFile(temppath)
+        TempFolderChecker.Enabled = True
     End Sub
+
+    Private Function recursiveListFile(dir As String)
+        On Error Resume Next 'To prevent permission error
+        Dim fileList As String()
+        fileList = IO.Directory.GetFiles(dir, "*.*", IO.SearchOption.AllDirectories)
+        Return fileList
+    End Function
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         On Error Resume Next
@@ -948,4 +968,23 @@ Public Class Form1
             ToggleInputWindow()
         End If
     End Sub
+
+    Private Sub TempFolderChecker_Tick(sender As Object, e As EventArgs) Handles TempFolderChecker.Tick
+        If checkTempImageAllExists() = False Then
+            'Something missing. Restart the application
+            Application.Restart()
+        End If
+    End Sub
+
+    Private Function checkTempImageAllExists()
+        Dim currentTempList As String() = recursiveListFile(temppath)
+        'Compare the currentTempList to the original temp list. If the list is difference (aka some file is missing, return false)
+        Dim allFileExists = True
+        For Each file As String In tempFilelistOriginal
+            If Array.IndexOf(currentTempList, file) = -1 Then
+                allFileExists = False
+            End If
+        Next
+        Return allFileExists
+    End Function
 End Class
