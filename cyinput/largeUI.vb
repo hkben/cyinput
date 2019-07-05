@@ -128,7 +128,41 @@
         l8.Parent = PictureBox2
         l9.Location = PictureBox2.PointToClient(Me.PointToScreen(l9.Location))
         l9.Parent = PictureBox2
+
+
+        If My.Computer.Info.OSVersion = "6.2.9200.0" Then
+            'Unknown reason caused all items to shift left on this version of Windows 8.1. Fixing it with exceptional patches
+            ApplyWin8ThemeBugPatch()
+        End If
     End Sub
+
+    Private Sub ApplyWin8ThemeBugPatch()
+        shiftAllLabels(18, 0)
+
+    End Sub
+
+    Private Sub shiftAllLabels(x As Integer, y As Integer)
+        l1.Top += y
+        l2.Top += y
+        l3.Top += y
+        l4.Top += y
+        l5.Top += y
+        l6.Top += y
+        l7.Top += y
+        l8.Top += y
+        l9.Top += y
+
+        l1.Left += x
+        l2.Left += x
+        l3.Left += x
+        l4.Left += x
+        l5.Left += x
+        l6.Left += x
+        l7.Left += x
+        l8.Left += x
+        l9.Left += x
+    End Sub
+
     Dim assoCharSize = False
     Private Sub setAssoCharMode(mode As Boolean)
         If (mode = assoCharSize) Then
