@@ -1,6 +1,9 @@
 <img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/header.png"></img>
 # cyinput
-<img src="https://raw.githubusercontent.com/tobychui/cyinput/master/image/banner.png" width="70%"></img>
+
+<img src="https://img.shields.io/badge/License-GPLv3-%23207de5.svg">
+<img src="https://img.shields.io/badge/Build-Portable-blue.svg">
+<img src="https://img.shields.io/badge/Made%20in-Hong%20Kong-orange.svg">
 
 速型輸入法 - 輕便又免費的開源繁體中文字型輸入法
 
