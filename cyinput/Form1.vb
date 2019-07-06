@@ -16,6 +16,7 @@ Public Class Form1
     Private hkkpp As VBHotkeys.GlobalHotkey
     Private hkkpm As VBHotkeys.GlobalHotkey
     Private hkkpq As VBHotkeys.GlobalHotkey
+    Private hkkps As VBHotkeys.GlobalHotkey
     'Table storage variables
     Public relatedCharTable As String()
     Dim mappedCharTable As String()
@@ -459,6 +460,9 @@ Public Class Form1
         hkkpp = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Add, Me)
         hkkpm = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Subtract, Me)
 
+        'Added in new shortcut mode using *
+        hkkps = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Multiply, Me)
+
         'Add support for toggling to use scoll lock or keypad divide 
         If (useScrollLockKey) Then
             'Use scrollLock for toggling
@@ -515,6 +519,7 @@ Public Class Form1
         'Register the + and - button as well
         hkkpp.Register()
         hkkpm.Register()
+        hkkps.Register()
         'Loading logical program section
         LoadTable()
         Me.TopLevel = True
@@ -576,6 +581,14 @@ Public Class Form1
                 '- pressed
                 If isSelecting Then
                     appendToCharSet(-1)
+                End If
+            Case 106
+                '* pressed
+                MsgBox("This function is work in progress.")
+                If shortcuts.visable = True Then
+                    shortcuts.setVisable(False)
+                Else
+                    shortcuts.setVisable(True)
                 End If
             Case 111
                 '/ pressed (Keypad)
@@ -651,6 +664,10 @@ Public Class Form1
             MessageBox.Show("Hotkey failed to unregister!")
         End If
         If Not hkkpm.Unregister() Then
+            MessageBox.Show("Hotkey failed to unregister!")
+        End If
+
+        If Not hkkps.Unregister() Then
             MessageBox.Show("Hotkey failed to unregister!")
         End If
 

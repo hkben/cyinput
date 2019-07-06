@@ -18,6 +18,9 @@
             newpoint.X -= (xpos1)
             newpoint.Y -= (ypos1)
             Me.Location = newpoint
+            If shortcuts.visable Then
+                shortcuts.adjustThisFormLocation(newpoint)
+            End If
             My.Settings.startPositionTop = Top
             My.Settings.startPositionLeft = Left
             My.Settings.numberOfMonitors = Screen.AllScreens.Length
