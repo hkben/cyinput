@@ -130,7 +130,7 @@
         l9.Parent = PictureBox2
 
 
-        If My.Computer.Info.OSVersion = "6.2.9200.0" Then
+        If My.Computer.Info.OSVersion = "6.2.9200.0" And My.Computer.Info.OSFullName.Contains("Windows 8.1") Then
             'Unknown reason caused all items to shift left on this version of Windows 8.1. Fixing it with exceptional patches
             ApplyWin8ThemeBugPatch()
         End If
