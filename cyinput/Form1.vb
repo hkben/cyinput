@@ -584,7 +584,8 @@ Public Class Form1
                 End If
             Case 106
                 '* pressed
-                MsgBox("This function is work in progress.")
+                Return
+                'This function is work in progress. Remove the return above to perform testing
                 If shortcuts.visable = True Then
                     shortcuts.setVisable(False)
                 Else
