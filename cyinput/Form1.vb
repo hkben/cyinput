@@ -426,9 +426,37 @@ Public Class Form1
         Return fileList
     End Function
 
+    Private Sub loadSettingsFromConfigFile()
+        Dim reader As StreamReader = My.Computer.FileSystem.OpenTextFileReader(Application.StartupPath & "/" & "settings.conf")
+        Dim a As String
+        Do
+            a = reader.ReadLine
+            Dim tmp As String() = a.Split("=")
+            Dim configName = tmp(0)
+            Dim configVal = tmp(1)
+            For Each value As Configuration.SettingsPropertyValue In My.Settings.PropertyValues
+                If (value.Name = configName) Then
+                    value.PropertyValue = configVal
+                End If
+            Next
+        Loop Until a Is Nothing
+        My.Settings.Save()
+        reader.Close()
+    End Sub
+
+    Public Sub saveSettings()
+        If My.Settings.usbMode = True Then
+            exportSettingsAsFile()
+        End If
+    End Sub
+
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         On Error Resume Next
         unzippingToTemp()
+
+        If My.Computer.FileSystem.FileExists(Application.StartupPath & "/" & "settings.conf") Then
+            loadSettingsFromConfigFile()
+        End If
 
         'Creating a system border to make it easier to be found when it is used on top of Window's file explorer
         Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
@@ -499,6 +527,11 @@ Public Class Form1
             NormalSizedToggle.Checked = False
         End If
 
+        'Check if USB mode is enabled. If yes, update the checkbox
+        If My.Settings.usbMode = True Then
+            enableUSB.Checked = True
+            disableUSB.Checked = False
+        End If
     End Sub
 
     Private Sub OnInputEnable()
@@ -771,6 +804,7 @@ Public Class Form1
         'Save selected mode to settings
         My.Settings.outputMode = mode
         My.Settings.Save()
+        saveSettings()
     End Sub
 
     Private Sub UpdateMenuCheckState()
@@ -815,6 +849,7 @@ Public Class Form1
         My.Settings.startPositionLeft = Left
         My.Settings.numberOfMonitors = Screen.AllScreens.Length
         My.Settings.Save()
+        saveSettings()
 
     End Sub
 
@@ -824,6 +859,7 @@ Public Class Form1
         啟用ToolStripMenuItem.Checked = False
         停用ToolStripMenuItem.Checked = True
         My.Settings.Save()
+        saveSettings()
     End Sub
 
     Private Sub 啟用ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 啟用ToolStripMenuItem.Click
@@ -831,6 +867,7 @@ Public Class Form1
         啟用ToolStripMenuItem.Checked = True
         停用ToolStripMenuItem.Checked = False
         My.Settings.Save()
+        saveSettings()
     End Sub
 
     Private Sub ResetWindowPositionItem_Click(sender As Object, e As EventArgs) Handles ResetWindowPositionItem.Click
@@ -856,6 +893,7 @@ Public Class Form1
             currentSize = 1
             My.Settings.startSize = 1
             My.Settings.Save()
+            saveSettings()
         End If
 
     End Sub
@@ -936,6 +974,7 @@ Public Class Form1
             currentSize = 0
             My.Settings.startSize = 0
             My.Settings.Save()
+            saveSettings()
         End If
 
     End Sub
@@ -951,6 +990,7 @@ Public Class Form1
         currentSize = 1
         My.Settings.startSize = 1
         My.Settings.Save()
+        saveSettings()
     End Sub
 
     Private Sub showLargeUI()
@@ -975,6 +1015,7 @@ Public Class Form1
             My.Settings.useScrollLockInstead = True
         End If
         My.Settings.Save()
+        saveSettings()
         System.Windows.Forms.Application.Restart()
     End Sub
 
@@ -1005,4 +1046,39 @@ Public Class Form1
         Next
         Return allFileExists
     End Function
+
+    Private Sub enableUSB_Click(sender As Object, e As EventArgs) Handles enableUSB.Click
+        My.Settings.usbMode = True
+        My.Settings.Save()
+        'Update menu selection state
+        enableUSB.Checked = True
+        disableUSB.Checked = False
+        exportSettingsAsFile()
+    End Sub
+
+    Private Sub disableUSB_Click(sender As Object, e As EventArgs) Handles disableUSB.Click
+        My.Settings.usbMode = False
+        My.Settings.Save()
+        'Update menu selection state
+        enableUSB.Checked = False
+        disableUSB.Checked = True
+        If My.Computer.FileSystem.FileExists(Application.StartupPath & "/" & "settings.conf") Then
+            My.Computer.FileSystem.DeleteFile(Application.StartupPath & "/" & "settings.conf")
+        End If
+    End Sub
+
+    Private Sub exportSettingsAsFile()
+        Dim sb As New System.Text.StringBuilder
+        For Each value As Configuration.SettingsPropertyValue In My.Settings.PropertyValues
+            sb.AppendLine(value.Name & "=" & value.PropertyValue.ToString)
+        Next
+        Dim file As System.IO.StreamWriter
+        file = My.Computer.FileSystem.OpenTextFileWriter(Application.StartupPath & "/" & "settings.conf", False)
+        file.Write(sb.ToString.Trim)
+        file.Close()
+    End Sub
+
+    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+        about.Show()
+    End Sub
 End Class

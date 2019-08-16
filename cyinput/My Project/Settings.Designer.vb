@@ -137,6 +137,18 @@ Namespace My
                 Me("useScrollLockInstead") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property usbMode() As Boolean
+            Get
+                Return CType(Me("usbMode"),Boolean)
+            End Get
+            Set
+                Me("usbMode") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

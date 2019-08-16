@@ -25,9 +25,13 @@
             My.Settings.startPositionLeft = Left
             My.Settings.numberOfMonitors = Screen.AllScreens.Length
             My.Settings.Save()
+
         End If
     End Sub
 
+    Private Sub Panel1_MouseUp(sender As Object, e As MouseEventArgs) Handles Panel1.MouseUp, Label1.MouseUp
+        Form1.saveSettings()
+    End Sub
     Public Sub updateUIbyCharCode(charcode As String)
 
         If Form1.isSelecting Then
@@ -260,4 +264,5 @@
             Form1.enterHomophonicMode(labelString)
         End If
     End Sub
+
 End Class

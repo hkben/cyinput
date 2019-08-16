@@ -73,3 +73,5 @@ C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.exe
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.pdb
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.vbprojResolveAssemblyReference.cache
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.shortcuts.resources
+C:\Users\Toby Chui\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.shortcuts.resources
+C:\Users\Toby Chui\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.about.resources
