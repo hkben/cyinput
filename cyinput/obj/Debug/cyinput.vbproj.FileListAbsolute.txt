@@ -71,7 +71,10 @@ C:\Users\Toby\Documents\GitHub\cyinput\cyinput\bin\Debug\cyinput.xml
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\bin\Debug\VBHotkeyLib.dll
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.exe
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.pdb
-C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.vbprojResolveAssemblyReference.cache
 C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.shortcuts.resources
 C:\Users\Toby Chui\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.shortcuts.resources
 C:\Users\Toby Chui\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.about.resources
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.vbprojAssemblyReference.cache
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\svchost.about.resources
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.vbproj.CoreCompileInputs.cache
+C:\Users\Toby\Documents\GitHub\cyinput\cyinput\obj\Debug\cyinput.vbproj.CopyComplete

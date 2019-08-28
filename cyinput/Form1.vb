@@ -369,7 +369,6 @@ Public Class Form1
     End Function
 
     Private Sub dothandler(Optional reset As Boolean = False)
-
         If charset.Length = 0 And lastusedword <> "" And isSelecting = False And reset = False Then
             'Punct mode
             enterPunctMode()
@@ -378,6 +377,7 @@ Public Class Form1
 
         'Reset
         isSelecting = False
+        lastusedword = ""
         charset = ""
         paintPictureBoxes(0)
         showPicturebox()
@@ -387,6 +387,7 @@ Public Class Form1
         drawText()
         Label10.Text = "標點"
         Label11.Text = "取消"
+        largeUI.updateUIbyCharCode(charset)
     End Sub
 
     Private Sub unzippingToTemp()
