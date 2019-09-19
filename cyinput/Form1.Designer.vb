@@ -54,9 +54,16 @@ Partial Class Form1
         Me.啟用ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.停用ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.視窗設定ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.縮放ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.MsizeToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.NormalSizedToggle = New System.Windows.Forms.ToolStripMenuItem()
         Me.ToggleToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ResetWindowPositionItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.useScrollLockInstead = New System.Windows.Forms.ToolStripMenuItem()
         Me.ExitAppItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.onLoadHide = New System.Windows.Forms.Timer(Me.components)
+        Me.scrollLockListener = New System.Windows.Forms.Timer(Me.components)
+        Me.TempFolderChecker = New System.Windows.Forms.Timer(Me.components)
         CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox2, System.ComponentModel.ISupportInitialize).BeginInit()
         CType(Me.PictureBox3, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -177,6 +184,7 @@ Partial Class Form1
         Me.Label10.Size = New System.Drawing.Size(32, 17)
         Me.Label10.TabIndex = 10
         Me.Label10.Text = "標點"
+        Me.Label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
         '
         'Label11
         '
@@ -340,22 +348,49 @@ Partial Class Form1
         '
         '視窗設定ToolStripMenuItem
         '
-        Me.視窗設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToggleToolStripMenuItem, Me.ResetWindowPositionItem})
+        Me.視窗設定ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.縮放ToolStripMenuItem, Me.ToggleToolStripMenuItem, Me.ResetWindowPositionItem, Me.useScrollLockInstead})
         Me.視窗設定ToolStripMenuItem.Name = "視窗設定ToolStripMenuItem"
         Me.視窗設定ToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
         Me.視窗設定ToolStripMenuItem.Text = "視窗設定"
         '
+        '縮放ToolStripMenuItem
+        '
+        Me.縮放ToolStripMenuItem.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.MsizeToolStripMenuItem, Me.NormalSizedToggle})
+        Me.縮放ToolStripMenuItem.Name = "縮放ToolStripMenuItem"
+        Me.縮放ToolStripMenuItem.Size = New System.Drawing.Size(211, 22)
+        Me.縮放ToolStripMenuItem.Text = "縮放"
+        '
+        'MsizeToolStripMenuItem
+        '
+        Me.MsizeToolStripMenuItem.Checked = True
+        Me.MsizeToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.MsizeToolStripMenuItem.Name = "MsizeToolStripMenuItem"
+        Me.MsizeToolStripMenuItem.Size = New System.Drawing.Size(100, 22)
+        Me.MsizeToolStripMenuItem.Text = "迷你"
+        '
+        'NormalSizedToggle
+        '
+        Me.NormalSizedToggle.Name = "NormalSizedToggle"
+        Me.NormalSizedToggle.Size = New System.Drawing.Size(100, 22)
+        Me.NormalSizedToggle.Text = "正常"
+        '
         'ToggleToolStripMenuItem
         '
         Me.ToggleToolStripMenuItem.Name = "ToggleToolStripMenuItem"
-        Me.ToggleToolStripMenuItem.Size = New System.Drawing.Size(180, 22)
+        Me.ToggleToolStripMenuItem.Size = New System.Drawing.Size(211, 22)
         Me.ToggleToolStripMenuItem.Text = "顯示 / 隱藏"
         '
         'ResetWindowPositionItem
         '
         Me.ResetWindowPositionItem.Name = "ResetWindowPositionItem"
-        Me.ResetWindowPositionItem.Size = New System.Drawing.Size(180, 22)
+        Me.ResetWindowPositionItem.Size = New System.Drawing.Size(211, 22)
         Me.ResetWindowPositionItem.Text = "重置視窗位置"
+        '
+        'useScrollLockInstead
+        '
+        Me.useScrollLockInstead.Name = "useScrollLockInstead"
+        Me.useScrollLockInstead.Size = New System.Drawing.Size(211, 22)
+        Me.useScrollLockInstead.Text = "使用 ScrollLock 作隱藏鍵"
         '
         'ExitAppItem
         '
@@ -363,9 +398,19 @@ Partial Class Form1
         Me.ExitAppItem.Size = New System.Drawing.Size(180, 22)
         Me.ExitAppItem.Text = "關閉輸入法"
         '
+        'onLoadHide
+        '
+        '
+        'scrollLockListener
+        '
+        '
+        'TempFolderChecker
+        '
+        Me.TempFolderChecker.Interval = 1000
+        '
         'Form1
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(9.0!, 19.0!)
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 15.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.White
         Me.ClientSize = New System.Drawing.Size(55, 80)
@@ -390,10 +435,10 @@ Partial Class Form1
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
         Me.Cursor = System.Windows.Forms.Cursors.SizeAll
-        Me.Font = New System.Drawing.Font("微軟正黑體", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
+        Me.Font = New System.Drawing.Font("細明體_HKSCS", 11.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(136, Byte))
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
-        Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.Margin = New System.Windows.Forms.Padding(4)
         Me.MaximizeBox = False
         Me.MaximumSize = New System.Drawing.Size(55, 80)
         Me.MinimizeBox = False
@@ -448,5 +493,12 @@ Partial Class Form1
     Friend WithEvents 停用ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents 視窗設定ToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ResetWindowPositionItem As ToolStripMenuItem
+    Friend WithEvents 縮放ToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents MsizeToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ToggleToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents NormalSizedToggle As ToolStripMenuItem
+    Friend WithEvents onLoadHide As Timer
+    Friend WithEvents useScrollLockInstead As ToolStripMenuItem
+    Friend WithEvents scrollLockListener As Timer
+    Friend WithEvents TempFolderChecker As Timer
 End Class

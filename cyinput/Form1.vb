@@ -16,20 +16,22 @@ Public Class Form1
     Private hkkpp As VBHotkeys.GlobalHotkey
     Private hkkpm As VBHotkeys.GlobalHotkey
     Private hkkpq As VBHotkeys.GlobalHotkey
+    Private hkkps As VBHotkeys.GlobalHotkey
     'Table storage variables
-    Dim relatedCharTable As String()
+    Public relatedCharTable As String()
     Dim mappedCharTable As String()
     Dim cj5_mapping As String()
     Dim b5xp_mapping As String()
+    Public homograph_mapping As String()
     'Logical Processing Variables
     Dim charset As String = ""
     Dim table As String()
-    Dim assoicateMode As Boolean = False
-    Dim punctMode As Boolean = False
     Dim textArray As New ArrayList
     Dim showingTextArrayIndex As Integer = 0
-    Dim lastusedword As String = ""
+    Dim useScrollLockKey As Boolean = My.Settings.useScrollLockInstead
+    Public lastusedword As String = ""
     Dim cj5buffer As String = ""
+    Public isSelecting As Boolean = False
 
     Dim drag As Boolean
     Dim mouseX As Integer
@@ -40,12 +42,47 @@ Public Class Form1
     'Scaling factor controls
     Dim defaultPictureboxSize As Integer = 30
     Dim currentSize = 0
+
     'currentSize = 0 means it is in mini state
     'currentSize = 1 means it is in normal state (larger than default)
 
+    'Temp files checking variables
+    Dim tempFilelistOriginal As String()
+    Dim temppath As String = IO.Path.GetTempPath.ToString & "cyinput\"
+
     Private Function appendToCharSet(number As String)
+
+        If isSelecting = True Then
+            'Special Case "09" 
+            If charset = "0" And number = "9" Then
+                charset = "09"
+                handlePage()
+                Return False
+            End If
+
+            '-1 = Last Page , 0 = Next Page , 1-9 = SelectedWord
+            If number <= 0 Then
+
+                If number = 0 Then
+                    showingTextArrayIndex += 9
+                ElseIf number = -1 Then
+                    showingTextArrayIndex -= 9
+                End If
+
+                'Go to Update Text Directly
+                drawText()
+            ElseIf number <> 0 Or number <> -1 Then
+                'If not last or next page , then its selecting word
+                SendWord(number)
+            End If
+
+            Return False
+        End If
+
+        'Default 
         charset = charset & number.ToString
-        Return charset.ToString
+        handlePage()
+        Return False
     End Function
 
     Private Sub LoadTable()
@@ -55,6 +92,7 @@ Public Class Form1
         mappedCharTable = My.Resources.mapped_char.Split(arg, StringSplitOptions.None)
         cj5_mapping = My.Resources.cj5_map.Split(arg, StringSplitOptions.None)
         b5xp_mapping = My.Resources.b5xp_map.Split(arg, StringSplitOptions.None)
+        homograph_mapping = My.Resources.mapped_homograph.Split(arg, StringSplitOptions.None)
         textArray.Clear()
         textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
         drawText()
@@ -85,207 +123,102 @@ Public Class Form1
         PictureBox8.Visible = False
         PictureBox9.Visible = False
     End Sub
-    Private Sub handlePage()
-        If charset.Length = 1 Then
-            If charset = "0" Then
-                If lastusedword = "" Then
-                    'Not typing any thing yet
-                    punctMode = True
-                    Dim wordlist As String = getWordList()
-                    textArray.Clear()
-                    For Each c As Char In wordlist
-                        textArray.Add(c.ToString)
-                    Next
-                    showingTextArrayIndex = 0
-                    drawText()
-                    hidePicturebox()
-                    Label10.Text = "下頁"
-                    Label11.Text = "取消"
-                    Console.WriteLine("Punct Mode Enabled")
-                Else
-                    'Select related char
-                    hidePicturebox()
-                    assoicateMode = True
-                    lastusedword = ""
-                    Label10.Text = "下頁"
-                    Label11.Text = "取消"
-                    Console.WriteLine("Selecting Assoicated Word")
-                End If
 
+    Private Sub SendWord(selectedPos As Byte)
+        Dim wordtosend As String = ""
+        Select Case selectedPos
+            Case 1
+                wordtosend = (Label7.Text)
+            Case 2
+                wordtosend = (Label8.Text)
+            Case 3
+                wordtosend = (Label9.Text)
+            Case 4
+                wordtosend = (Label4.Text)
+            Case 5
+                wordtosend = (Label5.Text)
+            Case 6
+                wordtosend = (Label6.Text)
+            Case 7
+                wordtosend = (Label1.Text)
+            Case 8
+                wordtosend = (Label2.Text)
+            Case 9
+                wordtosend = (Label3.Text)
+        End Select
+        SendOut(wordtosend)
+        lastusedword = wordtosend
+        handleNextWord()
+
+        isSelecting = False
+    End Sub
+
+    Private Sub loadWords(Optional mode As Short = 0)
+        isSelecting = True
+
+        Dim wordlist As String = ""
+
+        If mode = 0 Then
+            'load from mappedChar
+            wordlist = getWordList()
+        ElseIf mode = 1 Then
+            'load from AssoicatedWords
+            wordlist = loadAssoicatedWords()
+        End If
+
+        textArray.Clear()
+        For Each c As Char In wordlist
+            textArray.Add(c.ToString)
+        Next
+        drawText()
+        hidePicturebox()
+        Label10.Text = "下頁"
+        Label11.Text = "取消"
+    End Sub
+
+    Private Sub handlePage()
+
+        If charset = "0" Then
+            If lastusedword = "" Then
+                'Not typing any thing yet
+                loadWords()
+                Console.WriteLine("Punct Mode Enabled")
             Else
-                paintPictureBoxes(charset)
-                showPicturebox()
-                Label10.Text = "  "
-                Label11.Text = "取消"
+                'Select related char
+                loadWords(1)
+                charset = ""
+                Console.WriteLine("Selecting Assoicated Word")
             End If
-        ElseIf charset.Length = 2 And punctMode = False And assoicateMode = False Then
+            Return
+        End If
+
+        If charset.Length = 1 Then
+            paintPictureBoxes(charset)
+            showPicturebox()
+            Label10.Text = "姓氏"
+            Label11.Text = "取消"
+            Return
+        End If
+
+        If charset.Length = 2 Then
+            'All Last Name Mode Ends with 0  , 09 is special case
             If charset.Substring(charset.Length - 1, 1) = "0" Then
-                'First name system is not enabled on this version of cyinput
-                charset = charset.Substring(0, 1)
+                loadWords()
+            ElseIf charset = "09" Then
+                loadWords()
             Else
                 'Typing normally
                 paintPictureBoxes(0)
                 showPicturebox()
-                textArray.Clear()
-                drawText()
                 Label10.Text = "確定"
                 Label11.Text = "取消"
             End If
+            Return
+        End If
 
-        ElseIf charset.Length = 2 And punctMode = False And assoicateMode = True Then
-            'Selecting Assoicated Word
-            Dim selectedPos = charset.Substring(charset.Length - 1, 1)
-            Dim wordtosend As String = ""
-            Select Case selectedPos
-                Case 1
-                    wordtosend = (Label7.Text)
-                Case 2
-                    wordtosend = (Label8.Text)
-                Case 3
-                    wordtosend = (Label9.Text)
-                Case 4
-                    wordtosend = (Label4.Text)
-                Case 5
-                    wordtosend = (Label5.Text)
-                Case 6
-                    wordtosend = (Label6.Text)
-                Case 7
-                    wordtosend = (Label1.Text)
-                Case 8
-                    wordtosend = (Label2.Text)
-                Case 9
-                    wordtosend = (Label3.Text)
-            End Select
-            SendOut(wordtosend)
-            lastusedword = wordtosend
-            handleNextWord()
-            assoicateMode = False
-
-
-        ElseIf charset.Length = 2 And punctMode = True Then
-            'Choosing punctuation from the list
-            If charset.Substring(charset.Length - 1, 1) = "9" Then
-                'Choosing advance punct mode (09)
-                Dim wordlist As String = getWordList()
-                textArray.Clear()
-                For Each c As Char In wordlist
-                    textArray.Add(c.ToString)
-                Next
-                showingTextArrayIndex = 0
-                drawText()
-                hidePicturebox()
-                Label10.Text = "下頁"
-                Label11.Text = "取消"
-            Else
-                'Select and send the selected punct
-                Dim selectedPos As Integer = charset.Substring(charset.Length - 1, 1)
-                Dim wordtosend As String = "*"
-                Select Case selectedPos
-                    Case 1
-                        wordtosend = (Label7.Text)
-                    Case 2
-                        wordtosend = (Label8.Text)
-                    Case 3
-                        wordtosend = (Label9.Text)
-                    Case 4
-                        wordtosend = (Label4.Text)
-                    Case 5
-                        wordtosend = (Label5.Text)
-                    Case 6
-                        wordtosend = (Label6.Text)
-                    Case 7
-                        wordtosend = (Label1.Text)
-                    Case 8
-                        wordtosend = (Label2.Text)
-                End Select
-                SendOut(wordtosend)
-                lastusedword = ""
-                dothandler()
-                punctMode = False
-            End If
-
-        ElseIf charset.Length = 3 And punctMode = False Then
-            'Typing normal text in 3rd stage
-            Dim wordlist As String = getWordList()
-            textArray.Clear()
-            For Each c As Char In wordlist
-                textArray.Add(c.ToString)
-            Next
-            showingTextArrayIndex = 0
-            drawText()
-            hidePicturebox()
-            Label10.Text = "下頁"
-            Label11.Text = "取消"
-
-        ElseIf charset.Length = 3 And punctMode = True Then
-            'Selecting punct in 09 mode
-            If charset.Substring(charset.Length - 1, 1) = "0" Then
-                showingTextArrayIndex += 9
-                drawText()
-            Else
-                Dim selectedPos As Integer = charset.Substring(charset.Length - 1, 1)
-                Dim wordtosend As String = ""
-                Select Case selectedPos
-                    Case 1
-                        wordtosend = (Label7.Text)
-                    Case 2
-                        wordtosend = (Label8.Text)
-                    Case 3
-                        wordtosend = (Label9.Text)
-                    Case 4
-                        wordtosend = (Label4.Text)
-                    Case 5
-                        wordtosend = (Label5.Text)
-                    Case 6
-                        wordtosend = (Label6.Text)
-                    Case 7
-                        wordtosend = (Label1.Text)
-                    Case 8
-                        wordtosend = (Label2.Text)
-                    Case 9
-                        wordtosend = (Label3.Text)
-                End Select
-                SendOut(wordtosend)
-                lastusedword = ""
-                dothandler()
-                punctMode = False
-            End If
-        Else
-            If charset.Substring(charset.Length - 1, 1) = "0" Then
-                'Next page in word selection
-                showingTextArrayIndex += 9
-                drawText()
-            Else
-                'Send the selected word
-                Dim selectedPos As Integer = charset.Substring(charset.Length - 1, 1)
-                Dim wordtosend As String = ""
-                Select Case selectedPos
-                    Case 1
-                        wordtosend = (Label7.Text)
-                    Case 2
-                        wordtosend = (Label8.Text)
-                    Case 3
-                        wordtosend = (Label9.Text)
-                    Case 4
-                        wordtosend = (Label4.Text)
-                    Case 5
-                        wordtosend = (Label5.Text)
-                    Case 6
-                        wordtosend = (Label6.Text)
-                    Case 7
-                        wordtosend = (Label1.Text)
-                    Case 8
-                        wordtosend = (Label2.Text)
-                    Case 9
-                        wordtosend = (Label3.Text)
-                End Select
-                SendOut(wordtosend)
-                lastusedword = wordtosend
-                handleNextWord()
-                If punctMode = True Then
-                    punctMode = False
-                End If
-            End If
+        If charset.Length = 3 Then
+            loadWords()
+            Return
         End If
 
     End Sub
@@ -304,13 +237,13 @@ Public Class Form1
         Label11.Text = "標點"
     End Sub
 
-    Private Function loadAssoicatedWords()
+    Public Function loadAssoicatedWords()
         Dim target As String = lastusedword
         Dim returnvalue As String = "個能的到資就你這好"
         For Each i As String In relatedCharTable
-            If i.Length > 2 Then
-                If i.Substring(1, 1).Contains(target) Then
-                    i = i.Substring(2, i.Length - 2)
+            If i.Length > 1 Then
+                If i.Substring(0, 1).Contains(target) Then
+                    i = i.Substring(1, i.Length - 1)
                     If i.Length < returnvalue.Length Then
                         returnvalue = i & returnvalue.Substring(i.Length, returnvalue.Length - i.Length)
                         Return returnvalue
@@ -369,7 +302,6 @@ Public Class Form1
             sp = 0
             showingTextArrayIndex = 0
         End If
-
         Label7.Text = textArray(sp)
         Label8.Text = textArray(sp + 1)
         Label9.Text = textArray(sp + 2)
@@ -379,90 +311,124 @@ Public Class Form1
         Label1.Text = textArray(sp + 6)
         Label2.Text = textArray(sp + 7)
         Label3.Text = textArray(sp + 8)
+
+        'Update text on largeUI as well, filter the stars icon to nothing (Empty string). Only do filtering on large UI
+        largeUI.l1.Text = filterStarToEmptyString(textArray(sp))
+        largeUI.l2.Text = filterStarToEmptyString(textArray(sp + 1))
+        largeUI.l3.Text = filterStarToEmptyString(textArray(sp + 2))
+        largeUI.l4.Text = filterStarToEmptyString(textArray(sp + 3))
+        largeUI.l5.Text = filterStarToEmptyString(textArray(sp + 4))
+        largeUI.l6.Text = filterStarToEmptyString(textArray(sp + 5))
+        largeUI.l7.Text = filterStarToEmptyString(textArray(sp + 6))
+        largeUI.l8.Text = filterStarToEmptyString(textArray(sp + 7))
+        largeUI.l9.Text = filterStarToEmptyString(textArray(sp + 8))
     End Sub
 
+    Private Function filterStarToEmptyString(inString As String)
+        If (inString = "*") Then
+            Return ""
+        Else
+            Return inString
+        End If
+    End Function
+
     Private Sub enterPunctMode()
-        punctMode = True
+        lastusedword = ""
         charset = "0"
-        Dim wordlist As String = getWordList()
+        handlePage()
+    End Sub
+
+    Public Sub enterHomophonicMode(keyword As String)
+        isSelecting = True
+        charset = "h"
+        Dim wordlist As String = searchHomophonicWords(keyword)
         textArray.Clear()
         For Each c As Char In wordlist
             textArray.Add(c.ToString)
         Next
+        While textArray.Count < 9
+            textArray.Add("*")
+        End While
         showingTextArrayIndex = 0
         drawText()
         hidePicturebox()
         Label10.Text = "下頁"
         Label11.Text = "取消"
-        Console.WriteLine("Punct Mode Enabled")
+        Console.WriteLine("Homophonic Mode Enabled")
     End Sub
-    Private Sub dothandler(Optional reset As Boolean = False)
-        If charset.Length > 0 Or reset Then
-            If lastusedword = "" And assoicateMode = False And punctMode = False Then
-                'Reset
-                charset = ""
-                lastusedword = ""
-                paintPictureBoxes(0)
-                showPicturebox()
-                textArray.Clear()
-                textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
-                showingTextArrayIndex = 0
-                drawText()
-                Label10.Text = "標點"
-                Label11.Text = "取消"
-            ElseIf assoicateMode = True Then
-                'Cancel associate mode and return to default
-                assoicateMode = False
-                charset = ""
-                paintPictureBoxes(0)
-                showPicturebox()
-                textArray.Clear()
-                textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
-                showingTextArrayIndex = 0
-                drawText()
-                Label10.Text = "標點"
-                Label11.Text = "取消"
-            Else
-                'Cancel punct mode
-                charset = ""
-                paintPictureBoxes(0)
-                showPicturebox()
-                textArray.Clear()
-                textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
-                showingTextArrayIndex = 0
-                drawText()
-                lastusedword = ""
-                punctMode = False
-                Label10.Text = "標點"
-                Label11.Text = "取消"
 
-
+    Public Function searchHomophonicWords(keyword As String)
+        For Each searchIndex As String In homograph_mapping
+            Dim tmp = searchIndex.Split(" ")
+            Dim thisKey = tmp(0)
+            If (thisKey = keyword) Then
+                Return tmp(1)
             End If
-        ElseIf charset.Length = 0 And lastusedword <> "" Then
+        Next
+        Return ""
+    End Function
+
+    Private Sub dothandler(Optional reset As Boolean = False)
+
+        If charset.Length = 0 And lastusedword <> "" And isSelecting = False And reset = False Then
             'Punct mode
             enterPunctMode()
-        ElseIf charset.Length = 0 And lastusedword = "" Then
-            'Cancel button, do nothing
-            If punctMode = True Then
-                punctMode = False
-            End If
+            Return
         End If
+
+        'Reset
+        isSelecting = False
+        charset = ""
+        paintPictureBoxes(0)
+        showPicturebox()
+        textArray.Clear()
+        textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
+        showingTextArrayIndex = 0
+        drawText()
+        Label10.Text = "標點"
+        Label11.Text = "取消"
     End Sub
 
     Private Sub unzippingToTemp()
-        Dim temppath As String = IO.Path.GetTempPath.ToString & "cyinput\"
-        My.Computer.FileSystem.CreateDirectory(temppath)
-        Dim b As Byte() = My.Resources.img
-        My.Computer.FileSystem.WriteAllBytes(temppath & "tmp.zip", b, False)
-        ZipFile.ExtractToDirectory(temppath & "tmp.zip", temppath)
+        If My.Computer.FileSystem.DirectoryExists(IO.Path.GetTempPath.ToString & "cyinput\") = False Then
+            'If cyinput directory do not exists, create one.
+            My.Computer.FileSystem.CreateDirectory(temppath)
+        Else
+            'If the directory already exists, remove it and create a new one. This can prevent any problem left due to Windows 10 Hibernation Mode
+            'Yes, Windows are problematic.
+            My.Computer.FileSystem.DeleteDirectory(temppath, FileIO.DeleteDirectoryOption.DeleteAllContents)
+            My.Computer.FileSystem.CreateDirectory(temppath)
+        End If
+
+        'Unzip small UI symbols
+        If My.Computer.FileSystem.DirectoryExists(temppath & "img\") = False Then
+            Dim b As Byte() = My.Resources.img
+            My.Computer.FileSystem.WriteAllBytes(temppath & "tmp.zip", b, False)
+            ZipFile.ExtractToDirectory(temppath & "tmp.zip", temppath)
+        End If
+
+        'Unzip large UI interfaces
+        Dim l As Byte() = My.Resources.lui
+        If My.Computer.FileSystem.DirectoryExists(temppath & "lui\") = False Then
+            My.Computer.FileSystem.WriteAllBytes(temppath & "lui.zip", l, False)
+            ZipFile.ExtractToDirectory(temppath & "lui.zip", temppath)
+        End If
+
+        'Build the filelist for compare
+        tempFilelistOriginal = recursiveListFile(temppath)
+        TempFolderChecker.Enabled = True
     End Sub
+
+    Private Function recursiveListFile(dir As String)
+        On Error Resume Next 'To prevent permission error
+        Dim fileList As String()
+        fileList = IO.Directory.GetFiles(dir, "*.*", IO.SearchOption.AllDirectories)
+        Return fileList
+    End Function
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         On Error Resume Next
-        If My.Computer.FileSystem.DirectoryExists(IO.Path.GetTempPath.ToString & "cyinput\") = False Then
-            'MsgBox(IO.Path.GetTempPath.ToString & "cyinput\")
-            unzippingToTemp()
-        End If
+        unzippingToTemp()
 
         'Create a ding sound to show the process is started.
         If (My.Settings.initSound = True) Then
@@ -488,10 +454,22 @@ Public Class Form1
         'Added in new support for changing page with + and - sign
         hkkpp = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Add, Me)
         hkkpm = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Subtract, Me)
-        hkkpq = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Divide, Me)
 
-        'Register keypad /
-        hkkpq.Register()
+        'Added in new shortcut mode using *
+        hkkps = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Multiply, Me)
+
+        'Add support for toggling to use scoll lock or keypad divide 
+        If (useScrollLockKey) Then
+            'Use scrollLock for toggling
+            scrollLockListener.Enabled = True
+            useScrollLockInstead.Checked = True
+        Else
+            'Use Keypad / as toggling. Register keypad /
+            hkkpq = New VBHotkeys.GlobalHotkey(VBHotkeys.NOMOD, Keys.Divide, Me)
+            hkkpq.Register()
+        End If
+
+
 
         OnInputEnable()
 
@@ -501,6 +479,19 @@ Public Class Form1
                 Top = My.Settings.startPositionTop
                 Left = My.Settings.startPositionLeft
             End If
+        End If
+
+        'Check if the size is set to Normal Mode or Default (mini) mode
+        If My.Settings.startSize = 1 Then
+            'resizeAllElements(1.7, 1, New Size(160, 204), 18, 21)
+            currentSize = 1
+            MsizeToolStripMenuItem.Checked = False
+            NormalSizedToggle.Checked = True
+            showLargeUI()
+            onLoadHide.Enabled = True
+        Else
+            MsizeToolStripMenuItem.Checked = True
+            NormalSizedToggle.Checked = False
         End If
 
     End Sub
@@ -523,6 +514,7 @@ Public Class Form1
         'Register the + and - button as well
         hkkpp.Register()
         hkkpm.Register()
+        hkkps.Register()
         'Loading logical program section
         LoadTable()
         Me.TopLevel = True
@@ -544,65 +536,62 @@ Public Class Form1
     Private Sub HandleHotkey(keycode As Integer)
         Select Case (keycode)
             Case 96
-                'Keypad 0
                 appendToCharSet(0)
-                handlePage()
             Case 97
                 'Keypad 1
                 appendToCharSet(1)
-                handlePage()
             Case 98
                 'Keypad 2
                 appendToCharSet(2)
-                handlePage()
             Case 99
                 'Keypad 3
                 appendToCharSet(3)
-                handlePage()
             Case 100
                 'Keypad 4
                 appendToCharSet(4)
-                handlePage()
             Case 101
                 'Keypad 5
                 appendToCharSet(5)
-                handlePage()
             Case 102
                 'Keypad 6
                 appendToCharSet(6)
-                handlePage()
             Case 103
                 'Keypad 7
                 appendToCharSet(7)
-                handlePage()
             Case 104
                 'Keypad 8
                 appendToCharSet(8)
-                handlePage()
             Case 105
                 'Keypad 9
                 appendToCharSet(9)
-                handlePage()
             Case 110
                 'Keypad dot
                 dothandler()
             Case 107
                 '+ pressed
-                If (charset.Length >= 3 Or (punctMode And charset.Length >= 2)) Then
+                If isSelecting Then
                     appendToCharSet(0)
-                    handlePage()
                 End If
             Case 109
                 '- pressed
-                If (charset.Length > 3 Or (punctMode And charset.Length > 2)) Then
-                    charset = charset.Substring(0, charset.Length - 1)
-                    handlePage()
+                If isSelecting Then
+                    appendToCharSet(-1)
+                End If
+            Case 106
+                '* pressed
+                Return
+                'This function is work in progress. Remove the return above to perform testing
+                If shortcuts.visable = True Then
+                    shortcuts.setVisable(False)
+                Else
+                    shortcuts.setVisable(True)
                 End If
             Case 111
                 '/ pressed (Keypad)
                 ToggleInputWindow()
         End Select
-        Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Keycode" & keycode)
+        largeUI.updateUIbyCharCode(charset)
+        'Console.WriteLine("Charset: " & charset & "," & lastusedword & ", Punct: " & punctMode & ", Assoc: " & assoicateMode & ",Homophonic: " & homoMode & ",Keycode" & keycode)
 
     End Sub
 
@@ -622,9 +611,13 @@ Public Class Form1
             OnInputDisable()
         End If
 
-        If Not hkkpq.Unregister() Then
-            MessageBox.Show("Hotkey failed to unregister!")
+        If Not useScrollLockKey Then
+            If Not hkkpq.Unregister() Then
+                '//Ignore the message and continues.
+                'MessageBox.Show("Hide hotkey failed to unregister.")
+            End If
         End If
+
 
     End Sub
 
@@ -670,6 +663,10 @@ Public Class Form1
             MessageBox.Show("Hotkey failed to unregister!")
         End If
 
+        If Not hkkps.Unregister() Then
+            MessageBox.Show("Hotkey failed to unregister!")
+        End If
+
         cyinputEnable = False
 
     End Sub
@@ -677,9 +674,14 @@ Public Class Form1
     Private Sub ToggleInputWindow()
         If cyinputEnable Then
             Me.Hide()
+            largeUI.Hide()
             OnInputDisable()
         Else
-            Me.Show()
+            If (currentSize = 0) Then
+                Me.Show()
+            Else
+                largeUI.Show()
+            End If
             OnInputEnable()
         End If
     End Sub
@@ -709,6 +711,7 @@ Public Class Form1
 
 
     Private Sub SendOut(text As String)
+        On Error Resume Next
         If text = "*" Then
             'This word do not exists
             Return
@@ -786,20 +789,20 @@ Public Class Form1
 
     End Sub
 
-    Private Sub DragWindow_MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseDown, PictureBox9.MouseDown, PictureBox8.MouseDown, PictureBox7.MouseDown, PictureBox6.MouseDown, PictureBox5.MouseDown, PictureBox4.MouseDown, PictureBox3.MouseDown, PictureBox2.MouseDown, PictureBox1.MouseDown, Label11.MouseDown, Label10.MouseDown
+    Private Sub DragWindow_MouseDown(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseDown, PictureBox9.MouseDown, PictureBox8.MouseDown, PictureBox7.MouseDown, PictureBox6.MouseDown, PictureBox5.MouseDown, PictureBox4.MouseDown, PictureBox3.MouseDown, PictureBox2.MouseDown, PictureBox1.MouseDown, Label11.MouseDown, Label10.MouseDown, Label9.MouseDown, Label8.MouseDown, Label7.MouseDown, Label6.MouseDown, Label5.MouseDown, Label4.MouseDown, Label3.MouseDown, Label2.MouseDown, Label1.MouseDown
         drag = True
         mouseX = Cursor.Position.X - Left
         mouseY = Cursor.Position.Y - Top
     End Sub
 
-    Private Sub DragWindow_MouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseMove, PictureBox9.MouseMove, PictureBox8.MouseMove, PictureBox7.MouseMove, PictureBox6.MouseMove, PictureBox5.MouseMove, PictureBox4.MouseMove, PictureBox3.MouseMove, PictureBox2.MouseMove, PictureBox1.MouseMove, Label11.MouseMove, Label10.MouseMove
+    Private Sub DragWindow_MouseMove(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseMove, PictureBox9.MouseMove, PictureBox8.MouseMove, PictureBox7.MouseMove, PictureBox6.MouseMove, PictureBox5.MouseMove, PictureBox4.MouseMove, PictureBox3.MouseMove, PictureBox2.MouseMove, PictureBox1.MouseMove, Label11.MouseMove, Label10.MouseMove, Label9.MouseMove, Label8.MouseMove, Label7.MouseMove, Label6.MouseMove, Label5.MouseMove, Label4.MouseMove, Label3.MouseMove, Label2.MouseMove, Label1.MouseMove
         If drag Then
             Top = Cursor.Position.Y - mouseY
             Left = Cursor.Position.X - mouseX
         End If
     End Sub
 
-    Private Sub DragWindow_MouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseUp, PictureBox9.MouseUp, PictureBox8.MouseUp, PictureBox7.MouseUp, PictureBox6.MouseUp, PictureBox5.MouseUp, PictureBox4.MouseUp, PictureBox3.MouseUp, PictureBox2.MouseUp, PictureBox1.MouseUp, Label11.MouseUp, Label10.MouseUp
+    Private Sub DragWindow_MouseUp(ByVal sender As Object, ByVal e As MouseEventArgs) Handles Me.MouseUp, PictureBox9.MouseUp, PictureBox8.MouseUp, PictureBox7.MouseUp, PictureBox6.MouseUp, PictureBox5.MouseUp, PictureBox4.MouseUp, PictureBox3.MouseUp, PictureBox2.MouseUp, PictureBox1.MouseUp, Label11.MouseUp, Label10.MouseUp, Label9.MouseUp, Label8.MouseUp, Label7.MouseUp, Label6.MouseUp, Label5.MouseUp, Label4.MouseUp, Label3.MouseUp, Label2.MouseUp, Label1.MouseUp
         drag = False
 
         'Save position to settings
@@ -835,4 +838,166 @@ Public Class Form1
         ToggleInputWindow()
     End Sub
 
+
+    Private Sub NormalToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        'Deprecated function for direct zooming
+        NormalSizedToggle.Checked = True
+        MsizeToolStripMenuItem.Checked = False
+
+        If (currentSize <> 1) Then
+            'Scale this up to the size where a normal input method should be
+            ' Original size x 1.7 times
+            resizeAllElements(1.7, 1, New Size(160, 204), 18, 21)
+            currentSize = 1
+            My.Settings.startSize = 1
+            My.Settings.Save()
+        End If
+
+    End Sub
+
+    Private Sub resizeAllElements(scaleFactor As Double, yOffset As Integer, WindowSize As Size, fontSize As Integer, labelSize As Integer)
+        'Deprecated Method for making large UI. Keep here for reference only.
+        Dim pictureboxSize = defaultPictureboxSize * scaleFactor
+        Me.Size = WindowSize
+        Me.MaximumSize = WindowSize
+        Me.MinimumSize = WindowSize
+        UpdateControlSizes(PictureBox1, 0 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox2, 30 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox3, 60 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox4, 0 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox5, 30 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox6, 60 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox7, 0 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox8, 30 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(PictureBox9, 60 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+
+        UpdateControlSizes(Label1, 0 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label2, 30 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label3, 60 * scaleFactor, yOffset + 0 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label4, 0 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label5, 30 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label6, 60 * scaleFactor, yOffset + 30 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label7, 0 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label8, 30 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+        UpdateControlSizes(Label9, 60 * scaleFactor, yOffset + 60 * scaleFactor, pictureboxSize)
+
+        Label1.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label2.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label3.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label4.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label5.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label6.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label7.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label8.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+        Label9.Font = New Font("MingLiU_HKSCS", fontSize, FontStyle.Bold)
+
+        Label1.TextAlign = ContentAlignment.MiddleCenter
+        Label2.TextAlign = ContentAlignment.MiddleCenter
+        Label3.TextAlign = ContentAlignment.MiddleCenter
+        Label4.TextAlign = ContentAlignment.MiddleCenter
+        Label5.TextAlign = ContentAlignment.MiddleCenter
+        Label6.TextAlign = ContentAlignment.MiddleCenter
+        Label7.TextAlign = ContentAlignment.MiddleCenter
+        Label8.TextAlign = ContentAlignment.MiddleCenter
+        Label9.TextAlign = ContentAlignment.MiddleCenter
+
+        UpdateControlSizes(Label10, 0, 94 * scaleFactor, 50 * scaleFactor, 29 * scaleFactor)
+        UpdateControlSizes(Label11, 44 * scaleFactor, 94 * scaleFactor, 50 * scaleFactor, 29 * scaleFactor)
+        Label10.Font = New Font("MingLiU_HKSCS", labelSize)
+        Label11.Font = New Font("MingLiU_HKSCS", labelSize)
+    End Sub
+
+    Private Sub UpdateControlSizes(element As Control, posx As Integer, posy As Integer, width As Integer, Optional height As Integer = -1)
+        If (height = -1) Then
+            height = width 'This is a square
+        End If
+        element.Width = width
+        element.Height = width
+        element.Left = posx
+        element.Top = posy
+    End Sub
+
+    Private Sub MiniToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles MsizeToolStripMenuItem.Click
+        NormalSizedToggle.Checked = False
+        MsizeToolStripMenuItem.Checked = True
+        Me.Show()
+        'Update this form location to match the larger UI
+        Me.Left = largeUI.Left
+        Me.Top = largeUI.Top
+        largeUI.Hide()
+        If (currentSize <> 0) Then
+            'Deprecated method for direct zooming
+            'resizeAllElements(1, 1, New Size(92, 120), 14.25, 14.25)
+            currentSize = 0
+            My.Settings.startSize = 0
+            My.Settings.Save()
+        End If
+
+    End Sub
+
+    Private Sub TrayIcon_MouseDoubleClick(sender As Object, e As MouseEventArgs) Handles TrayIcon.MouseDoubleClick
+        'Toggle Input by DoubleClick TrayIcon
+        ToggleInputWindow()
+    End Sub
+
+    Private Sub NormalSizedToggleClick(sender As Object, e As EventArgs) Handles NormalSizedToggle.Click
+        'New method for zooming into the input method
+        showLargeUI()
+        currentSize = 1
+        My.Settings.startSize = 1
+        My.Settings.Save()
+    End Sub
+
+    Private Sub showLargeUI()
+        Me.Hide()
+        largeUI.Show()
+        largeUI.Left = Me.Left
+        largeUI.Top = Me.Top
+        MsizeToolStripMenuItem.Checked = False
+        NormalSizedToggle.Checked = True
+    End Sub
+
+    Private Sub onLoadHide_Tick(sender As Object, e As EventArgs) Handles onLoadHide.Tick
+        onLoadHide.Enabled = False
+        Me.Hide()
+
+    End Sub
+
+    Private Sub useScrollLockIsnteadClick(sender As Object, e As EventArgs) Handles useScrollLockInstead.Click
+        If My.Settings.useScrollLockInstead = True Then
+            My.Settings.useScrollLockInstead = False
+        Else
+            My.Settings.useScrollLockInstead = True
+        End If
+        My.Settings.Save()
+        System.Windows.Forms.Application.Restart()
+    End Sub
+
+    Dim scrollLockState As Boolean = My.Computer.Keyboard.ScrollLock
+    Private Sub scrollLockListener_Tick(sender As Object, e As EventArgs) Handles scrollLockListener.Tick
+        'Check if scroll lock state change. If yes, toggle hide / show state
+        If My.Computer.Keyboard.ScrollLock <> scrollLockState Then
+            scrollLockState = My.Computer.Keyboard.ScrollLock
+            ToggleInputWindow()
+        End If
+    End Sub
+
+    Private Sub TempFolderChecker_Tick(sender As Object, e As EventArgs) Handles TempFolderChecker.Tick
+        If checkTempImageAllExists() = False Then
+            'Something missing. Restart the application
+            Application.Restart()
+        End If
+    End Sub
+
+    Private Function checkTempImageAllExists()
+        Dim currentTempList As String() = recursiveListFile(temppath)
+        'Compare the currentTempList to the original temp list. If the list is difference (aka some file is missing, return false)
+        Dim allFileExists = True
+        For Each file As String In tempFilelistOriginal
+            If Array.IndexOf(currentTempList, file) = -1 Then
+                allFileExists = False
+            End If
+        Next
+        Return allFileExists
+    End Function
 End Class
