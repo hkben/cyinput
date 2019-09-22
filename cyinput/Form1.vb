@@ -1,5 +1,9 @@
-﻿Imports System.IO
+﻿Imports System.Globalization
+Imports System.IO
 Imports System.IO.Compression
+Imports System.Text
+Imports System.Text.RegularExpressions
+
 Public Class Form1
     'System Key Hooker Declarations
     Private hkkp0 As VBHotkeys.GlobalHotkey
@@ -23,6 +27,7 @@ Public Class Form1
     Dim cj5_mapping As String()
     Dim b5xp_mapping As String()
     Public homograph_mapping As String()
+    Public big5unicode_map As String()
     'Logical Processing Variables
     Dim charset As String = ""
     Dim table As String()
@@ -93,6 +98,7 @@ Public Class Form1
         cj5_mapping = My.Resources.cj5_map.Split(arg, StringSplitOptions.None)
         b5xp_mapping = My.Resources.b5xp_map.Split(arg, StringSplitOptions.None)
         homograph_mapping = My.Resources.mapped_homograph.Split(arg, StringSplitOptions.None)
+        big5unicode_map = My.Resources.big5unicode_map.Split(arg, StringSplitOptions.None)
         textArray.Clear()
         textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
         drawText()
@@ -274,7 +280,7 @@ Public Class Form1
                 End If
 
                 Return returnmsg(1)
-                End If
+            End If
         Next
         Return "*********"
     End Function
@@ -302,15 +308,15 @@ Public Class Form1
             sp = 0
             showingTextArrayIndex = 0
         End If
-        Label7.Text = textArray(sp)
-        Label8.Text = textArray(sp + 1)
-        Label9.Text = textArray(sp + 2)
-        Label4.Text = textArray(sp + 3)
-        Label5.Text = textArray(sp + 4)
-        Label6.Text = textArray(sp + 5)
-        Label1.Text = textArray(sp + 6)
-        Label2.Text = textArray(sp + 7)
-        Label3.Text = textArray(sp + 8)
+        Draw(Label7, textArray(sp))
+        Draw(Label8, textArray(sp + 1))
+        Draw(Label9, textArray(sp + 2))
+        Draw(Label4, textArray(sp + 3))
+        Draw(Label5, textArray(sp + 4))
+        Draw(Label6, textArray(sp + 5))
+        Draw(Label1, textArray(sp + 6))
+        Draw(Label2, textArray(sp + 7))
+        Draw(Label3, textArray(sp + 8))
 
         'Update text on largeUI as well, filter the stars icon to nothing (Empty string). Only do filtering on large UI
         largeUI.l1.Text = filterStarToEmptyString(textArray(sp))
@@ -758,6 +764,11 @@ Public Class Form1
 
         Dim mode As Integer = My.Settings.outputMode
 
+        'Covent HKSCS Big5 to Unicode
+        If Not IfCharacterBig5(text) Then
+            text = Big5HKSCSConverter(text)
+        End If
+
         If mode = 0 Then
             Clipboard.SetText(text)
             SendKeys.Send("^v")
@@ -1082,4 +1093,82 @@ Public Class Form1
     Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
         about.Show()
     End Sub
+
+    Private Function Big5HKSCSConverter(text As String) As String
+
+        Dim code = GetBig5HexCode(text)
+        Dim hexUnicode = ""
+
+        'search in big5unicode_map
+        For Each row As String In big5unicode_map
+            If row.StartsWith(code) Then
+                hexUnicode = row.Split(",")(1)
+            End If
+        Next
+
+        'If not found in big5unicode_map , return original input
+        If hexUnicode = "" Then
+            Return text
+        End If
+
+        Dim result = GetTextFromHexUnicode(hexUnicode)
+
+        Return result
+
+    End Function
+
+    Private Function GetBig5HexCode(text As String) As String
+
+        Dim result = ""
+        'Convert Big5 word to Bytes
+        Dim Big5 As Encoding = Encoding.GetEncoding("big5")
+        Dim bytes = Big5.GetBytes(text)
+
+        'Convert  Bytes To Hex
+        For Each x As Byte In bytes
+            Dim part = Conversion.Hex(x)
+            result = result + part.ToString()
+        Next
+
+        Return result
+
+    End Function
+
+    Private Function GetTextFromHexUnicode(unicode As String) As String
+
+        'Convert Hex to Bin
+        Dim numeric = Int32.Parse(unicode, NumberStyles.HexNumber)
+        'Convert Bin to Bytes
+        Dim bytes = BitConverter.GetBytes(numeric)
+        'Convert Bytes to Unicode Word
+        Dim result = Encoding.UTF32.GetString(bytes)
+
+        Return result
+
+    End Function
+
+    Private Sub Draw(ByRef label As Label, text As String)
+
+        label.Text = text
+
+        If IfCharacterBig5(text) Then
+            label.ForeColor = Color.Black
+        Else
+            label.ForeColor = Color.Red
+        End If
+
+    End Sub
+
+    Private Function IfCharacterBig5(text As String) As Boolean
+
+        'Regex for not Unicode Words
+        Dim regex As New Regex("[^\uE000-\uF8FF]")
+
+        If regex.IsMatch(text) Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
 End Class
