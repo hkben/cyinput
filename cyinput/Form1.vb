@@ -319,15 +319,15 @@ Public Class Form1
         Draw(Label3, textArray(sp + 8))
 
         'Update text on largeUI as well, filter the stars icon to nothing (Empty string). Only do filtering on large UI
-        largeUI.l1.Text = filterStarToEmptyString(textArray(sp))
-        largeUI.l2.Text = filterStarToEmptyString(textArray(sp + 1))
-        largeUI.l3.Text = filterStarToEmptyString(textArray(sp + 2))
-        largeUI.l4.Text = filterStarToEmptyString(textArray(sp + 3))
-        largeUI.l5.Text = filterStarToEmptyString(textArray(sp + 4))
-        largeUI.l6.Text = filterStarToEmptyString(textArray(sp + 5))
-        largeUI.l7.Text = filterStarToEmptyString(textArray(sp + 6))
-        largeUI.l8.Text = filterStarToEmptyString(textArray(sp + 7))
-        largeUI.l9.Text = filterStarToEmptyString(textArray(sp + 8))
+        Draw(largeUI.l1, filterStarToEmptyString(textArray(sp)))
+        Draw(largeUI.l2, filterStarToEmptyString(textArray(sp + 1)))
+        Draw(largeUI.l3, filterStarToEmptyString(textArray(sp + 2)))
+        Draw(largeUI.l4, filterStarToEmptyString(textArray(sp + 3)))
+        Draw(largeUI.l5, filterStarToEmptyString(textArray(sp + 4)))
+        Draw(largeUI.l6, filterStarToEmptyString(textArray(sp + 5)))
+        Draw(largeUI.l7, filterStarToEmptyString(textArray(sp + 6)))
+        Draw(largeUI.l8, filterStarToEmptyString(textArray(sp + 7)))
+        Draw(largeUI.l9, filterStarToEmptyString(textArray(sp + 8)))
     End Sub
 
     Private Function filterStarToEmptyString(inString As String)
