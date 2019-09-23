@@ -215,6 +215,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="ICON.ico" />
+    <Content Include="Resources\big5unicode_map.txt" />
     <None Include="Resources\VBHotkeyLib.dll" />
     <None Include="Resources\mapped_homograph.dll" />
     <None Include="Resources\b5xp_map.dll" />
