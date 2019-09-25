@@ -1,5 +1,9 @@
-﻿Imports System.IO
+﻿Imports System.Globalization
+Imports System.IO
 Imports System.IO.Compression
+Imports System.Text
+Imports System.Text.RegularExpressions
+
 Public Class Form1
     'System Key Hooker Declarations
     Private hkkp0 As VBHotkeys.GlobalHotkey
@@ -23,6 +27,7 @@ Public Class Form1
     Dim cj5_mapping As String()
     Dim b5xp_mapping As String()
     Public homograph_mapping As String()
+    Public big5unicode_map As String()
     'Logical Processing Variables
     Dim charset As String = ""
     Dim table As String()
@@ -93,6 +98,7 @@ Public Class Form1
         cj5_mapping = My.Resources.cj5_map.Split(arg, StringSplitOptions.None)
         b5xp_mapping = My.Resources.b5xp_map.Split(arg, StringSplitOptions.None)
         homograph_mapping = My.Resources.mapped_homograph.Split(arg, StringSplitOptions.None)
+        big5unicode_map = My.Resources.big5unicode_map.Split(arg, StringSplitOptions.None)
         textArray.Clear()
         textArray.AddRange({"個", "能", "的", "到", "資", "就", "你", "這", "好"})
         drawText()
@@ -274,7 +280,7 @@ Public Class Form1
                 End If
 
                 Return returnmsg(1)
-                End If
+            End If
         Next
         Return "*********"
     End Function
@@ -302,26 +308,26 @@ Public Class Form1
             sp = 0
             showingTextArrayIndex = 0
         End If
-        Label7.Text = textArray(sp)
-        Label8.Text = textArray(sp + 1)
-        Label9.Text = textArray(sp + 2)
-        Label4.Text = textArray(sp + 3)
-        Label5.Text = textArray(sp + 4)
-        Label6.Text = textArray(sp + 5)
-        Label1.Text = textArray(sp + 6)
-        Label2.Text = textArray(sp + 7)
-        Label3.Text = textArray(sp + 8)
+        Draw(Label7, textArray(sp))
+        Draw(Label8, textArray(sp + 1))
+        Draw(Label9, textArray(sp + 2))
+        Draw(Label4, textArray(sp + 3))
+        Draw(Label5, textArray(sp + 4))
+        Draw(Label6, textArray(sp + 5))
+        Draw(Label1, textArray(sp + 6))
+        Draw(Label2, textArray(sp + 7))
+        Draw(Label3, textArray(sp + 8))
 
         'Update text on largeUI as well, filter the stars icon to nothing (Empty string). Only do filtering on large UI
-        largeUI.l1.Text = filterStarToEmptyString(textArray(sp))
-        largeUI.l2.Text = filterStarToEmptyString(textArray(sp + 1))
-        largeUI.l3.Text = filterStarToEmptyString(textArray(sp + 2))
-        largeUI.l4.Text = filterStarToEmptyString(textArray(sp + 3))
-        largeUI.l5.Text = filterStarToEmptyString(textArray(sp + 4))
-        largeUI.l6.Text = filterStarToEmptyString(textArray(sp + 5))
-        largeUI.l7.Text = filterStarToEmptyString(textArray(sp + 6))
-        largeUI.l8.Text = filterStarToEmptyString(textArray(sp + 7))
-        largeUI.l9.Text = filterStarToEmptyString(textArray(sp + 8))
+        Draw(largeUI.l1, filterStarToEmptyString(textArray(sp)))
+        Draw(largeUI.l2, filterStarToEmptyString(textArray(sp + 1)))
+        Draw(largeUI.l3, filterStarToEmptyString(textArray(sp + 2)))
+        Draw(largeUI.l4, filterStarToEmptyString(textArray(sp + 3)))
+        Draw(largeUI.l5, filterStarToEmptyString(textArray(sp + 4)))
+        Draw(largeUI.l6, filterStarToEmptyString(textArray(sp + 5)))
+        Draw(largeUI.l7, filterStarToEmptyString(textArray(sp + 6)))
+        Draw(largeUI.l8, filterStarToEmptyString(textArray(sp + 7)))
+        Draw(largeUI.l9, filterStarToEmptyString(textArray(sp + 8)))
     End Sub
 
     Private Function filterStarToEmptyString(inString As String)
@@ -369,7 +375,6 @@ Public Class Form1
     End Function
 
     Private Sub dothandler(Optional reset As Boolean = False)
-
         If charset.Length = 0 And lastusedword <> "" And isSelecting = False And reset = False Then
             'Punct mode
             enterPunctMode()
@@ -378,6 +383,7 @@ Public Class Form1
 
         'Reset
         isSelecting = False
+        lastusedword = ""
         charset = ""
         paintPictureBoxes(0)
         showPicturebox()
@@ -387,6 +393,7 @@ Public Class Form1
         drawText()
         Label10.Text = "標點"
         Label11.Text = "取消"
+        largeUI.updateUIbyCharCode(charset)
     End Sub
 
     Private Sub unzippingToTemp()
@@ -426,9 +433,42 @@ Public Class Form1
         Return fileList
     End Function
 
+    Private Sub loadSettingsFromConfigFile()
+        Dim reader As StreamReader = My.Computer.FileSystem.OpenTextFileReader(Application.StartupPath & "/" & "settings.conf")
+        Dim a As String
+        Do
+            a = reader.ReadLine
+            Dim tmp As String() = a.Split("=")
+            Dim configName = tmp(0)
+            Dim configVal = tmp(1)
+            For Each value As Configuration.SettingsPropertyValue In My.Settings.PropertyValues
+                If (value.Name = configName) Then
+                    value.PropertyValue = configVal
+                End If
+            Next
+        Loop Until a Is Nothing
+        My.Settings.Save()
+        reader.Close()
+    End Sub
+
+    Public Sub saveSettings()
+        If My.Settings.usbMode = True Then
+            exportSettingsAsFile()
+        End If
+    End Sub
+
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         On Error Resume Next
         unzippingToTemp()
+
+        If My.Computer.FileSystem.FileExists(Application.StartupPath & "/" & "settings.conf") Then
+            loadSettingsFromConfigFile()
+        End If
+
+        'Creating a system border to make it easier to be found when it is used on top of Window's file explorer
+        'Me.FormBorderStyle = Windows.Forms.FormBorderStyle.FixedSingle
+        Me.Text = ""
+        Me.ControlBox = False
 
         'Create a ding sound to show the process is started.
         If (My.Settings.initSound = True) Then
@@ -494,6 +534,11 @@ Public Class Form1
             NormalSizedToggle.Checked = False
         End If
 
+        'Check if USB mode is enabled. If yes, update the checkbox
+        If My.Settings.usbMode = True Then
+            enableUSB.Checked = True
+            disableUSB.Checked = False
+        End If
     End Sub
 
     Private Sub OnInputEnable()
@@ -719,6 +764,11 @@ Public Class Form1
 
         Dim mode As Integer = My.Settings.outputMode
 
+        'Covent HKSCS Big5 to Unicode
+        If Not IfCharacterBig5(text) Then
+            text = Big5HKSCSConverter(text)
+        End If
+
         If mode = 0 Then
             Clipboard.SetText(text)
             SendKeys.Send("^v")
@@ -766,6 +816,7 @@ Public Class Form1
         'Save selected mode to settings
         My.Settings.outputMode = mode
         My.Settings.Save()
+        saveSettings()
     End Sub
 
     Private Sub UpdateMenuCheckState()
@@ -810,6 +861,7 @@ Public Class Form1
         My.Settings.startPositionLeft = Left
         My.Settings.numberOfMonitors = Screen.AllScreens.Length
         My.Settings.Save()
+        saveSettings()
 
     End Sub
 
@@ -819,6 +871,7 @@ Public Class Form1
         啟用ToolStripMenuItem.Checked = False
         停用ToolStripMenuItem.Checked = True
         My.Settings.Save()
+        saveSettings()
     End Sub
 
     Private Sub 啟用ToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles 啟用ToolStripMenuItem.Click
@@ -826,6 +879,7 @@ Public Class Form1
         啟用ToolStripMenuItem.Checked = True
         停用ToolStripMenuItem.Checked = False
         My.Settings.Save()
+        saveSettings()
     End Sub
 
     Private Sub ResetWindowPositionItem_Click(sender As Object, e As EventArgs) Handles ResetWindowPositionItem.Click
@@ -851,6 +905,7 @@ Public Class Form1
             currentSize = 1
             My.Settings.startSize = 1
             My.Settings.Save()
+            saveSettings()
         End If
 
     End Sub
@@ -931,6 +986,7 @@ Public Class Form1
             currentSize = 0
             My.Settings.startSize = 0
             My.Settings.Save()
+            saveSettings()
         End If
 
     End Sub
@@ -946,6 +1002,7 @@ Public Class Form1
         currentSize = 1
         My.Settings.startSize = 1
         My.Settings.Save()
+        saveSettings()
     End Sub
 
     Private Sub showLargeUI()
@@ -970,6 +1027,7 @@ Public Class Form1
             My.Settings.useScrollLockInstead = True
         End If
         My.Settings.Save()
+        saveSettings()
         System.Windows.Forms.Application.Restart()
     End Sub
 
@@ -1000,4 +1058,117 @@ Public Class Form1
         Next
         Return allFileExists
     End Function
+
+    Private Sub enableUSB_Click(sender As Object, e As EventArgs) Handles enableUSB.Click
+        My.Settings.usbMode = True
+        My.Settings.Save()
+        'Update menu selection state
+        enableUSB.Checked = True
+        disableUSB.Checked = False
+        exportSettingsAsFile()
+    End Sub
+
+    Private Sub disableUSB_Click(sender As Object, e As EventArgs) Handles disableUSB.Click
+        My.Settings.usbMode = False
+        My.Settings.Save()
+        'Update menu selection state
+        enableUSB.Checked = False
+        disableUSB.Checked = True
+        If My.Computer.FileSystem.FileExists(Application.StartupPath & "/" & "settings.conf") Then
+            My.Computer.FileSystem.DeleteFile(Application.StartupPath & "/" & "settings.conf")
+        End If
+    End Sub
+
+    Private Sub exportSettingsAsFile()
+        Dim sb As New System.Text.StringBuilder
+        For Each value As Configuration.SettingsPropertyValue In My.Settings.PropertyValues
+            sb.AppendLine(value.Name & "=" & value.PropertyValue.ToString)
+        Next
+        Dim file As System.IO.StreamWriter
+        file = My.Computer.FileSystem.OpenTextFileWriter(Application.StartupPath & "/" & "settings.conf", False)
+        file.Write(sb.ToString.Trim)
+        file.Close()
+    End Sub
+
+    Private Sub AboutToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AboutToolStripMenuItem.Click
+        about.Show()
+    End Sub
+
+    Private Function Big5HKSCSConverter(text As String) As String
+
+        Dim code = GetBig5HexCode(text)
+        Dim hexUnicode = ""
+
+        'search in big5unicode_map
+        For Each row As String In big5unicode_map
+            If row.StartsWith(code) Then
+                hexUnicode = row.Split(",")(1)
+            End If
+        Next
+
+        'If not found in big5unicode_map , return original input
+        If hexUnicode = "" Then
+            Return text
+        End If
+
+        Dim result = GetTextFromHexUnicode(hexUnicode)
+
+        Return result
+
+    End Function
+
+    Private Function GetBig5HexCode(text As String) As String
+
+        Dim result = ""
+        'Convert Big5 word to Bytes
+        Dim Big5 As Encoding = Encoding.GetEncoding("big5")
+        Dim bytes = Big5.GetBytes(text)
+
+        'Convert  Bytes To Hex
+        For Each x As Byte In bytes
+            Dim part = Conversion.Hex(x)
+            result = result + part.ToString()
+        Next
+
+        Return result
+
+    End Function
+
+    Private Function GetTextFromHexUnicode(unicode As String) As String
+
+        'Convert Hex to Bin
+        Dim numeric = Int32.Parse(unicode, NumberStyles.HexNumber)
+        'Convert Bin to Bytes
+        Dim bytes = BitConverter.GetBytes(numeric)
+        'Convert Bytes to Unicode Word
+        Dim result = Encoding.UTF32.GetString(bytes)
+
+        Return result
+
+    End Function
+
+    Private Sub Draw(ByRef label As Label, text As String)
+
+        label.Text = text
+
+        If IfCharacterBig5(text) Then
+            label.ForeColor = Color.Black
+        Else
+            label.ForeColor = Color.Red
+        End If
+
+    End Sub
+
+    Private Function IfCharacterBig5(text As String) As Boolean
+
+        'Regex for not Unicode Words
+        Dim regex As New Regex("[^\uE000-\uF8FF]")
+
+        If regex.IsMatch(text) Then
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
 End Class
