@@ -308,6 +308,13 @@ Public Class Form1
             sp = 0
             showingTextArrayIndex = 0
         End If
+
+        If showingTextArrayIndex < 0 Then
+            Dim page = textArray.Count / 9 - 1
+            sp = page * 9
+            showingTextArrayIndex = sp
+        End If
+
         Draw(Label7, textArray(sp))
         Draw(Label8, textArray(sp + 1))
         Draw(Label9, textArray(sp + 2))
