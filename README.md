@@ -12,6 +12,8 @@
 ## 下載
 <a href="https://raw.githubusercontent.com/tobychui/cyinput/master/cyinput/bin/Debug/cyinput.exe">點這裡</a>
 
+如果你想使用舊版，你也可以查看我們曾發佈的 <a href="https://github.com/tobychui/cyinput/releases">歷史版本</a>。
+
 ## 系統要求
 - Windows 7 或以上
 - .NET framework 4.5.1 或以上
