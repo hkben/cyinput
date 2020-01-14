@@ -82,7 +82,7 @@ Partial Class Form1
         '
         'Label1
         '
-        Me.Label1.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
+        Me.Label1.Font = New System.Drawing.Font("MingLiU_HKSCS", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
         Me.Label1.Location = New System.Drawing.Point(3, 2)
         Me.Label1.Margin = New System.Windows.Forms.Padding(0)
         Me.Label1.Name = "Label1"
@@ -93,7 +93,7 @@ Partial Class Form1
         '
         'Label2
         '
-        Me.Label2.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
+        Me.Label2.Font = New System.Drawing.Font("MingLiU_HKSCS", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
         Me.Label2.Location = New System.Drawing.Point(21, 2)
         Me.Label2.Margin = New System.Windows.Forms.Padding(0)
         Me.Label2.Name = "Label2"
@@ -104,7 +104,7 @@ Partial Class Form1
         '
         'Label3
         '
-        Me.Label3.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
+        Me.Label3.Font = New System.Drawing.Font("MingLiU_HKSCS", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
         Me.Label3.Location = New System.Drawing.Point(39, 2)
         Me.Label3.Margin = New System.Windows.Forms.Padding(0)
         Me.Label3.Name = "Label3"
@@ -115,7 +115,7 @@ Partial Class Form1
         '
         'Label4
         '
-        Me.Label4.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
+        Me.Label4.Font = New System.Drawing.Font("MingLiU_HKSCS", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
         Me.Label4.Location = New System.Drawing.Point(3, 22)
         Me.Label4.Margin = New System.Windows.Forms.Padding(0)
         Me.Label4.Name = "Label4"
@@ -126,7 +126,7 @@ Partial Class Form1
         '
         'Label5
         '
-        Me.Label5.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
+        Me.Label5.Font = New System.Drawing.Font("MingLiU_HKSCS", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
         Me.Label5.Location = New System.Drawing.Point(21, 22)
         Me.Label5.Margin = New System.Windows.Forms.Padding(0)
         Me.Label5.Name = "Label5"
@@ -137,7 +137,7 @@ Partial Class Form1
         '
         'Label6
         '
-        Me.Label6.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
+        Me.Label6.Font = New System.Drawing.Font("MingLiU_HKSCS", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
         Me.Label6.Location = New System.Drawing.Point(39, 22)
         Me.Label6.Margin = New System.Windows.Forms.Padding(0)
         Me.Label6.Name = "Label6"
@@ -148,7 +148,7 @@ Partial Class Form1
         '
         'Label7
         '
-        Me.Label7.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
+        Me.Label7.Font = New System.Drawing.Font("MingLiU_HKSCS", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
         Me.Label7.Location = New System.Drawing.Point(3, 42)
         Me.Label7.Margin = New System.Windows.Forms.Padding(0)
         Me.Label7.Name = "Label7"
@@ -159,7 +159,7 @@ Partial Class Form1
         '
         'Label8
         '
-        Me.Label8.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
+        Me.Label8.Font = New System.Drawing.Font("MingLiU_HKSCS", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
         Me.Label8.Location = New System.Drawing.Point(21, 42)
         Me.Label8.Margin = New System.Windows.Forms.Padding(0)
         Me.Label8.Name = "Label8"
@@ -170,7 +170,7 @@ Partial Class Form1
         '
         'Label9
         '
-        Me.Label9.Font = New System.Drawing.Font("新細明體", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
+        Me.Label9.Font = New System.Drawing.Font("MingLiU_HKSCS", 16.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel, CType(136, Byte))
         Me.Label9.Location = New System.Drawing.Point(39, 42)
         Me.Label9.Margin = New System.Windows.Forms.Padding(0)
         Me.Label9.Name = "Label9"
